@@ -1,0 +1,509 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Izmene za programere}
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Izmene za programere}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89054 | Provide core cache frontends via dependency injection
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Keš Dependency Injection (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Programeri se ohrabruju da indžektuju keš direktno umesto da koriste CacheManager.
+		\item Ovo zahteva samo par jednostavnih izmena.
+
+		\item \textbf{Prethodno:}
+
+\begin{lstlisting}
+class MyClass
+{
+  /**
+   * @var TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+   */
+  private $cache;
+
+  public function __construct()
+  {
+      $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+      $this->cache = $cacheManager->getCache('my_cache');
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89054 | Provide core cache frontends via dependency injection
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Keš Dependency Injection (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Od \textbf{TYPO3 v10.1}, klasa treba da izgleda ovako:
+
+\begin{lstlisting}
+class MyClass
+{
+  /**
+   * @var TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+   */
+  private $cache;
+
+  public function __construct(FrontendInterface $cache)
+  {
+    $this->cache = $cache;
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89054 | Provide core cache frontends via dependency injection
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Keš Dependency Injection (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item ... i skedeća konfiguracija kontejner servisa je potrebna:
+
+\begin{lstlisting}
+services:
+  cache.my_cache:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['my_cache']
+
+  MyClass:
+    arguments:
+      $cache: '@cache.my_cache'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89066 | Add PHP API for Notifications in backend
+%
+%\begin{frame}[fragile]
+%	\frametitle{Izmene za programere}
+%	\framesubtitle{Backend Notifications}
+%
+%	% decrease font size for code listing
+%	\lstset{basicstyle=\smaller\ttfamily}
+%
+%	\begin{itemize}
+%		\item A new PHP API provides a simple way to create JavaScript backend notifications.
+%		\item For example:
+%
+%\begin{lstlisting}
+%GeneralUtility::makeInstance(NotificationService::class)
+%   ->notice('Notice', 'notice');
+%\end{lstlisting}
+%
+%	\end{itemize}
+%
+%	\begin{figure}
+%		\includegraphics[width=0.90\linewidth]{ChangesForDevelopers/89066-NotificationApi.png}
+%	\end{figure}
+%
+%\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89061 | Introduce Notification Actions
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Akcije obaveštenja}
+
+	\begin{itemize}
+		\item JavaScript obaveštenja u administratorskom interfejsu sada podržavaju
+			akcije (dugmad).
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{ChangesForDevelopers/89061-NotificationActionsAndButtons.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89244 | Broadcast Channels and Messaging
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Kanali emitovanja i poruke (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sada je moguće poslati i primiti "emitovanu poruku" korišćenjem JavaScript-a.
+	\end{itemize}
+
+	\vspace{-0.2cm}
+	\begingroup
+		\color{red}
+			\begin{center}
+				Ovaj API se smatra \textbf{unutrašnjim} za sada i može se promeniti\newline
+				 u bilo kom trenutku dok se ne proglasi "stabilnim".
+			\end{center}
+	\endgroup
+
+	\begin{itemize}
+		\item Primer za \textbf{slanje} poruke:
+
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/BroadcastService'], function (BroadcastService) {
+  const payload = {
+    componentName: 'my_extension',
+    eventName: 'my_event',
+    foo: 'bar'
+  };
+  BroadcastService.post(payload);
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89244 | Broadcast Channels and Messaging
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Kanali emitovanja i poruke (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Primer za \textbf{prijem} poruke:
+
+\begin{lstlisting}
+define([], function() {
+  document.addEventListener('typo3:my_component:my_event', (e) => eventHandler(e.detail));
+  function eventHandler(detail) {
+    // output contains key 'foo' as the payload
+    console.log(detail);
+  }
+});
+\end{lstlisting}
+
+		\item Pogledajte \href{https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API}{developer.mozilla.org} za više detalja.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89018 | Provide implementation for PSR-17 HTTP Message Factories
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{PSR-17 HTTP Message Factories}
+
+	\begin{itemize}
+		\item \href{https://www.php-fig.org/psr/psr-17/}{PSR-17}
+			HTTP Message Factories implementacija je dodata.
+		\item HTTP Message Factory interfejsi se trebaju koristiti kao zavisnisti
+		 	za upravljače zahtevima ili servise koji kreiraju PSR-7 objekte poruka.
+		\item PSR-17 se sastoji od šest factory interfejsa:
+
+			\begin{itemize}\smaller
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					RequestFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					ResponseFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					ServerRequestFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					StreamFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					UploadedFileFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					UriFactoryInterface}
+
+			\end{itemize}\normalsize
+
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.1/Feature-89018-ProvideImplementationForPSR-17HTTPMessageFactories.html}{dokumentaciju}
+			za primer koda.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89216 | PSR-18 HTTP Client Implementation
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{PSR-18 HTTP klijent}
+
+	\begin{itemize}
+		\item \href{https://www.php-fig.org/psr/psr-18/}{PSR-18}
+			HTTP klijent implementacija je dodata.
+		\item Ovo omogućava programerima da generišu HTTP zahteve zasnovane na PSR-7
+			objektima poruka bez potrebe da se oslanjaju na specifične HTTP klijentske implementacije.
+		\item Ovo ne zamenjuje postojeći \href{http://guzzlephp.org/}{Guzzle}
+			omotač, već omogućava opštiju alternativu.
+		\item PSR-18 se sastoji od klijentskog interfejsa i tri interfejsa izuzetaka:
+
+			\begin{itemize}\smaller
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					ClientInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					ClientExceptionInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					NetworkExceptionInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					RequestExceptionInterface}
+			\end{itemize}\normalsize
+
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.1/Feature-89216-PSR-18HTTPClientImplementation.html}{dokumentaiju}
+			za primer koda.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88871 | Handle middleware handler in RequestFactory correctly
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{RequestFactory Middleware Handler}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sada je moguće definisati prilagodjen upravljač middleware-om kao niz.
+		\item RequestFactory gradi gomilu upravljača zasnovanu na \newline
+			\small
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['HTTP']['handler']}
+			\normalsize
+			nizu i indzektuje ga u klijenta.
+		\item Na primer:
+
+\begin{lstlisting}
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use \Vendor\MyExtension\Middleware\Guzzle\CustomMiddleware;
+use \Vendor\MyExtension\Middleware\Guzzle\SecondCustomMiddleware;
+
+# Add custom middleware to default Guzzle handler stack
+$GLOBALS['TYPO3_CONF_VARS']['HTTP']['handler'][] =
+  (GeneralUtility::makeInstance(CustomMiddleware::class))->handler();
+$GLOBALS['TYPO3_CONF_VARS']['HTTP']['handler'][] =
+  (GeneralUtility::makeInstance(SecondCustomMiddleware::class))->handler();
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88602 | Allow registering additional file processors
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Prilagodjeni procesori fajlova}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Programeri mogu sada da registruju svoje procesore fajlova.
+		\item Dodajte sledeći kod u fajl \texttt{ext\_localconf.php}:
+
+\begin{lstlisting}
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ExampleImageProcessor'] = [
+  'className' => \Vendor\MyExtension\Resource\Processing\ExampleImageProcessor::class,
+  'before' => 'LocalImageProcessor',
+];
+\end{lstlisting}
+
+		\item Standardni slučajevi upotrebe:
+
+			\begin{itemize}
+				\item dodavanje vodenog žiga slikama
+				\item kompresovanje otpremljenih fajlova u ZIP arhivu
+				\item snimanje izmenjenih kopija fajlova
+				\item i tako dalje...
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88995 | Calling registerPlugin with vendor name
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Extbase i Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Preskočiti ime vendora kada se registruju plaginovi sa\newline
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Utility\textbackslash
+					ExtensionUtility::registerPlugin()}
+			\normalsize
+
+		\item Na primer, koristite "\texttt{Form}" umesto "\texttt{TYPO3.CMS.Form}"\newline
+			\small(prvi argument)\normalsize
+
+\begin{lstlisting}
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+  'Form',
+  'Formframework',
+  'Form',
+  'content-form',
+);
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89001 | TSFE->createHashBase
+% Feature | 89150 | Add events before and after rollback of record history entries
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Razno (1)}
+
+	\begin{itemize}
+		\item Izmenjeni su \texttt{hashParameter-i} za izračunavanje hashBase-a u sledećoj klasi:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					Controller\textbackslash
+					TypoScriptFrontendController}
+			\normalsize
+
+			\begin{itemize}
+				\item \texttt{gr\_list} je zamenjen sa \texttt{groupIds}.
+				\item \texttt{cHash} je zamenjen sa \texttt{dynamicArguments}.
+				\item \texttt{domainStartPage} je zamenjen sa \texttt{site} (identifikator sajta).
+			\end{itemize}
+
+		\item Emituju se dva nova dogadjaja kada se rekordi vraćaju (roll back):
+
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					History\textbackslash
+					Event\textbackslash
+					BeforeHistoryRollbackStartEvent}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					History\textbackslash
+					Event\textbackslash
+					AfterHistoryRollbackFinishedEvent}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88805 | Add type to TYPO3/CMS/Core/Database/Query/QueryBuilder::set()
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Razno (2)}
+
+	\begin{itemize}
+		\item Metod \texttt{set()} iz Query Builder-a sada prihvata i četvrti argument
+		 	da definiše tip imenovanog parametra:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					Query\textbackslash
+					QueryBuilder::set()}
+			\normalsize\newline
+			\vspace{0.2cm}
+			(podrazumevana vrednost je \texttt{\textbackslash PDO::PARAM\_STR})
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

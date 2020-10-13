@@ -1,0 +1,509 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Changes for Developers}
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+
+	\begin{center}\huge{Chapter 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Changes for Developers}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89054 | Provide core cache frontends via dependency injection
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Cache Dependency Injection (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Extension developers are encouraged to inject caches directly rather than using the CacheManager.
+		\item This requires a few simple changes as shown below.
+
+		\item \textbf{Previously:}
+
+\begin{lstlisting}
+class MyClass
+{
+  /**
+   * @var TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+   */
+  private $cache;
+
+  public function __construct()
+  {
+      $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+      $this->cache = $cacheManager->getCache('my_cache');
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89054 | Provide core cache frontends via dependency injection
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Cache Dependency Injection (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Since \textbf{TYPO3 v10.1}, the class should look as follows:
+
+\begin{lstlisting}
+class MyClass
+{
+  /**
+   * @var TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+   */
+  private $cache;
+
+  public function __construct(FrontendInterface $cache)
+  {
+    $this->cache = $cache;
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89054 | Provide core cache frontends via dependency injection
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Cache Dependency Injection (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item ...and the following container service configuration is required:
+
+\begin{lstlisting}
+services:
+  cache.my_cache:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['my_cache']
+
+  MyClass:
+    arguments:
+      $cache: '@cache.my_cache'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89066 | Add PHP API for Notifications in backend
+%
+%\begin{frame}[fragile]
+%	\frametitle{Changes for Developers}
+%	\framesubtitle{Backend Notifications}
+%
+%	% decrease font size for code listing
+%	\lstset{basicstyle=\smaller\ttfamily}
+%
+%	\begin{itemize}
+%		\item A new PHP API provides a simple way to create JavaScript backend notifications.
+%		\item For example:
+%
+%\begin{lstlisting}
+%GeneralUtility::makeInstance(NotificationService::class)
+%   ->notice('Notice', 'notice');
+%\end{lstlisting}
+%
+%	\end{itemize}
+%
+%	\begin{figure}
+%		\includegraphics[width=0.90\linewidth]{ChangesForDevelopers/89066-NotificationApi.png}
+%	\end{figure}
+%
+%\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89061 | Introduce Notification Actions
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Notification Actions}
+
+	\begin{itemize}
+		\item JavaScript notifications in the backend support actions (buttons) now.
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{ChangesForDevelopers/89061-NotificationActionsAndButtons.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89244 | Broadcast Channels and Messaging
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Broadcast Channels and Messaging (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item It is now possible to send and receive "broadcast messages" using JavaScript.
+	\end{itemize}
+
+	\vspace{-0.2cm}
+	\begingroup
+		\color{red}
+			\begin{center}
+				The API is considered \textbf{internal} for the time being\newline
+				and may change at any time until declared "stable".
+			\end{center}
+	\endgroup
+
+	\begin{itemize}
+		\item Example for \textbf{sending} a message:
+
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/BroadcastService'], function (BroadcastService) {
+  const payload = {
+    componentName: 'my_extension',
+    eventName: 'my_event',
+    foo: 'bar'
+  };
+  BroadcastService.post(payload);
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89244 | Broadcast Channels and Messaging
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Broadcast Channels and Messaging (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Example for \textbf{receiving} the message:
+
+\begin{lstlisting}
+define([], function() {
+  document.addEventListener('typo3:my_component:my_event', (e) => eventHandler(e.detail));
+  function eventHandler(detail) {
+    // output contains key 'foo' as the payload
+    console.log(detail);
+  }
+});
+\end{lstlisting}
+
+		\item See \href{https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API}{developer.mozilla.org} for more details.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89018 | Provide implementation for PSR-17 HTTP Message Factories
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{PSR-17 HTTP Message Factories}
+
+	\begin{itemize}
+		\item The \href{https://www.php-fig.org/psr/psr-17/}{PSR-17}
+			HTTP Message Factories implementation has been added.
+		\item HTTP Message Factory interfaces should be used as dependencies for
+			request handlers or services that create PSR-7 message objects.
+		\item PSR-17 consists of six factory interfaces:
+
+			\begin{itemize}\smaller
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					RequestFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					ResponseFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					ServerRequestFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					StreamFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					UploadedFileFactoryInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Message\textbackslash
+					UriFactoryInterface}
+
+			\end{itemize}\normalsize
+
+		\item See
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.1/Feature-89018-ProvideImplementationForPSR-17HTTPMessageFactories.html}{documentation}
+			for a code example.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89216 | PSR-18 HTTP Client Implementation
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{PSR-18 HTTP Client}
+
+	\begin{itemize}
+		\item The \href{https://www.php-fig.org/psr/psr-18/}{PSR-18}
+			HTTP Client implementation has been added.
+		\item It lets developers generate HTTP requests based on PSR-7
+			message objects without relying on a specific HTTP client implementation.
+		\item It does not replace the existing \href{http://guzzlephp.org/}{Guzzle}
+			wrapper, but provides a more generic alternative.
+		\item PSR-18 consists of a client interface and three exception interfaces:
+
+			\begin{itemize}\smaller
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					ClientInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					ClientExceptionInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					NetworkExceptionInterface}
+				\item \texttt{\textbackslash
+					Psr\textbackslash
+					Http\textbackslash
+					Client\textbackslash
+					RequestExceptionInterface}
+			\end{itemize}\normalsize
+
+		\item See
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.1/Feature-89216-PSR-18HTTPClientImplementation.html}{documentation}
+			for a code example.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88871 | Handle middleware handler in RequestFactory correctly
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{RequestFactory Middleware Handler}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item It is now possible to define custom middleware handlers as an array.
+		\item The RequestFactory builds a handler stack based on the\newline
+			\small
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['HTTP']['handler']}
+			\normalsize
+			array and injects it into the client.
+		\item For example:
+
+\begin{lstlisting}
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use \Vendor\MyExtension\Middleware\Guzzle\CustomMiddleware;
+use \Vendor\MyExtension\Middleware\Guzzle\SecondCustomMiddleware;
+
+# Add custom middleware to default Guzzle handler stack
+$GLOBALS['TYPO3_CONF_VARS']['HTTP']['handler'][] =
+  (GeneralUtility::makeInstance(CustomMiddleware::class))->handler();
+$GLOBALS['TYPO3_CONF_VARS']['HTTP']['handler'][] =
+  (GeneralUtility::makeInstance(SecondCustomMiddleware::class))->handler();
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88602 | Allow registering additional file processors
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Custom File Processors}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Developers can now register their own file processors.
+		\item Add the following code to file \texttt{ext\_localconf.php}:
+
+\begin{lstlisting}
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['fal']['processors']['ExampleImageProcessor'] = [
+  'className' => \Vendor\MyExtension\Resource\Processing\ExampleImageProcessor::class,
+  'before' => 'LocalImageProcessor',
+];
+\end{lstlisting}
+
+		\item Typical use cases:
+
+			\begin{itemize}
+				\item add a watermark to images
+				\item compress uploaded files to a ZIP archive
+				\item store manipulated copies of images
+				\item etc.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88995 | Calling registerPlugin with vendor name
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Extbase and Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Omit the vendor name when registering plugins with\newline
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Utility\textbackslash
+					ExtensionUtility::registerPlugin()}
+			\normalsize
+
+		\item For example, use "\texttt{Form}" instead of "\texttt{TYPO3.CMS.Form}"\newline
+			\small(first argument)\normalsize
+
+\begin{lstlisting}
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+  'Form',
+  'Formframework',
+  'Form',
+  'content-form',
+);
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89001 | TSFE->createHashBase
+% Feature | 89150 | Add events before and after rollback of record history entries
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Miscellaneous (1)}
+
+	\begin{itemize}
+		\item The \texttt{hashParameters} for calculating the hashBase in the following class have been modified:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					Controller\textbackslash
+					TypoScriptFrontendController}
+			\normalsize
+
+			\begin{itemize}
+				\item \texttt{gr\_list} has been replaced by \texttt{groupIds}.
+				\item \texttt{cHash} has been replaced by \texttt{dynamicArguments}.
+				\item \texttt{domainStartPage} has been replaced by \texttt{site} (site identifier).
+			\end{itemize}
+
+		\item Two new events are dispatched when records are rolled back:
+
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					History\textbackslash
+					Event\textbackslash
+					BeforeHistoryRollbackStartEvent}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					History\textbackslash
+					Event\textbackslash
+					AfterHistoryRollbackFinishedEvent}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88805 | Add type to TYPO3/CMS/Core/Database/Query/QueryBuilder::set()
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Developers}
+	\framesubtitle{Miscellaneous (2)}
+
+	\begin{itemize}
+		\item Method \texttt{set()} of the Query Builder now accepts a 4th argument
+			to specify the type of the named parameter:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					Query\textbackslash
+					QueryBuilder::set()}
+			\normalsize\newline
+			\vspace{0.2cm}
+			(the default is \texttt{\textbackslash PDO::PARAM\_STR})
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

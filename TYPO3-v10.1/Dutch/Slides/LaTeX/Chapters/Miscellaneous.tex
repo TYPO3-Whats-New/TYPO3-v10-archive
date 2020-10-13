@@ -1,0 +1,78 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Dutch Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Dutch
+% ------------------------------------------------------------------------------
+
+\section{Diversen}
+\begin{frame}[fragile]
+	\frametitle{Diversen}
+
+	\begin{center}\huge{Hoofdstuk 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Diversen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 78488 | Add rel=”noopener noreferrer” to external links
+
+\begin{frame}[fragile]
+	\frametitle{Diversen}
+	\framesubtitle{Verbeterde beveiliging}
+
+	\begin{itemize}
+		\item Externe links gemaakt door TypoLink, of links met \texttt{\_blank},
+			krijgen nu het attribuut \texttt{rel="noopener noreferrer"}.
+		\item Dit zorgt voor meer veiligheid voor de TYPO3 site:
+
+			\begin{itemize}
+				\item "\textbf{noopener}" vertelt de browser om de link te openen zonder
+					de nieuwe context toegang te geven tot het voorgaande document.
+				\item "\textbf{noreferrer}" voorkomt dat de browser het adres van de vorige pagina
+					doorgeeft aan de volgende via de
+					\texttt{Referer:} HTTP header.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88742 | Import YAML files relative to the current YAML file
+
+\begin{frame}[fragile]
+	\frametitle{Diversen}
+	\framesubtitle{Invoegen van YAML bestanden}
+
+    % decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item YAML-bestanden kunnen al ingevoegd worden door andere YAML-bestanden met de volgende syntax:
+
+\begin{lstlisting}
+imports:
+  - { resource: "EXT:my_extension/Configuration/FooBar/Example.yaml" }
+
+another:
+  option: true
+\end{lstlisting}
+
+		\item Dit is uitgebreid zodat bestanden relatief tot het huidige YAML-bestand geïmporteerd kunnen worden:
+
+\begin{lstlisting}
+imports:
+  - { resource: "subfolder/AnotherExample.yaml" }
+  - { resource: "../pad/naar/configuratie/AnotherExample.yaml" }
+
+another:
+  option: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

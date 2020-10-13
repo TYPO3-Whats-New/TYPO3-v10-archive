@@ -1,0 +1,202 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (German Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+
+\section{Einführung}
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+
+	\begin{center}\huge{Einführung}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Fakten}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - The Facts
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{TYPO3 Version 10.1 - Fakten}
+
+	\begin{itemize}
+		\item Veröffentlichungsdatum: 01 Oktober 2019
+		\item Releasetyp: Sprint Release
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3-v10-1-banner.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - Executive Summary
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Zusammenfassung}
+
+	\small
+		TYPO3 Version 10.1 ist der zweite Sprint Release auf dem Weg zur LTS
+		(langfristige Unterstützung) im Jahr 2020.
+
+		\vspace{0.2cm}
+
+		Die neue Version hat seit der vor zehn Wochen veröffentlichten Vorgängerversion
+		10.0 mehr als 240 Git-Commits erhalten (überprüfte, getestete und genehmigte 
+		Quellcodeänderungen).
+
+		\vspace{0.2cm}
+
+		Obwohl Backend-Benutzer nicht viele offensichtliche Änderungen oder wichtige neue
+		Funktionen als solche sehen, erhielt TYPO3 Version 10.1 eine Reihe von Verbesserungen unter der Haube.
+
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% System Requirements
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Systemvoraussetzungen}
+
+	\begin{itemize}
+		\item PHP Version 7.2 or 7.3
+		\item PHP Einstellungen:
+
+			\begin{itemize}
+				\item \texttt{memory\_limit} >= 256M
+				\item \texttt{max\_execution\_time} >= 240s
+				\item \texttt{max\_input\_vars} >= 1500
+				\item Die Kompilierungsoption \texttt{-}\texttt{-disable-ipv6} darf \underline{nicht} benutzt werden
+			\end{itemize}
+
+		\item Die meisten von \textbf{Doctrine DBAL} unterstützten Datenbankserver arbeiten auch mit TYPO3.
+			Getestete DB-Engines sind zum Beispiel:
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.80\linewidth]{Introduction/logo-databases.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Development, Release and Maintenance Timeline
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Zeitplan für Entwicklung, Veröffentlichung und Instandhaltung}
+
+	\textbf{TYPO3 v10}
+
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{Introduction/typo3-v10-lifecycle.png}
+	\end{figure}
+
+	\textbf{Erweiterter Support}\newline
+	\smaller
+		Die \href{https://typo3.com}{TYPO3 GmbH} bietet weitere Supportmöglichkeiten
+		für TYPO3 v10 LTS auch nach dem 30. April 2023 für bis zu zwei weitere 
+		Jahre.
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 v10 Roadmap
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{TYPO3 v10 Roadmap}
+
+	Voraussichtliche Veröffentlichung und deren Hauptfokus:
+
+	\begin{itemize}
+
+		\item v10.0 \tabto{1.1cm}23/July/2019\tabto{3.4cm}Pave the way for exciting new concepts and APIs
+		\item
+			\begingroup
+				\color{typo3orange}
+				v10.1 \tabto{1.1cm}01/Oct/2019\tabto{3.4cm}Routing Improvements and Site Handling v2
+			\endgroup
+		\item v10.2 \tabto{1.1cm}03/Dec/2019\tabto{3.4cm}Fluid/Rendering Engine Improvements
+		\item v10.3 \tabto{1.1cm}04/Feb/2020\tabto{3.4cm}Feature Freeze
+		\item v10.4 \tabto{1.1cm}07/Apr/2020\tabto{3.4cm}LTS Release (Long-term Support)
+
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/article/typo3-v10-roadmap/}\newline
+		\url{https://typo3.org/article/typo3-v10-safe-and-sound/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Installation}
+
+	\begin{itemize}
+		\item Empfohlene \textit{klassische} Installationsschritte unter Linux/Mac OS X\newline
+			(DocumentRoot ist beispielsweise \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+$ cd /var/www/site
+$ wget --content-disposition get.typo3.org/10.1
+$ tar xzf typo3_src-10.1.0.tar.gz
+$ cd htdocs
+$ ln -s ../typo3_src-10.1.0 typo3_src
+$ ln -s typo3_src/index.php
+$ ln -s typo3_src/typo3
+$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolische Links unter Microsoft Windows:
+
+			\begin{itemize}
+				\item Unter Windows XP/2000 kann \texttt{junction} benutzt werden
+				\item Unter Windows Vista und Windows 7 oder höher kann \texttt{mklink} benutzt werden
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation using composer
+
+\begin{frame}[fragile]
+	\frametitle{Installation und Upgrade}
+	\framesubtitle{Installation mit \texttt{composer}}
+
+	\begin{itemize}
+		\item Installation mit \textit{composer} unter Linux, Mac OS X und Windows 10:
+
+			\begin{lstlisting}
+$ cd /var/www/site/
+$ composer create-project typo3/cms-base-distribution typo3v10 ^10.1
+			\end{lstlisting}
+
+		\item Alternativ eine benutzerdefinierte \texttt{composer.json} Datei erstellen und ausführen:
+
+			\begin{lstlisting}
+$ composer install
+			\end{lstlisting}
+
+			Weitere \texttt{composer.json} Beipsielsdateien können unter:\newline
+			\smaller
+				\href{https://composer.typo3.org}{https://composer.typo3.org} heruntergeladen werden.
+			\normalsize
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------

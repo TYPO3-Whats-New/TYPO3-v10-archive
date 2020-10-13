@@ -1,0 +1,212 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Italian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+
+\section{Funzioni deprecate/rimosse}
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+
+	\begin{center}\huge{Capitolo 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Funzioni deprecate/rimosse}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88854 | T3_THIS_LOCATION
+% Deprecation | 88862 | T3_RETURN_URL
+% Deprecation | 89033 | jumpToUrl
+% Deprecation | 88854 | jumpExt() of RecordListController
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Deprecazioni JavaScript (1)}
+
+	\begin{itemize}
+		\item Due variabili globali JavaScript sono state segnate come \textbf{deprecate}:
+
+			\begin{itemize}
+				\item \texttt{T3\_THIS\_LOCATION}
+				\item \texttt{T3\_RETURN\_URL}
+			\end{itemize}
+
+		\item La nota funzione JavaScript \texttt{jumpToUrl()} è stata segnata come \textbf{deprecata}.
+			Possibilità di migrazione:
+
+			\begin{itemize}
+				\item usa \texttt{window.location.href = '...';}
+				\item oppure usa un link nell'HTML come \texttt{<a href="...">link</a>}
+			\end{itemize}
+
+		\item La funzione JavaScript \texttt{jumpExt()} è stata segnata come \textbf{deprecata}.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89215 | jQuery.clearable
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Deprecazioni JavaScript (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Il plugin jQuery \texttt{jquery.clearable},
+			che fornisce un bottone per cancellare un campo di input, è stato segnato come \textbf{deprecato}.
+		\item Migrazione: usa il modulo \small\texttt{TYPO3/CMS/Backend/Input/Clearable}\normalsize e
+			il metodo \texttt{clearable()} su un HTMLInputElement nativo.
+
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/Input/Clearable'], function() {
+  const inputField = document.querySelector('#myinput');
+  if (inputField !== null) {
+    inputField.clearable();
+  }
+
+  const clear = Array.from(document.querySelectorAll('.t3js-clearable')).filter(inputElement => {
+    return !inputElement.classList.contains('t3js-datetimepicker');
+  });
+  clear.forEach(clearableField => clearableField.clearable());
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88839 | CLI lowlevel request handlers
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Gestore di comandi CLI}
+
+	\begin{itemize}
+		\item I comandi CLI vengono gestiti utilizzando la classe \texttt{CommandApplication}.
+		\item Questa classe è un wrapper attorno alla
+			\href{https://symfony.com/doc/current/components/console.html}{Symfony Console}.
+
+		\item La precedente interfaccia e la classe \texttt{CommandRequestHandler} sono state segnate come \textbf{deprecate}:
+
+			\begin{itemize}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						RequestHandlerInterface}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						CommandRequestHandler}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88850 | ContentObjectRenderer::sendNotifyEmail
+% Deprecation | 88787 | BackendUtility::editOnClick
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Varie}
+
+	\begin{itemize}
+		\item La funzionalità delle email non deve essere inclusa nella classe\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					ContentObject\textbackslash
+					ContentObjectRenderer}.\newline
+			\normalsize
+			Pertanto, il metodo \texttt{sendNotifyEmail()} è stato segnato come \textbf{deprecato} e sarà rimosso in TYPO3 v11.
+
+		\item Il metodo \texttt{editOnClick()} usato per generare target Javascript \texttt{onclick}
+			è stato segnato come \textbf{deprecato} nella seguente classe:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility}.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89127 | Cleanup RecordHistory handling
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Gestione della RecordHistory}
+
+	Modifiche fatte alla classe
+		\smaller
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				History\textbackslash
+				RecordHistory}:
+		\normalsize
+
+	\begin{itemize}
+
+		\item Visibilità delle proprietà \texttt{changeLog} e \texttt{lastHistoryEntry}
+			modificate in \texttt{protected} (e aggiunta una funzione pubblica getter).
+		\item Visibilità dei metodi \texttt{getHistoryEntry()} e \texttt{getHistoryData()}
+			modificate in \texttt{protected}.
+		\item I seguenti metodi sono stati segnati come \textbf{deprecati}:
+
+			\begin{itemize}\smaller
+				\item \texttt{createChangeLog()}
+				\item \texttt{shouldPerformRollback()}
+				\item \texttt{getElementData()}
+				\item \texttt{performRollback()}
+				\item \texttt{createMultipleDiff()}
+				\item \texttt{setLastHistoryEntry()}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89037 | Deprecated LocallangXmlParser
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{File XML per le lingue}
+
+	\begin{itemize}
+		\item Il formato XLIFF è utilizzato per i file delle lingue a partire da TYPO3 v4.6.
+		\item L'utilizzo dei file XML per le lingue sono segnati come \textbf{deprecati}
+			e generano un warning/error.
+		\item Questo comporta l'esecuzione del seguente parser XML:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Localization\textbackslash
+					Parser\textbackslash
+					LocallangXmlParser}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

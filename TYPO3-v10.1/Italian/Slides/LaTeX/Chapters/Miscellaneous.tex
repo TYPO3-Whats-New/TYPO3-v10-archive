@@ -1,0 +1,78 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Italian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+
+\section{Miscellaneous}
+\begin{frame}[fragile]
+	\frametitle{Varie}
+
+	\begin{center}\huge{Capitolo 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Varie}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 78488 | Add rel=”noopener noreferrer” to external links
+
+\begin{frame}[fragile]
+	\frametitle{Varie}
+	\framesubtitle{Strengthen Security}
+
+	\begin{itemize}
+		\item I link esterni generati da TypoLink, o i link che utilizzano \texttt{\_blank},
+			mostrano ora l'attributo \texttt{rel="noopener noreferrer"}.
+		\item Questo punta a rafforzare la sicurezza del sito TYPO3:
+
+			\begin{itemize}
+				\item "\textbf{noopener}" indica al browser di aprire il link senza concedere
+					al nuovo contesto di navigazione l'accesso al documento che lo ha aperto.
+				\item "\textbf{noreferrer}" impedisce al browser, durante la navigazione verso un'altra pagina,
+					di inviare l'indirizzo della pagina o  qualsiasi altro valore, come referrer tramite il
+					\texttt{Referer:} HTTP.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88742 | Import YAML files relative to the current YAML file
+
+\begin{frame}[fragile]
+	\frametitle{Varie}
+	\framesubtitle{Inclusione file YAML}
+
+    % decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item I file YAML possono essere inclusi da altri file YAML utilizzando la sintassi seguente:
+
+\begin{lstlisting}
+imports:
+  - { resource: "EXT:my_extension/Configuration/FooBar/Example.yaml" }
+
+another:
+  option: true
+\end{lstlisting}
+
+		\item Questo è stato esteso per importare risorse relative al file YAML corrente:
+
+\begin{lstlisting}
+imports:
+  - { resource: "subfolder/AnotherExample.yaml" }
+  - { resource: "../path/to/configuration/AnotherExample.yaml" }
+
+another:
+  option: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

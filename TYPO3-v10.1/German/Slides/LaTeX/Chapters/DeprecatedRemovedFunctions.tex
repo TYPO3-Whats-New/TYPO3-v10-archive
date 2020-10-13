@@ -1,0 +1,212 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (German Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+
+\section{Veraltete/Entfernte Funktionen}
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+
+	\begin{center}\huge{Kapitel 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Veraltete/Entfernte Funktionen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88854 | T3_THIS_LOCATION
+% Deprecation | 88862 | T3_RETURN_URL
+% Deprecation | 89033 | jumpToUrl
+% Deprecation | 88854 | jumpExt() of RecordListController
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Veraltetes JavaScript (1)}
+
+	\begin{itemize}
+		\item Zwei globale JavaScript-Variablen wurden als \textbf{veraltet} markiert:
+
+			\begin{itemize}
+				\item \texttt{T3\_THIS\_LOCATION}
+				\item \texttt{T3\_RETURN\_URL}
+			\end{itemize}
+
+		\item Die bekannte JavaScript-Funktion \texttt{jumpToUrl()} wurde als \textbf{veraltet} markiert.
+			Migrationsoptionen:
+
+			\begin{itemize}
+				\item verwenden Sie \texttt{window.location.href = '...';}
+				\item oder benutzen Sie einen Link in HTML wie zum Beispiel \texttt{<a href="...">link</a>}
+			\end{itemize}
+
+		\item Die JavaScript-Funktion \texttt{jumpExt()} wurde als \textbf{veraltet} markiert.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89215 | jQuery.clearable
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Veraltetes JavaScript (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Das jQuery Plugin \texttt{jquery.clearable}, das eine Schaltflächte zum Löschen eines
+			 Eingabefeldes bereitgestellt wurde, wurde als \textbf{veraltet} markiert.
+		\item Migration: verwenden Sie den Modul \small\texttt{TYPO3/CMS/Backend/Input/Clearable}\normalsize
+			und die Methode \texttt{clearable()} auf einem nativen HTMLInputElement.
+
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/Input/Clearable'], function() {
+  const inputField = document.querySelector('#myinput');
+  if (inputField !== null) {
+    inputField.clearable();
+  }
+
+  const clear = Array.from(document.querySelectorAll('.t3js-clearable')).filter(inputElement => {
+    return !inputElement.classList.contains('t3js-datetimepicker');
+  });
+  clear.forEach(clearableField => clearableField.clearable());
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88839 | CLI lowlevel request handlers
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{CLI Command Handler}
+
+	\begin{itemize}
+		\item CLI-Befehle werden mit der Klasse \texttt{CommandApplication} verarbeitet.
+		\item Diese Klasse ist ein Wrapper um die
+			\href{https://symfony.com/doc/current/components/console.html}{Symfony Konsole}.
+
+		\item Die zuvor verwendete Schnittstelle und die Klasse \texttt{CommandRequestHandler} wurden als \textbf{veraltet} markiert:
+
+			\begin{itemize}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						RequestHandlerInterface}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						CommandRequestHandler}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88850 | ContentObjectRenderer::sendNotifyEmail
+% Deprecation | 88787 | BackendUtility::editOnClick
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Sonstiges}
+
+	\begin{itemize}
+		\item Die Mail-Functionalität sollte nicht in der Klasse\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					ContentObject\textbackslash
+					ContentObjectRenderer} verwendet werden.\newline
+			\normalsize
+			Daher wurde die Methode \texttt{sendNotifyEmail()} als \textbf{veraltet} markiert und wird in der TYPO3 v11 entfernt werden.
+
+		\item Die Methode \texttt{editOnClick()}, die zum Generieren von JavaScript \texttt{onclick}-Zielen
+			verwendet wurde, wurde in der folgenden Klasse als \textbf{veraltet} markiert:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility}.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89127 | Cleanup RecordHistory handling
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{RecordHistory Handling}
+
+	Änderungen wurden an folgender Klasse vorgenommen:
+		\smaller
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				History\textbackslash
+				RecordHistory}:
+		\normalsize
+
+	\begin{itemize}
+
+		\item Die Sichtbarkeit der Eigenschaften \texttt{changeLog} und \texttt{lastHistoryEntry}
+			wurden auf \texttt{protected} geändert (und die Funktion public Getter wurde auch hinzugefügt).
+		\item Die Sichtbarkeit der Methoden \texttt{getHistoryEntry()} und \texttt{getHistoryData()}
+			wurde auf \texttt{protected} geändert.
+		\item Die folgenden Methoden wurden als \textbf{veraltet} makiert:
+
+			\begin{itemize}\smaller
+				\item \texttt{createChangeLog()}
+				\item \texttt{shouldPerformRollback()}
+				\item \texttt{getElementData()}
+				\item \texttt{performRollback()}
+				\item \texttt{createMultipleDiff()}
+				\item \texttt{setLastHistoryEntry()}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89037 | Deprecated LocallangXmlParser
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{XML-Sprachdateien}
+
+	\begin{itemize}
+		\item Das XLIFF-Format wird für Sprachdateien seit TYPO3 v4.6 verwendet.
+		\item Die Verwendung von XML-Sprachdateien wird nun als \textbf{veraltet}
+			markiert und löst eine Warnung/einen Fehler aus.
+		\item Dazu gehört auch die Ausführung des folgenden XML-Parameters:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Localization\textbackslash
+					Parser\textbackslash
+					LocallangXmlParser}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

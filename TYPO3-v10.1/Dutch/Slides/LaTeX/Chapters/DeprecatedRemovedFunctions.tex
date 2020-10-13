@@ -1,0 +1,212 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Dutch Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Dutch
+% ------------------------------------------------------------------------------
+
+\section{Verouderde/verwijderde functies}
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+
+	\begin{center}\huge{Hoofdstuk 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Verouderde/verwijderde functies}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88854 | T3_THIS_LOCATION
+% Deprecation | 88862 | T3_RETURN_URL
+% Deprecation | 89033 | jumpToUrl
+% Deprecation | 88854 | jumpExt() of RecordListController
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Verouderd in JavaScript (1)}
+
+	\begin{itemize}
+		\item Twee globale JavaScript-variabelen zjin als verouderd gemarkeerd.
+
+			\begin{itemize}
+				\item \texttt{T3\_THIS\_LOCATION}
+				\item \texttt{T3\_RETURN\_URL}
+			\end{itemize}
+
+		\item De bekende JavaScript functie \texttt{jumpToUrl()} is als \textbf{verouderd} gemarkeerd.
+			Migratiemogelijkheden:
+
+			\begin{itemize}
+				\item gebruik \texttt{window.location.href = '...';}
+				\item of gebruik een link in HTML zoals \texttt{<a href="...">link</a>}
+			\end{itemize}
+
+		\item De JavaScript functie \texttt{jumpExt()} is als \textbf{verouderd} gemarkeerd.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89215 | jQuery.clearable
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Verouderd in JavaScript (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De jQuery plug-in \texttt{jquery.clearable},
+			die een knop biedt om een invoerveld te legen is als \textbf{verouderd} gemarkeerd.
+		\item Migratie: gebruik module \small\texttt{TYPO3/CMS/Backend/Input/Clearable}\normalsize
+			en de functie \texttt{clearable()} op een gewoon HTMLInputElement.
+
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/Input/Clearable'], function() {
+  const inputField = document.querySelector('#myinput');
+  if (inputField !== null) {
+    inputField.clearable();
+  }
+
+  const clear = Array.from(document.querySelectorAll('.t3js-clearable')).filter(inputElement => {
+    return !inputElement.classList.contains('t3js-datetimepicker');
+  });
+  clear.forEach(clearableField => clearableField.clearable());
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88839 | CLI lowlevel request handlers
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{CLI Commando Handler}
+
+	\begin{itemize}
+		\item CLI commando's worden afgehandeld door de \texttt{CommandApplication} klasse.
+		\item Deze klasse is een omhulsel rond de
+			\href{https://symfony.com/doc/current/components/console.html}{Symfony Console}.
+
+		\item Het hiervoor gebruikte koppelvlak en de klasse \texttt{CommandRequestHandler} zijn als \textbf{verouderd} aangemerkt:
+
+			\begin{itemize}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						RequestHandlerInterface}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						CommandRequestHandler}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88850 | ContentObjectRenderer::sendNotifyEmail
+% Deprecation | 88787 | BackendUtility::editOnClick
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Diversen}
+
+	\begin{itemize}
+		\item E-mailfunctionaliteit hoort niet thuisin de klasse\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					ContentObject\textbackslash
+					ContentObjectRenderer}.\newline
+			\normalsize
+			Daarom is de functie \texttt{sendNotifyEmail()} als \textbf{verouderd} aangemerkt en zal worden verwijderd in TYPO3 v11.
+
+		\item De functie \texttt{editOnClick()} die gebruikt werd om JavaScript \texttt{onclick} doelen te maken
+			is als \textbf{verouderd} aangemerkt in de volgende klasse:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility}.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89127 | Cleanup RecordHistory handling
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Afhandeling historie van records}
+
+	Veranderingen in de klasse
+		\smaller
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				History\textbackslash
+				RecordHistory}:
+		\normalsize
+
+	\begin{itemize}
+
+		\item Zichtbaarheid van eigenschappen \texttt{changeLog} en \texttt{lastHistoryEntry}
+			gewijzigd in \texttt{protected} (en publieke getters toegevoegd).
+		\item Zichtbaarheid van functies \texttt{getHistoryEntry()} en \texttt{getHistoryData()}
+			gewijzigd in \texttt{protected}.
+		\item De volgende functies zijn aangemerkt als \textbf{verouderd}:
+
+			\begin{itemize}\smaller
+				\item \texttt{createChangeLog()}
+				\item \texttt{shouldPerformRollback()}
+				\item \texttt{getElementData()}
+				\item \texttt{performRollback()}
+				\item \texttt{createMultipleDiff()}
+				\item \texttt{setLastHistoryEntry()}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89037 | Deprecated LocallangXmlParser
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{XML Taalbestanden}
+
+	\begin{itemize}
+		\item Het XLIFF-formaat wordt gebruikt voor taalbestanden sinds TYPO3 v4.6.
+		\item Het gebruik van XML-taalbestanden is nu aangemerkt als \textbf{verouderd}
+			en geeft een waarschuwing/fout.
+		\item Hieronder valt het uitvoeren van de volgende XML-parser:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Localization\textbackslash
+					Parser\textbackslash
+					LocallangXmlParser}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

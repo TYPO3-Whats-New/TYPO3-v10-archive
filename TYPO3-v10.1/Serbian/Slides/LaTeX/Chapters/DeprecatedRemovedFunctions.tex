@@ -1,0 +1,212 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Zastarele/izbačene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele/izbačene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88854 | T3_THIS_LOCATION
+% Deprecation | 88862 | T3_RETURN_URL
+% Deprecation | 89033 | jumpToUrl
+% Deprecation | 88854 | jumpExt() of RecordListController
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{JavaScript zastarelosti (1)}
+
+	\begin{itemize}
+		\item Dve globalne JavaScript promenljive su označene kao \textbf{zastarele}:
+
+			\begin{itemize}
+				\item \texttt{T3\_THIS\_LOCATION}
+				\item \texttt{T3\_RETURN\_URL}
+			\end{itemize}
+
+		\item Dobro poznata JavaScript funkcija \texttt{jumpToUrl()} je označena kao \textbf{zastarela}.
+			Opcije za migraciju:
+
+			\begin{itemize}
+				\item koristite \texttt{window.location.href = '...';}
+				\item ili koristite link u HTML-u \texttt{<a href="...">link</a>}
+			\end{itemize}
+
+		\item JavaScript funkcija \texttt{jumpExt()} je označena kao \textbf{zastarela}.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89215 | jQuery.clearable
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{JavaScript zastarelosti (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item jQuery plagin \texttt{jquery.clearable}, koji omogućava dugme da se očisti
+			polje unosa, je označen kao \textbf{zastareo}.
+		\item Migracija: koristite modul \small\texttt{TYPO3/CMS/Backend/Input/Clearable}\normalsize 
+			i metod \texttt{clearable()} na HTMLInputElement.
+
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/Input/Clearable'], function() {
+  const inputField = document.querySelector('#myinput');
+  if (inputField !== null) {
+    inputField.clearable();
+  }
+
+  const clear = Array.from(document.querySelectorAll('.t3js-clearable')).filter(inputElement => {
+    return !inputElement.classList.contains('t3js-datetimepicker');
+  });
+  clear.forEach(clearableField => clearableField.clearable());
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88839 | CLI lowlevel request handlers
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Upravljač CLI komandama}
+
+	\begin{itemize}
+		\item CLI komande se upravljaju korišćenjem \texttt{CommandApplication} klase.
+		\item Ova klasa je omotač oko
+			\href{https://symfony.com/doc/current/components/console.html}{Symfony Console}.
+
+		\item Prethodno korišćeni interfejs i klasa \texttt{CommandRequestHandler} su označeni kao \textbf{zastareli}:
+
+			\begin{itemize}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						RequestHandlerInterface}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						CommandRequestHandler}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88850 | ContentObjectRenderer::sendNotifyEmail
+% Deprecation | 88787 | BackendUtility::editOnClick
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Razno}
+
+	\begin{itemize}
+		\item Funkcionalnosti za email ne smeju se uključivati u klasi\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					ContentObject\textbackslash
+					ContentObjectRenderer}.\newline
+			\normalsize
+			Zato, metod \texttt{sendNotifyEmail()} je označen kao \textbf{zastareo} i biće uklonjen u TYPO3 v11.
+
+		\item Metod \texttt{editOnClick()} korišćen da se generiše JavaScript \texttt{onclick}
+			je označen kao \textbf{zastareo} u sledećoj klasi:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility}.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89127 | Cleanup RecordHistory handling
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Upravljanje istorijom rekorda (RecordHistory)}
+
+	Izmene u klasi
+		\smaller
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				History\textbackslash
+				RecordHistory}:
+		\normalsize
+
+	\begin{itemize}
+
+		\item Vidljivost osobina \texttt{changeLog} i \texttt{lastHistoryEntry}
+			promenjena je na \texttt{protected} (i javna geter metoda je dodata).
+		\item Vidljivost metoda \texttt{getHistoryEntry()} i \texttt{getHistoryData()}
+			promenjena je na \texttt{protected}.
+		\item Sledeći metodi su označeni kao \textbf{zastareli}:
+
+			\begin{itemize}\smaller
+				\item \texttt{createChangeLog()}
+				\item \texttt{shouldPerformRollback()}
+				\item \texttt{getElementData()}
+				\item \texttt{performRollback()}
+				\item \texttt{createMultipleDiff()}
+				\item \texttt{setLastHistoryEntry()}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89037 | Deprecated LocallangXmlParser
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{XML jezički fajlovi}
+
+	\begin{itemize}
+		\item XLIFF je korišćen za jezičke fajlove od TYPO3 v4.6.
+		\item Korišćenje XML jezičkih fajlova je sada označeno kao \textbf{zastarelo}
+			 i izaziva upozorenje/grešku.
+		\item Ovo uključuje izvršavanje sledećeg XML parsera:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Localization\textbackslash
+					Parser\textbackslash
+					LocallangXmlParser}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

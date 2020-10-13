@@ -1,0 +1,78 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.1 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Razno}
+\begin{frame}[fragile]
+	\frametitle{Razno}
+
+	\begin{center}\huge{Poglavlje 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Razno}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 78488 | Add rel=”noopener noreferrer” to external links
+
+\begin{frame}[fragile]
+	\frametitle{Razno}
+	\framesubtitle{Pojačana sigurnost}
+
+	\begin{itemize}
+		\item Spoljni linkovi koji se generišu putem TypoLink-a, ili linkovi koji koriste \texttt{\_blank},
+			sada prikazuju atribut \texttt{rel="noopener noreferrer"}.
+		\item Ovo ima za cilj da ojača sigurnost TYPO3 sajta:
+
+			\begin{itemize}
+				\item "\textbf{noopener}" upućuje pretraživač da otvori link bez generisanja
+				 	novog konteksta pristupa sa dokumentom koji ga je otvorio.
+				\item "\textbf{noreferrer}" sprečava pretraživač, kada prelazi na novu stranicu,
+					da pošalje adresu stranice, ili bilo koju drugu vrednost, kao referentnu u
+					\texttt{Referer:} HTTP header.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88742 | Import YAML files relative to the current YAML file
+
+\begin{frame}[fragile]
+	\frametitle{Razno}
+	\framesubtitle{Uključivanje YAML fajlova}
+
+    % decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item YAML fajlovi se već mogu uključivati od strane drugih YAML fajlova korišćenjem sledeće sintakse:
+
+\begin{lstlisting}
+imports:
+  - { resource: "EXT:my_extension/Configuration/FooBar/Example.yaml" }
+
+another:
+  option: true
+\end{lstlisting}
+
+		\item Ovo je prošireno da mogu da se uvezu i resursi relativni u odnosu na trenutni YAML fajl:
+
+\begin{lstlisting}
+imports:
+  - { resource: "subfolder/AnotherExample.yaml" }
+  - { resource: "../path/to/configuration/AnotherExample.yaml" }
+
+another:
+  option: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
