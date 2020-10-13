@@ -1,0 +1,137 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Interfaccia utente di Backend}
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+
+	\begin{center}\huge{Capitolo 1:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Interfaccia utente di Backend}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 56213 | Allow sorting file list by file meta data title
+
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+	\framesubtitle{Ordinamento lista file}
+
+	I file possono essere ordinati, nell'elemento di contenuto "File Links", in base al titolo indicato dei metadati.
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{BackendUserInterface/56213-FilelistSorting.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 85569 | Show scheduler information in the system information toolbar
+
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+	\framesubtitle{Toolbar delle informazioni di sistema}
+
+	La toolbar delle informazioni di sistema mostra informazioni sullo scheduler TYPO3.
+
+	\begin{figure}
+		\includegraphics[width=0.50\linewidth]{BackendUserInterface/85569-SchedulerInfoInStatusBar.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86629 | Implement LinkHandler for telephone numbers
+
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+	\framesubtitle{Gestore dei link}
+
+	Un nuovo gestore dei link è stato aggiunto: consente agli utenti di backend di impostare link ai numeri di
+	    telefono utilizzando il protocollo \texttt{tel:}.
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{BackendUserInterface/86629-TelephoneNumberLinkHandler.png}
+	\end{figure}
+
+	\begin{figure}
+		\includegraphics[width=0.60\linewidth]{BackendUserInterface/86629-TelephoneNumberLinkHandler2.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87433 | Add changefreq and priority
+
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+	\framesubtitle{SEO Sitemap (1)}
+
+	\texttt{EXT:seo} ora supporta le frequenze di aggiornamento e le priorità per la Sitemap.
+	La proprietà di pagina (tab "SEO") ha due nuovi campi.
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{BackendUserInterface/87433-SeoAddChangefreqAndPriority.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87433 | Add changefreq and priority
+
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+	\framesubtitle{SEO Sitemap (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	Queste impostazioni possono essere definite anche in TypoScript mappandole con campi nel database
+
+	\begin{lstlisting}
+plugin.tx_seo {
+  config {
+    xmlSitemap {
+      sitemaps {
+        <unique key> {
+          provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+          config {
+            ...
+            changeFreqField = news_changefreq
+            priorityField = news_priority
+            ...
+          }
+        }
+      }
+    }
+  }
+}
+	\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84757 | Double click in structure tree changes label
+
+\begin{frame}[fragile]
+	\frametitle{Interfaccia utente di Backend}
+	\framesubtitle{Form}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	Le etichette degli elementi del form possono essere modificate con doppio click sul titolo, nell'albero della sua struttura.
+
+	\begin{figure}
+		\includegraphics[width=0.60\linewidth]{ChangesForIntegrators/84757-DoubleClickToChangeLabel.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

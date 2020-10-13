@@ -1,0 +1,208 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Einführung}
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+
+	\begin{center}\huge{Einführung}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Fakten}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - The Facts
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{TYPO3 Version 10.0 - Fakten}
+
+	\begin{itemize}
+		\item Veröffentlichungsdatum: 23. Juli 2019
+		\item Releasetyp: Sprint Release
+		\item Entwicklungszeit: cca. 6 Monate
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3-v10-0-banner.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - Executive Summary
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Zusammenfassung}
+
+	\small
+		TYPO3 v10.0 ist das erste Sprint Release auf dem Weg zur LTS
+		(langfristige Unterstützung) im Jahr 2020.
+
+		\vspace{0.2cm}
+
+		Da der Hauptfokus von Version 10.0 auf Bereinigungsaufgaben liegt, ist es nicht
+		verwunderlich, dass in dieser Version eine große Anzahl wichtiger Änderungen vorgenommen wurden.
+
+		\vspace{0.2cm}
+
+		Mit diesem Ansatz können wir in einem frühen Stadium der Entwicklung neue Bibliotheken, moderne 
+		Konzepte und optimierte APIs einführen um sicherzustellen, dass TYPO3 eines der besten 
+		Enterprise Content Management-Systeme auf dem Markt bleibt.
+
+		\vspace{0.2cm}
+
+		Eine Reihe spannender 
+		\href{https://typo3.org/community/teams/typo3-development/initiatives/}{Initiativen}
+		wurde ins Leben gerufen, um in einem bestimmten Bereich von TYPO3 langfristige Verbesserungen zu 
+		erzielen.
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% System Requirements
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Systemvoraussetzungen}
+
+	\begin{itemize}
+		\item PHP Version 7.2 oder 7.3
+		\item PHP Einstellungen:
+
+			\begin{itemize}
+				\item \texttt{memory\_limit} >= 256M
+				\item \texttt{max\_execution\_time} >= 240s
+				\item \texttt{max\_input\_vars} >= 1500
+				\item Die Option \texttt{-}\texttt{-disable-ipv6} darf \underline{nicht} genutzt werden
+			\end{itemize}
+
+		\item Die meisten von \textbf{Doctrine DBAL} unterstützten Datenbankserver arbeiten auch mit TYPO3.
+			Getestete DB-Engines sind zum Beispiel:
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.80\linewidth]{Introduction/logo-databases.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Development, Release and Maintenance Timeline
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Zeitplan für Entwicklung, Veröffentlichung und Instandhaltung}
+
+	\textbf{TYPO3 v10}
+
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{Introduction/typo3-v10-lifecycle.png}
+	\end{figure}
+
+	\textbf{Erweiterter Support}\newline
+	\smaller
+		Die \href{https://typo3.com}{TYPO3 GmbH} bietet weitere Supportmöglichkeiten für 
+		TYPO3 v10 LTS auch nach dem 30. April 2023 für bis zu zwei weitere
+		Jahre.
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 v10 Roadmap
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{TYPO3 v10 Roadmap}
+
+	Voraussichtliche Veröffentlichungen und deren Hauptfokus:
+
+	\begin{itemize}
+
+		\item
+			\begingroup
+				\color{typo3orange}
+				v10.0 \tabto{1.1cm}23/July/2019\tabto{3.4cm}Pave the way for exciting new concepts and APIs
+			\endgroup
+		\item v10.1 \tabto{1.1cm}01/Oct/2019\tabto{3.4cm}Routing Improvements and Site Handling v2
+		\item v10.2 \tabto{1.1cm}03/Dec/2019\tabto{3.4cm}Fluid/Rendering Engine Improvements
+		\item v10.3 \tabto{1.1cm}04/Feb/2020\tabto{3.4cm}Feature Freeze
+		\item v10.4 \tabto{1.1cm}07/Apr/2020\tabto{3.4cm}LTS Release 
+
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/article/typo3-v10-roadmap/}\newline
+		\url{https://typo3.org/article/typo3-v10-safe-and-sound/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation
+
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Installation}
+
+	\begin{itemize}
+		\item Empfohlene \textit{klassische} Installationsschritte unter Linux/Mac OS X\newline
+			(DocumentRoot ist beispielsweise \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+$ cd /var/www/site
+$ wget --content-disposition get.typo3.org/10.0
+$ tar xzf typo3_src-10.0.0.tar.gz
+$ cd htdocs
+$ ln -s ../typo3_src-10.0.0 typo3_src
+$ ln -s typo3_src/index.php
+$ ln -s typo3_src/typo3
+$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolische Links unter Microsoft Windows:
+
+			\begin{itemize}
+				\item Unter Windows XP/2000 kann \texttt{junction} benutzt werden.
+				\item Unter Windows Vista und Windows 7 oder höher kann \texttt{mklink} benutzt werden.
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation using composer
+
+\begin{frame}[fragile]
+	\frametitle{Installation und Upgrade}
+	\framesubtitle{Installation mit\texttt{composer}}
+
+	\begin{itemize}
+		\item Installation mit \textit{composer} unter Linux, Mac OS X und Windows 10:
+
+			\begin{lstlisting}
+$ cd /var/www/site/
+$ composer create-project typo3/cms-base-distribution typo3v10 ^10
+			\end{lstlisting}
+
+		\item Alternativ eine benutzerdefinierte \texttt{composer.json} Datei erstellen und ausführen:
+
+			\begin{lstlisting}
+$ composer install
+			\end{lstlisting}
+
+			Weitere \texttt{composer.json} Beispielsdateien können unter:\newline
+				\href{https://composer.typo3.org}{https://composer.typo3.org} heruntergeladen werden
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------

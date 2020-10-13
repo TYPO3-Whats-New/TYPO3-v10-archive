@@ -1,0 +1,295 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Modifiche per integratori e sviluppatori}
+\begin{frame}[fragile]
+	\frametitle{Modifiche per integratori e sviluppatori}
+
+	\begin{center}\huge{Capitolo 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Modifiche per integratori e sviluppatori}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 88376 | Removed obsolete pageNotFound_handling settings
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per integratori e sviluppatori}
+	\framesubtitle{Gestione pagina non trovata}
+
+	\begin{itemize}
+
+		\item Le seguenti impostazioni globali di TYPO3 sono state rimosse:
+
+			\begin{itemize}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling\_statheader']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling\_accessdeniedheader']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageUnavailable\_handling']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageUnavailable\_handling\_statheader']}}
+			\end{itemize}
+
+			\begin{itemize}\smaller
+				\item[\ding{228}] La gestione di sito introdotta in TYPO3 v9 ha sostituito queste impostazioni.
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 87980 | Page Is Being Generated Message Has Been Removed
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per integratori e sviluppatori}
+	\framesubtitle{Gestione pagina non trovata}
+
+	\begin{itemize}
+
+		\item Il messaggio "\textit{Page is being generated}" e la corrispondente risposta temporanea
+			HTTP 503 sono stati rimossi.
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.70\linewidth]{ChangesForIntegratorsAndDevelopers/87980-PageIsBeingGenerated.png}
+	\end{figure}
+
+	\begin{itemize}
+		\item Invece di fermare l'esecuzione in attesa del contenuto della pagina finale, le richieste simultanee
+		rimangono in attesa del rendering del contenuto della pagina reale.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 86862 | Default Layout of ext:fluid_styled_content does not use spaceless viewHelper anymore
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Fluid}
+
+	\begin{itemize}
+		\item La rimozione di spazi bianchi nel layout di default di \texttt{EXT:fluid\_styled\_content}
+			è stata causa di problemi saltuari; è stata quindi rimossa.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 80420 | Allow multiple recipients in email finisher
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per integratori e sviluppatori}
+	\framesubtitle{Form Framework: Destinatari multipli (1)}
+
+	\begin{itemize}
+		\item Le email inviate tramite \textit{EmailFinisher} possono ora avere destinatari multipli.
+
+		\item Sono state introdotte le seguenti nuovi opzioni:
+
+			\begin{itemize}
+				\item \texttt{recipients} (To)
+				\item \texttt{replyToRecipients} (Reply-To)
+				\item \texttt{carbonCopyRecipients} (CC)
+				\item \texttt{blindCarbonCopyRecipients} (BCC)
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 80420 | Allow multiple recipients in email finisher
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Form Framework: Destinatari multipli (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Questo cambiamento richiede una migrazione manuale delle opzioni singole nelle opzioni di elenco.
+
+		\smaller\textbf{Vecchia} configurazione del Finisher:\normalsize
+
+\begin{lstlisting}
+finishers:
+  -
+    identifier: EmailToReceiver
+    options:
+      recipientAddress: user@example.com
+      recipientName: 'Firstname Lastname'
+\end{lstlisting}
+
+		\smaller\textbf{Nuova} configurazione del Finisher:\normalsize
+
+\begin{lstlisting}
+finishers:
+  -
+    identifier: EmailToReceiver
+    options:
+      recipients:
+        user@example.com: 'Firstname Lastname'
+\end{lstlisting}
+
+		\item Vedi il \href{https://docs.typo3.org/c/typo3/cms-core/10.0/en-us/Changelog/master/Deprecation-80420-EmailFinisherSingleAddressOptions.html}{log dei cambiamenti}
+			per maggiori esempi di migrazione.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 87200 | EmailFinisher format option
+% Deprecation | 87200 | EmailFinisher FORMAT_* constants
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Form Framework: Plaintext/HTML (1)}
+
+	\begin{itemize}
+		\item Le email inviate da \textit{EmailFinisher} possono ora contenere testo in chiaro e/o in formato HTML.
+
+		\item Allo stesso tempo l'opzione \texttt{format} è stata segnata come deprecata e sarà rimossa in TYPO3 v11.
+
+		\item I valori esistenti verranno migrati automaticamente:
+
+			\begin{itemize}\smaller
+				\item \texttt{format:html} \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{true}}
+				\item \texttt{format:plaintext} \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{false}}
+				\item a missing "\texttt{format}" \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{true}}
+			\end{itemize}\normalsize
+
+		\item Gli sviluppatori dovrebbero essere consapevoli che le due costanti seguenti sono state segnate come deprecate:
+
+			\begin{itemize}\smaller
+				\item \texttt{EmailFinisher::FORMAT\_PLAINTEXT}
+				\item \texttt{EmailFinisher::FORMAT\_HTML}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84262 | Update EXT:felogin to Extbase (long-term goal, not completed yet)
+% Breaking | 88706 | Streamline felogin locallang keys
+% Breaking | 88129 | Renamed felogin flexform fields
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Frontend Login: Extbase}
+
+	\begin{itemize}
+		\item Il login dell'utente di frontend (\texttt{EXT:felogin}) è stato convertito in Extbase e Fluid.
+
+		\item Questo è un obiettivo a lungo termine, attualmente in corso di lavorazione.\newline
+			Vedi \href{https://forge.typo3.org/issues/84262}{forge \#84262} per maggiori dettagli.
+
+		\item Le seguenti modifiche sono state implementate in TYPO3 v10.0:
+
+		\begin{itemize}
+			\item[\ding{202}] Il prefisso "\texttt{ll\_}" è stato rimosso dalle chiavi locallang.
+
+				\begin{itemize}
+					\item[\ding{228}] Aggiorna il tuo TypoScript se hai sovrascritto le etichette in lingua rimuovendo il prefisso "\texttt{ll\_}" dalle tue chiavi.
+				\end{itemize}
+
+			\item[\ding{203}] La struttura del FlexForm esistente è stata rielaborata.
+
+				\begin{itemize}
+					\item[\ding{228}] Esegui la procedura guidata di aggiornamento per migrare i valori del FlexForm.
+				\end{itemize}
+
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 88583 | Database field sys_language.static_lang_isocode removed
+% Deprecation | 88567 | $GLOBALS['LOCAL_LANG']
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Lingue}
+
+	\begin{itemize}
+		\item Codici ISO:
+
+			\begin{itemize}
+				\item Il campo del database inutilizzato \texttt{static\_lang\_isocode} è stato rimosso.
+				\item L'estensione \texttt{EXT:static\_info\_tables} può essere installata per reimplementare la funzionalità se necessario.
+				\item Si consiglia agli sviluppatori di recuperare tutti i metadati di una lingua utilizzando il Configuratore di Sito e le API SiteLanguage API.
+			\end{itemize}
+
+		\item File di lingua:
+
+			\begin{itemize}
+				\item L'uso dell'array globale \texttt{\$GLOBALS[LOCAL\_LANG]} è stato deprecato.
+				\item Il secondo e terzo argomento di \texttt{LanguageService->includeLLFile()} sono stati deprecati.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 21638 | Introduced IP locking for IPv6
+% Breaking | 21638 | AbstractUserAuthentication::lockIP property removed
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Varie}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item  La funzionalità di blocco IP è stata estesa anche a IPv6
+			(frontend e backend).
+
+\begin{lstlisting}
+$GLOBALS['TYPO3_CONF_VARS']['FE']['lockIPv6'] = 2;
+$GLOBALS['TYPO3_CONF_VARS']['BE']['lockIPv6'] = 2;
+\end{lstlisting}
+
+		\item La proprietà pubblica \texttt{lockIP} nella seguente classe PHP è stata rimossa:\newline
+			\small
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Authentication\textbackslash
+					AbstractUserAuthentication}.
+			\normalsize
+
+		\item Opzioni di migrazione:
+
+			\begin{itemize}\smaller
+				\item[\ding{228}] Imposta \texttt{lockIP} e \texttt{lockIPv6} in \texttt{\$GLOBALS['TYPO3\_CONF\_VARS'][...]}.
+				\item[\ding{228}] Usa le nuovi API IP-Locker:
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Authentication\textbackslash
+						IpLocker}.
+			\end{itemize}\normalsize
+
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

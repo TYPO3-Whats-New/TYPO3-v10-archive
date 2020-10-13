@@ -1,0 +1,298 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - What's New (Serbian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Izmene za integratore i programere}
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+
+	\begin{center}\huge{Poglavlje 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Izmene za integratore i programere}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 88376 | Removed obsolete pageNotFound_handling settings
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Upravljanje stranicama koje nisu pronadjene}
+
+	\begin{itemize}
+
+		\item Sledeca globalna TYPO3 podešavanja su uklonjena:
+
+			\begin{itemize}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling\_statheader']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling\_accessdeniedheader']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageUnavailable\_handling']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageUnavailable\_handling\_statheader']}}
+			\end{itemize}
+
+			\begin{itemize}\smaller
+				\item[\ding{228}] Site Handling uveden u TYPO3 v9 menja ova podešavanja.
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 87980 | Page Is Being Generated Message Has Been Removed
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Upravljanje stranicama koje nisu pronadjene}
+
+	\begin{itemize}
+
+		\item Poruka "\textit{Page is being generated}" i odgovarajuci
+			HTTP 503 status su uklonjeni.
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.70\linewidth]{ChangesForIntegratorsAndDevelopers/87980-PageIsBeingGenerated.png}
+	\end{figure}
+
+	\begin{itemize}
+		\item Umesto ovoga, traženi zahtev sada ceka stvarni sadržaj da bude generisan.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 86862 | Default Layout of ext:fluid_styled_content does not use spaceless viewHelper anymore
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Fluid}
+
+	\begin{itemize}
+		\item Uklanjanje praznog prostora u podrazumevanom šablonu od \texttt{EXT:fluid\_styled\_content}
+			je uzrokovalo povremene probleme i izbaceno je.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 80420 | Allow multiple recipients in email finisher
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Form Framework: Višestruki primaoci (1)}
+
+	\begin{itemize}
+		\item Mejlovi poslati putem \textit{EmailFinisher} sada mogu imati višestruke primaoce.
+
+		\item Dodate su sledece nove opcije:
+
+			\begin{itemize}
+				\item \texttt{recipients} (To)
+				\item \texttt{replyToRecipients} (Reply-To)
+				\item \texttt{carbonCopyRecipients} (CC)
+				\item \texttt{blindCarbonCopyRecipients} (BCC)
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 80420 | Allow multiple recipients in email finisher
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Form Framework: Višestruki primaoci (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Ova izmena zahteva rucno ažuriranje sa opcija sa jednom vrednošcu na opcije sa
+		listom vrednosti.
+
+		\smaller\textbf{Stara konfiguracija} Finisher-a:\normalsize
+
+\begin{lstlisting}
+finishers:
+  -
+    identifier: EmailToReceiver
+    options:
+      recipientAddress: user@example.com
+      recipientName: 'Firstname Lastname'
+\end{lstlisting}
+
+		\smaller\textbf{Nova konfiguracija} Finisher-a:\normalsize
+
+\begin{lstlisting}
+finishers:
+  -
+    identifier: EmailToReceiver
+    options:
+      recipients:
+        user@example.com: 'Firstname Lastname'
+\end{lstlisting}
+
+		\item Pogledajte \href{https://docs.typo3.org/c/typo3/cms-core/10.0/en-us/Changelog/master/Deprecation-80420-EmailFinisherSingleAddressOptions.html}{change log}
+			za više primera migracija.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 87200 | EmailFinisher format option
+% Deprecation | 87200 | EmailFinisher FORMAT_* constants
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Form Framework: Plaintext/HTML (1)}
+
+	\begin{itemize}
+		\item Mejlovi poslati putem  \textit{EmailFinisher} sada mogu da sadrže i plaintext i/ili HTML delove.
+
+		\item U isto vreme \texttt{format} opcija je oznacena kao zastarela i bice uklonjena u TYPO3 v11.
+
+		\item Postojece vrednosti ce biti automatski migrirane:
+
+			\begin{itemize}\smaller
+				\item \texttt{format:html} \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{true}}
+				\item \texttt{format:plaintext} \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{false}}
+				\item a missing "\texttt{format}" \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{true}}
+			\end{itemize}\normalsize
+
+		\item Programeri treba da obrate pažnju na sledece dve konstante koje su oznacene
+		kao zastarele:
+
+			\begin{itemize}\smaller
+				\item \texttt{EmailFinisher::FORMAT\_PLAINTEXT}
+				\item \texttt{EmailFinisher::FORMAT\_HTML}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84262 | Update EXT:felogin to Extbase (long-term goal, not completed yet)
+% Breaking | 88706 | Streamline felogin locallang keys
+% Breaking | 88129 | Renamed felogin flexform fields
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Logovanje na korisnicki interfejs: Extbase}
+
+	\begin{itemize}
+		\item Logovanje na korisnicki interfejs (\texttt{EXT:felogin}) bice reprogramirano na Extbase i Fluid.
+
+		\item Ovo je dugorocni cilj i rad je trenutno u toku.\newline
+			Pogledajte \href{https://forge.typo3.org/issues/84262}{forge \#84262} za više detalja.
+
+		\item Sledece izmene su uvedene u TYPO3 v10.0:
+
+		\begin{itemize}
+			\item[\ding{202}] Prefiks "\texttt{ll\_}" je uklonjen iz kljuceva u locallang.
+
+				\begin{itemize}
+					\item[\ding{228}] Ažurirajte Vaš TypoScript ukoliko ste prepisivali language labele
+					i izbrišite prefiks "\texttt{ll\_}" iz Vaših kljuceva.
+				\end{itemize}
+
+			\item[\ding{203}] Struktura postojece FlexForm-e je prepravljena.
+
+				\begin{itemize}
+					\item[\ding{228}] Pokrenite Upgrade Wizard da migrirate vrednosti u FlexForm-i.
+				\end{itemize}
+
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 88583 | Database field sys_language.static_lang_isocode removed
+% Deprecation | 88567 | $GLOBALS['LOCAL_LANG']
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Jezici}
+
+	\begin{itemize}
+		\item ISO kodovi:
+
+			\begin{itemize}
+				\item Polje u bazi podataka \texttt{static\_lang\_isocode} koje se nije koristilo, sada je uklonjeno.
+				\item \texttt{EXT:static\_info\_tables} se može instalirati da nadomesti funkcionalnost ako je potrebno.
+				\item Programerima se savetuje da dohvate sve meta podatke za jezike korišcenjem
+				Site Configuration i SiteLanguage API.
+			\end{itemize}
+
+		\item Jezicki fajlovi:
+
+			\begin{itemize}
+				\item Korišcenje globalnog niza \texttt{\$GLOBALS[LOCAL\_LANG]} je zastarelo.
+				\item Drugi i treci argument od \texttt{LanguageService->includeLLFile()} su zastareli.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 21638 | Introduced IP locking for IPv6
+% Breaking | 21638 | AbstractUserAuthentication::lockIP property removed
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore i programere}
+	\framesubtitle{Razno}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Funkcionalnost zakljucavanja IP adresa je proširena da podržava i IPv6
+			(administratorski i korisnicki interfejs).
+
+\begin{lstlisting}
+$GLOBALS['TYPO3_CONF_VARS']['FE']['lockIPv6'] = 2;
+$GLOBALS['TYPO3_CONF_VARS']['BE']['lockIPv6'] = 2;
+\end{lstlisting}
+
+		\item Javna osobina \texttt{lockIP} u sledecoj PHP klasi je uklonjena:\newline
+			\small
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Authentication\textbackslash
+					AbstractUserAuthentication}.
+			\normalsize
+
+		\item Opcije za migraciju:
+
+			\begin{itemize}\smaller
+				\item[\ding{228}] Podesite \texttt{lockIP} i \texttt{lockIPv6} u \texttt{\$GLOBALS['TYPO3\_CONF\_VARS'][...]}.
+				\item[\ding{228}] Koristite novi IP-Locker API:
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Authentication\textbackslash
+						IpLocker}.
+			\end{itemize}\normalsize
+
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

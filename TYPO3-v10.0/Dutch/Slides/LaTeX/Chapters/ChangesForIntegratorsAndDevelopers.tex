@@ -1,0 +1,295 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.0 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Dutch
+% ------------------------------------------------------------------------------
+
+\section{Wijzigingen voor Integrators en Ontwikkelaars}
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators en Ontwikkelaars}
+
+	\begin{center}\huge{Hoofdstuk 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Wijzigingen voor Integrators en Ontwikkelaars}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 88376 | Removed obsolete pageNotFound_handling settings
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators en Ontwikkelaars}
+	\framesubtitle{Afhandeling pagina niet gevonden}
+
+	\begin{itemize}
+
+		\item De volgende globale TYPO3 instellingen zijn verwijderd:
+
+			\begin{itemize}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling\_statheader']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageNotFound\_handling\_accessdeniedheader']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageUnavailable\_handling']}}
+				\item {\fontsize{7}{8}\selectfont\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageUnavailable\_handling\_statheader']}}
+			\end{itemize}
+
+			\begin{itemize}\smaller
+				\item[\ding{228}] De site-afhandeling die in TYPO3 v9 is ge\"{\i}ntroduceerd vervangt deze opties.
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 87980 | Page Is Being Generated Message Has Been Removed
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators en Ontwikkelaars}
+	\framesubtitle{Afhandeling pagina niet gevonden}
+
+	\begin{itemize}
+
+		\item De melding "\textit{Page is being generated}" en het bijbehorende tijdelijke
+			HTTP 503 antwoord zijn verwijderd.
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.70\linewidth]{ChangesForIntegratorsAndDevelopers/87980-PageIsBeingGenerated.png}
+	\end{figure}
+
+	\begin{itemize}
+		\item In plaats van het uitstellen van het werk en te wachten op de uiteindelijk pagina-inhoud wachten
+			gelijktijdige requests nu gewoon tot de echte pagina-inhoud is gemaakt.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 86862 | Default Layout of ext:fluid_styled_content does not use spaceless viewHelper anymore
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Fluid}
+
+	\begin{itemize}
+		\item Het verwijderen van witruimte in het standaard lay-outbestand van \texttt{EXT:fluid\_styled\_content}
+			veroorzaakte af en toe problemen en is verwijderd.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 80420 | Allow multiple recipients in email finisher
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Formulier-raamwerk: Meerdere ontvangers (1)}
+
+	\begin{itemize}
+		\item Mails kunnen door de \textit{EmailFinisher} verstuurd worden aan meerdere ontvangers.
+
+		\item De volgende nieuwe opties zijn ge\"{\i}ntroduceerd:
+
+			\begin{itemize}
+				\item \texttt{recipients} (To)
+				\item \texttt{replyToRecipients} (Reply-To)
+				\item \texttt{carbonCopyRecipients} (CC)
+				\item \texttt{blindCarbonCopyRecipients} (BCC)
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 80420 | Allow multiple recipients in email finisher
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Formulier-raamwerk: Meerdere ontvangers (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Deze wijziging vergt het handmatig aanpassen van enkele waarden naar lijsten.
+
+		\smaller\textbf{Oude} Finisher configuratie:\normalsize
+
+\begin{lstlisting}
+finishers:
+  -
+    identifier: EmailToReceiver
+    options:
+      recipientAddress: user@example.com
+      recipientName: 'Voornaam Achternaam'
+\end{lstlisting}
+
+		\smaller\textbf{Nieuwe} Finisher configuratie:\normalsize
+
+\begin{lstlisting}
+finishers:
+  -
+    identifier: EmailToReceiver
+    options:
+      recipients:
+        user@example.com: 'Voornaam Achternaam'
+\end{lstlisting}
+
+		\item Zie \href{https://docs.typo3.org/c/typo3/cms-core/10.0/en-us/Changelog/master/Deprecation-80420-EmailFinisherSingleAddressOptions.html}{change log}
+			voor meer migratievoorbeelden.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 87200 | EmailFinisher format option
+% Deprecation | 87200 | EmailFinisher FORMAT_* constants
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Formulier-raamwerk: Platte tekst/HTML (1)}
+
+	\begin{itemize}
+		\item Mails verstuurd door de \textit{EmailFinisher} kunnen zowel een HTML en/of tekstdeel hebben.
+
+		\item Tegelijkertijd is de optie \texttt{format} aangemerkt als verouderd en zal verwijderd worden in TYPO3 v11.
+
+		\item Bestaande waarden zullen automatisch gemigreerd worden:
+
+			\begin{itemize}\smaller
+				\item \texttt{format:html} \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{true}}
+				\item \texttt{format:plaintext} \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{false}}
+				\item een ontbrekende "\texttt{format}" \tabto{3cm}\textrightarrow\hspace{0.1cm}\texttt{addHtmlPart:\textbf{true}}
+			\end{itemize}\normalsize
+
+		\item Ontwikkelaars moeten letten op de volgende twee constanten die als verouderd gemarkeerd zijn:
+
+			\begin{itemize}\smaller
+				\item \texttt{EmailFinisher::FORMAT\_PLAINTEXT}
+				\item \texttt{EmailFinisher::FORMAT\_HTML}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84262 | Update EXT:felogin to Extbase (long-term goal, not completed yet)
+% Breaking | 88706 | Streamline felogin locallang keys
+% Breaking | 88129 | Renamed felogin flexform fields
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Frontend-aanmelding: Extbase}
+
+	\begin{itemize}
+		\item De aanmelding voor frontend-gebruikers (\texttt{EXT:felogin}) zal omgezet worden naar Extbase/Fluid.
+
+		\item Dit is een langeretermijndoel, momenteel werk in uitvoering.\newline
+			Zie \href{https://forge.typo3.org/issues/84262}{forge \#84262} voor meer details.
+
+		\item De volgende wijzigingen zijn ge\"{\i}mplementeerd in TYPO3 v10.0:
+
+		\begin{itemize}
+			\item[\ding{202}] Prefix "\texttt{ll\_}" is verwijderd van locallang-sleutels.
+
+				\begin{itemize}
+					\item[\ding{228}] Werk TypoScript bij als er taallabels zijn overschreven en verwijder de prefix "\texttt{ll\_}".
+				\end{itemize}
+
+			\item[\ding{203}] Bestaande FlexForm structuren zijn bijgewerkt.
+
+				\begin{itemize}
+					\item[\ding{228}] Voer de Upgrade-assistent uit om de FLexForm-waarden te migreren.
+				\end{itemize}
+
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 88583 | Database field sys_language.static_lang_isocode removed
+% Deprecation | 88567 | $GLOBALS['LOCAL_LANG']
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Talen}
+
+	\begin{itemize}
+		\item ISO Codes:
+
+			\begin{itemize}
+				\item Het ongebruikte database-veld \texttt{static\_lang\_isocode} is verwijderd.
+				\item \texttt{EXT:static\_info\_tables} kan worden ge\"{\i}nstalleerd om de functionaliteit te herintroduceren.
+				\item Ontwikkelaars wordt aangeraden alle metadata van een taal uit de Site Configuration en de SiteLanguage API te halen.
+			\end{itemize}
+
+		\item Taalbestanden:
+
+			\begin{itemize}
+				\item Gebruik van de globale array \texttt{\$GLOBALS[LOCAL\_LANG]} is als verouderd aangemerkt.
+				\item Het 2e en 3e argument van \texttt{LanguageService->includeLLFile()} is als verouderd aangemerkt.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 21638 | Introduced IP locking for IPv6
+% Breaking | 21638 | AbstractUserAuthentication::lockIP property removed
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Diversen}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De functie voor het vastzetten op IP is uitgebreid om ook IPv6 te ondersteunen
+			(frontend en backend).
+
+\begin{lstlisting}
+$GLOBALS['TYPO3_CONF_VARS']['FE']['lockIPv6'] = 2;
+$GLOBALS['TYPO3_CONF_VARS']['BE']['lockIPv6'] = 2;
+\end{lstlisting}
+
+		\item De publieke eigenschap \texttt{lockIP} in de volgende PHP-klasse is verwijderd:\newline
+			\small
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Authentication\textbackslash
+					AbstractUserAuthentication}.
+			\normalsize
+
+		\item Migratiemogelijkheden:
+
+			\begin{itemize}\smaller
+				\item[\ding{228}] Stel \texttt{lockIP} en \texttt{lockIPv6} in binnen \texttt{\$GLOBALS['TYPO3\_CONF\_VARS'][...]}.
+				\item[\ding{228}] Gebruik de nieuwe IP-Locker API:
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Authentication\textbackslash
+						IpLocker}.
+			\end{itemize}\normalsize
+
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
