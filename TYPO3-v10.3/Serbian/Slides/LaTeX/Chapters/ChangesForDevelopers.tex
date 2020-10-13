@@ -1,0 +1,424 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.3 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Izmene za programere}
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Izmene za programere}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90333 | Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Dashboard (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Programeri mogu da naprave prilagodjene vidžete za dashboard proširenjem jednog od sledećih \textit{abstraktnih} vidžeta:
+
+			\begin{itemize}
+				\item \texttt{AbstractWidget}\newline
+					\small
+						Osnovna abstraktna verzija koja se može koristit za početak prostijih vidžeta.
+					\normalsize
+				\item \texttt{AbstractRssWidget}\newline
+					\small
+						Abstraktna verzija za kreiranje vidžeta za prikazivanje RSS feed-a.
+					\normalsize
+				\item \texttt{AbstractListWidget}\newline
+					\small
+						Abstraktna verzija za kreiranje vidžeta za prikazivanje liste stavki.
+					\normalsize
+				\item \texttt{AbstractCtaButtonWidget}\newline
+					\small
+						Abstraktna verzija za kreiranje vidžeta za prikazivanje "call-to-action" dugmeta.
+					\normalsize
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90333 | Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Dashboard (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Registrujte Vaše vidžete u sledećem fajlu Vašeg proširenja:\newline
+			\texttt{EXT:my\_extension/Configuration/Services.yaml}
+
+		\item Opcija 1: identifikator vidžeta kao atribut
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+Vendor\MyExtension\Widgets\MyFirstWidget:
+  tags:
+    - name: dashboard.widget
+      identifier: widget-identifier-1
+      widgetGroups: 'general'
+\end{lstlisting}
+
+		\item Opcija 2: prilagodjeno ime servisa omogućuje da više identifikatora vidžeta koriste istu klasu
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+widget.identifier:
+  class: Vendor\MyExtension\Widgets\MySecondWidget
+  tags:
+    - name: dashboard.widget
+      identifier: widget-identifier-2
+      widgetGroups: 'general, typo3'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90333 | Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Dashboard (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Svaki vidžet je vezan za jednu ili više vidžet grupa.
+		\item Ove grupe se vide u modalu prilikom dodavanja novog vidžeta na dashboard.
+		\item Programeri mogu da konfigurišu prilagodjene grupe vidžeta kreiranjem fajla\newline
+			\smaller
+				\texttt{EXT:my\_extension/Configuration/Backend/DashboardWidgetGroups.php}
+			\normalsize
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+return [
+  'widgetGroup-exampleGroup' => [
+    'title' => 'LLL:EXT:my_extension/Resources/Private/Language/locallang.xlf:widget_group_name',
+  ],
+];
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89870 | New PSR-14 Events for Extbase-related signals
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Extbase i Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sledeći PSR-14 dogadjaji su dodati za signale vezane za Extbase:
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+TYPO3\CMS\Extbase\Event\Mvc\AfterRequestDispatchedEvent
+TYPO3\CMS\Extbase\Event\Mvc\BeforeActionCallEvent
+TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent
+TYPO3\CMS\Extbase\Event\Persistence\ModifyQueryBeforeFetchingObjectDataEvent
+TYPO3\CMS\Extbase\Event\Persistence\ModifyResultAfterFetchingObjectDataEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityAddedToPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityFinalizedAfterPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityUpdatedInPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityRemovedFromPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent
+\end{lstlisting}
+
+		\item Postojeći signali su zamenjeni i ne trebju se više koristiti.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89644 | Add optional argument fields to editRecord ViewHelpers
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{ViewHelper \texttt{editRecord}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Opcioni argument \texttt{fields} je dodat u
+			\texttt{uri.editRecord} i \texttt{link.editRecord} ViewHelper-e.
+		\item Ukoliko je postavljen, FormEngine kreira formu koja može da menja samo dato polje/polja u bazi podataka.
+		\item Sledeći primer kreira link za menjanje \texttt{tt\_content.bodytext} polja od rekorda sa UID 42.
+
+\begin{lstlisting}
+<be:link.editRecord uid="42" table="tt_content" fields="bodytext" returnUrl="foo/bar">
+  Edit record
+</be:link.editRecord>
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | xxxxx | Introduce AssetCollector
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{AssetCollector}
+
+	\begin{itemize}
+		\item Početni koraci integracije AssetCollector-a su implementirani.
+		\item Ovaj koncept omogućuje programerima da dodaju prilagodjen CSS/JS kod (inline ili external)
+			više puta, ali ga TYPO3 ispisuje samo jednom.
+		\item U ove svrhe, dodata su dva nova Fluid ViewHelper-a:
+			\begin{itemize}
+				\item \texttt{<f:css>}
+				\item \texttt{<f:script>}
+			\end{itemize}
+		\item Dugoročno, AssetCollector  treba ra zameni razne TypoScript opcije koje su sada konfuzne.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86614 | Add PSR-14 event to control hreflang tags to be rendered
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Izmena \texttt{hreflang} taga}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Od sada je moguće izmeniti \texttt{hreflang} tagove pre njihovog renderanja.
+		\item Programeri ovo mogu da postignu registrovanjem slušaoca dogadjaja za sledeći dogadjaj:\newline
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					Event\textbackslash
+					ModifyHrefLangTagsEvent}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88818 | Introduce events to modify CKEditor configuration
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Menjanje konfiguracije CKEditor-a}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sledeći dogadjaji zasnovani na PSR-14 su dodati da omoguće izmenu konfiguracije CKEditor-a:
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+TYPO3\CMS\RteCKEditor\Form\Element\Event\AfterGetExternalPluginsEvent
+TYPO3\CMS\RteCKEditor\Form\Element\Event\BeforeGetExternalPluginsEvent
+TYPO3\CMS\RteCKEditor\Form\Element\Event\AfterPrepareConfigurationForEditorEvent
+TYPO3\CMS\RteCKEditor\Form\Element\Event\BeforePrepareConfigurationForEditorEvent
+\end{lstlisting}
+
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-88818-IntroduceEventsToModifyCKEditorConfiguration.html}{change log}
+			za primer.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90265 | Show dispatched Events in Admin Panel
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{PSR-14 dogadjaji u Admin PANELU}
+
+	\begin{itemize}
+		\item Admin Panel prikazuje sve PSR-14 dogjadjaje koji su trigerovani u trenutnom zahtevu.
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.85\linewidth]{ChangesForDevelopers/90265-ShowDispatchedEventsInAdminPanel.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89738 | API for AJAX Requests
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{API za AJAX zahteve}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \textbf{Fetch API} je implementiran za AJAX zahteve, sa svrhom da smanji zavisnost TYPO3 od jQuery.
+		\item API nudi generičke definicije objekata zahteva i odgovora
+			(kao i ostale stvari koje su uključene u mrežne zahteve).
+		\item Podržano je od strane svih modernih pretraživača, za više detalja pogledajte
+			\href{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API}{grafik kompatibilnosti}.
+		\item TYPO3 jezgro već sada koristi novi API u Install Tool, FormEngine i kontekstualnim menijima.
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-89738-ApiForAjaxRequests.html}{change log}
+			za primere kako da koristite Fetch API.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89650 | Allow line breaks in TCA descriptions
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{TCA polja opisa}
+
+	\begin{itemize}
+		\item Polje opisa u TCA od sada može da ima prelomljene linije teksta,
+			ovo za rezultat ima bolju čitljivost dugačkih tekstova.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 90020 | Legacy BasicFileUtility and ExtendedFileUtility classes marked as internal
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Klase \texttt{BasicFileUtility} i \texttt{ExtendedFileUtility}}
+
+	\begin{itemize}
+		\item Sledeće dve klase su označene kao \textbf{unutrašnje}
+			i više se ne trebaju koristiti:
+
+			\begin{itemize}\small
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					File\textbackslash
+					BasicFileUtility}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					File\textbackslash
+					ExtendedFileUtility}
+			\end{itemize}
+
+		\item Programeri umesto njih treba da koriste \texttt{ResourceStorage}
+			i \texttt{ResourceFactory}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89139 | Add dependency injection support for console commands
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Komande u konzoli: podrška za Symfony DI}
+
+	\begin{itemize}
+		\item Zavisnosti u komandama se sada mogu dodavati preko konstruktora ili nekom drugom tehnikom dodavanja.
+		\item Dodajte tag \texttt{console.command} komand klasama.
+		\item Koristite atribut taga \texttt{command} da postavite ime komande.
+		\item Opcioni atribut taga \texttt{schedulable} se može postaviti na \texttt{false}
+			da bi se komanda ignorisala u TYPO3 scheduler-u.
+
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-89139-AddDependencyInjectionSupportForConsoleCommands.html}{change log}
+			za primer.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90168 | Introduce Modal Actions
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Akciona dugmad u modalima}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Modali sada podržavaju akcionu dugmad.
+		\item Kao alternativa na postojeći \texttt{trigger}, može se koristiti \texttt{action}.
+		\item Na primer:
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+Modal.confirm('Header', 'Some content', Severity.error, [
+  {
+    text: 'Based on trigger()',
+    trigger: function () {
+      console.log('Vintage!');
+    }
+  },
+  {
+    text: 'Based on action()',
+    action: new DeferredAction(() => {
+      return new AjaxRequest('/any/endpoint').post({});
+    })
+  }
+]);
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90471 | JavaScript Event API
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{JavaScript API za dogadjaje}
+
+	\begin{itemize}
+		\item Novi JavaScript API za dogadjaje omogućuje programerima da imaju stabilan interfejs za slušanje dogadjaja.
+		\item API se brine za česte probleme kao sto je delegiranje dogadjaja i čisto odvezivanje dogadjaja.
+		\item Svaka \textit{strategija dogadjaja} nudi dva načina da se slušalac veže za dogadjaj.
+		\item API za dogadjaje nudi više strategija da se upravlja slušaocima dogadjaja.
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-90471-JavaScriptEventAPI.html}{change log}
+			za primere i više detalja.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

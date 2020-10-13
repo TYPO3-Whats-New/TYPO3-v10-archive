@@ -1,0 +1,252 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.3 - What's New (Italian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+
+\section{Funzioni deprecate/rimosse}
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+
+	\begin{center}\huge{Capitolo 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Funzioni deprecate/rimosse}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89463 | Deprecate switchable controller actions
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Switchable Controller Actions}
+
+	\begin{itemize}
+		\item "Switchable Controller Actions" (SCA) è stato contrassegnato come \textbf{deprecato}.
+		\item SCA veniva utilizzato per sovrascrivere il set consentito di controller e azioni mediante TypoScript o Flexforms.
+		\item L'uso dello stesso plug-in come punto di ingresso per molte funzionalità diverse contraddice l'idea di un plug-in con uno scopo specifico.
+		\item I plugin che utilizzano SCA devono essere suddivisi in più plugin diversi.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90007 | Global constants TYPO3_version and TYPO3_branch
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Costanti globali}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Le seguenti due costanti globali sono state contrassegnate come \textbf{deprecate}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\_version}
+				\item \texttt{TYPO3\_branch}
+			\end{itemize}
+
+		\item Al suo posto va usata la seguente nuova classe PHP:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Information\textbackslash
+					Typo3Version}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89673 | Deprecate Extbases WebRequest and WebResponse
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Extbase: \texttt{WebRequest}/\texttt{WebResponse}}
+
+	\begin{itemize}
+		\item Le seguenti due classi Extbase sono state contrassegnate come \textbf{deprecate}:
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Request}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Response}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90258 | Simplified RTE Parser API
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Simplified RTE Parser API}
+
+	\begin{itemize}
+		\item La classe PHP \texttt{RteHtmlParser} presenta ora un'API semplificata.
+		\item Di conseguenza, i seguenti due metodi sono stati contrassegnati come \textbf{deprecati}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->init()}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->RTE\_transform()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89139 | Console Commands configuration migrated to Symfony service tags
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{Configurazione comandi della console}
+
+	\begin{itemize}
+		\item Poiché la configurazione dei comandi della console è stata migrata nei tag di servizio di Symfony,
+			il file di configurazione dei comandi della console  \texttt{Configuration/Commands.php}
+			è stato contrassegnato come \textbf{deprecato}.
+		\item Utilizzare invece il tag del servizio di iniezione delle dipendenze \texttt{console.command}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89672 | transOrigPointerField is not longer allowed to be excluded
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{TCA: \texttt{transOrigPointerField}}
+
+	\begin{itemize}
+		\item L'esclusione della seguente opzione TCA ha portato a dati incoerenti archiviati nel database in determinate circostanze:
+			\small
+				\texttt{\$GLOBALS['TCA'][\$table]['ctrl']['transOrigPointerField']}
+			\normalsize
+
+		\item Pertanto, questa opzione non può più essere esclusa.
+		\item Una procedura guidata di migrazione rimuove l'opzione dal TCA e aggiunge un messaggio di deprecazione al log
+		    delle deprecazioni nel caso in cui il codice debba essere aggiornato.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90421 | DocumentTemplate
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{DocumentTemplate}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Le seguenti classi sono state contrassegnate come \textbf{deprecate}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Template\textbackslash
+					DocumentTemplate}
+			\end{itemize}
+
+		\item È stato utilizzato come base per il rendering di moduli backend o output basato su HTML nel backend TYPO3.
+		\item A partire da TYPO3 v7, è invece necessario utilizzare la nuova API tramite ModuleTemplate.
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+...
+$moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+$content = $this->getHtmlContentFromMyModule();
+$moduleTemplate->setTitle('My module');
+$moduleTemplate->setContent($content);
+return new HtmlResponse($moduleTemplate->renderContent());
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 85613 | Introduce simple way to register category fields
+%
+%\begin{frame}[fragile]
+%	\frametitle{Deprecated/Removed Functions}
+%	\framesubtitle{CategoryRegistry API}
+%
+%	\begin{itemize}
+%		\item The following class has been marked as \textbf{deprecated}:
+%
+%			\begin{itemize}
+%				\item \texttt{TYPO3\textbackslash
+%					CMS\textbackslash
+%					Core\textbackslash
+%					Category\textbackslash
+%					CategoryRegistry}
+%			\end{itemize}
+%
+%		\item The following method has been marked as \textbf{deprecated}:
+%
+%			\begin{itemize}
+%				\item \texttt{ExtgensionManagementUtility::makeCategorizable()}
+%			\end{itemize}
+%
+%		\item Category fields can easily by registered by adding TCA configuration.
+%
+%	\end{itemize}
+%
+%\end{frame}
+%
+% ------------------------------------------------------------------------------
+% Deprecation | 90390 | Deprecate BrokenLinkRepository::getNumberOfBrokenLinks() in linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Funzioni deprecate/rimosse}
+	\framesubtitle{LinkValidator}
+
+	\begin{itemize}
+		\item Il metodo seguente è stato segnato come \textbf{deprecato}:
+		\newline\newline
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Linkvalidator\textbackslash
+					Repository\textbackslash
+					BrokenLinkRepository}\newline
+				\texttt{->getNumberOfBrokenLinks()}\normalsize\newline
+
+		\item Utilizzare al suo posto il seguente metodo nella stessa classe:\newline
+			\small\texttt{BrokenLinkRepository::isLinkTargetBrokenLink()}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------

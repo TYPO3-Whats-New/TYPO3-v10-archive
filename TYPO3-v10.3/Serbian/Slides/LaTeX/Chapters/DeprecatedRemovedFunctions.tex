@@ -1,0 +1,254 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.3 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Zastarele/izbačene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele/izbačene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89463 | Deprecate switchable controller actions
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Switchable Controller Actions}
+
+	\begin{itemize}
+		\item "Switchable Controller Actions" (SCA) su označene kao \textbf{zastarele}.
+		\item SCA su korišćene da se prepiše dozvoljen set kontrolera i akcija korišćenjem TypoScript-a ili Flexform-i.
+		\item Korišćenje jednog plagina kao ulazne tačke za više funkcionalnosti je u kontradikciji sa idejom da svaki plagin služi samo za jednu svrhu.
+		\item Plaginove koji koriste SCA treba podeliti u više plaginova.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90007 | Global constants TYPO3_version and TYPO3_branch
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Globalne konstante}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Sledeće dve globalne konstante su označene kao \textbf{zastarele}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\_version}
+				\item \texttt{TYPO3\_branch}
+			\end{itemize}
+
+		\item Umesto njih treba koristiti sledeću PHP klasu:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Information\textbackslash
+					Typo3Version}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89673 | Deprecate Extbases WebRequest and WebResponse
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Extbase: \texttt{WebRequest}/\texttt{WebResponse}}
+
+	\begin{itemize}
+		\item Sledeće dve Extbase klase su označene kao \textbf{zastarele}:
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Request}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Response}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90258 | Simplified RTE Parser API
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Uprošćen API za parsiranje RTE}
+
+	\begin{itemize}
+		\item PHP klasa \texttt{RteHtmlParser} sada poseduje jednostavniji API.
+		\item Kao posledica ovoga, sledeća dva metoda su označena kao \textbf{zastarela}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->init()}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->RTE\_transform()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89139 | Console Commands configuration migrated to Symfony service tags
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Konfiguracija konzolnih komandi}
+
+	\begin{itemize}
+		\item Pošto je konfiguracija konzolnih komandi implementirana kroz servisne tagove iz Symfony-ja,
+			fajl \texttt{Configuration/Commands.php} za konfiguraciju konzolnih komandi je označen kao
+			\textbf{zastareo}.
+		\item Kao zamenu koristiti DI servisni tag \texttt{console.command}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89672 | transOrigPointerField is not longer allowed to be excluded
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{TCA: \texttt{transOrigPointerField}}
+
+	\begin{itemize}
+		\item Izostavljanje polja sa sledećim TCA opcijama dovodi do nekonzistentnih podataka
+			snimljenih u bazu podataka pod odredjenim okolnostima:
+			\small
+				\texttt{\$GLOBALS['TCA'][\$table]['ctrl']['transOrigPointerField']}
+			\normalsize
+
+		\item Stoga, polje sa ovom opcijom ne može se više izostavljati.
+		\item Čarobnjak za migraciju uklanja opciju za izostavljanje iz TCA i dodaje poruku o zastarelosti
+			u deprecation log u slučaju da kod treba da se izmeni.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90421 | DocumentTemplate
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{DocumentTemplate}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sledeća klasa je označena kao \textbf{zastarela}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Template\textbackslash
+					DocumentTemplate}
+			\end{itemize}
+
+		\item Koristila se za renderanje modula administratorskog interfejsa
+			ili ispisivanje sadržaja zasnovanog na HTML-u u TYPO3 administratorskom interfejsu.
+		\item Od TYPO3 v7 se koristi novi ModuleTemplate API.
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+...
+$moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+$content = $this->getHtmlContentFromMyModule();
+$moduleTemplate->setTitle('My module');
+$moduleTemplate->setContent($content);
+return new HtmlResponse($moduleTemplate->renderContent());
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 85613 | Introduce simple way to register category fields
+%
+%\begin{frame}[fragile]
+%	\frametitle{Zastarele/izbačene funkcije}
+%	\framesubtitle{CategoryRegistry API}
+%
+%	\begin{itemize}
+%		\item The following class has been marked as \textbf{deprecated}:
+%
+%			\begin{itemize}
+%				\item \texttt{TYPO3\textbackslash
+%					CMS\textbackslash
+%					Core\textbackslash
+%					Category\textbackslash
+%					CategoryRegistry}
+%			\end{itemize}
+%
+%		\item The following method has been marked as \textbf{deprecated}:
+%
+%			\begin{itemize}
+%				\item \texttt{ExtgensionManagementUtility::makeCategorizable()}
+%			\end{itemize}
+%
+%		\item Category fields can easily by registered by adding TCA configuration.
+%
+%	\end{itemize}
+%
+%\end{frame}
+%
+% ------------------------------------------------------------------------------
+% Deprecation | 90390 | Deprecate BrokenLinkRepository::getNumberOfBrokenLinks() in linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{LinkValidator}
+
+	\begin{itemize}
+		\item Sledeći metod je označen kao \textbf{zastareo}:
+		\newline\newline
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Linkvalidator\textbackslash
+					Repository\textbackslash
+					BrokenLinkRepository}\newline
+				\texttt{->getNumberOfBrokenLinks()}\normalsize\newline
+
+		\item Kao zamenu koristiti sledeći metod u istoj klasi:\newline
+			\small\texttt{BrokenLinkRepository::isLinkTargetBrokenLink()}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------

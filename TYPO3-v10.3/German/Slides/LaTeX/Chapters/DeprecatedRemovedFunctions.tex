@@ -1,0 +1,252 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.3 - What's New (German Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+
+\section{Veraltete/entfernte Funktionen}
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+
+	\begin{center}\huge{Kapitel 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Veraltete/entfernte Funktionen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89463 | Deprecate switchable controller actions
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{Umschaltbare Controller-Aktionen}
+
+	\begin{itemize}
+		\item "Switchable Controller Actions" (SCA) wurden als \textbf{veraltet} markiert.
+		\item SCA werden verwendet um den zulässigen Satz von Controllern und Aktionen mit TypoScript oder Flexforms zu überschreiben.
+		\item Die Verwendung desselben Plugins als Einstiegspunkt für verschiedene Funktionalitäten widerspricht der Idee eines Plugins, das einem bestimmten Zweck dient.
+		\item Plugins, die SCA verwenden, sollten in mehrere verschiedene Plugins aufgeteilt werden.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90007 | Global constants TYPO3_version and TYPO3_branch
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{Globale Konstanten}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Die folgenden beiden globalen Konstanten wurden als \textbf{veraltet} markiert:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\_version}
+				\item \texttt{TYPO3\_branch}
+			\end{itemize}
+
+		\item Folgende neue PHP-Klasse sollte stattdessen verwendet werden:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Information\textbackslash
+					Typo3Version}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89673 | Deprecate Extbases WebRequest and WebResponse
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{Extbase: \texttt{WebRequest}/\texttt{WebResponse}}
+
+	\begin{itemize}
+		\item Die folgenden beiden Extbase-Klassen wurden als \textbf{veraltet} markiert:
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Request}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Response}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90258 | Simplified RTE Parser API
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{Vereinfachte RTE-Parser-API}
+
+	\begin{itemize}
+		\item Die PHP-Klasse \texttt{RteHtmlParser} verfügt jetzt über eine vereinfachte API.
+		\item Als Folge davon wurden die folgenden beiden Methoden als \textbf{veraltet} markiert:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->init()}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->RTE\_transform()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89139 | Console Commands configuration migrated to Symfony service tags
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{Konfiguration der Konsolenbefehle}
+
+	\begin{itemize}
+		\item Da die Konfigurationsdatei für Konsolenbefehle in Symfony-Service-Tags migriert wurde,
+			wurde die Datei \texttt{Configuration/Commands.php}
+			als \textbf{veraltet} markiert.
+		\item Verwenden Sie stattdessen den Dependency Injection Service Tag \texttt{console.command}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89672 | transOrigPointerField is not longer allowed to be excluded
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{TCA: \texttt{transOrigPointerField}}
+
+	\begin{itemize}
+		\item Das Ausschließen des Feldes, auf das die folgende TCA-Option hinweist, führte unter bestimmten Umständen zu inkonsistenten Daten, die in der Datenbank gespeichert sind:
+			\small
+				\texttt{\$GLOBALS['TCA'][\$table]['ctrl']['transOrigPointerField']}
+			\normalsize
+
+		\item Daher kann der Zielbereich nicht mehr ausgeschlossen werden.
+		\item Ein Migrationsassistent entfernt die Option aus dem TCA und fügt dem Verwerfungsprotokoll
+			eine Verwerfungsmeldung hinzu, falls der Code aktualisiert werden muss.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90421 | DocumentTemplate
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{DocumentTemplate}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die folgende Klasse wurde als \textbf{veraltet} markiert:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Template\textbackslash
+					DocumentTemplate}
+			\end{itemize}
+
+		\item Dies wurde als Grundlage für die Darstellung von Backend-Modulen oder HTML-basierten Ausgaben im TYPO3-Backend verwendet.
+		\item Seit TYPO3 v7 sollte stattdessen die neue API über ModuleTemplate verwendet werden.
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+...
+$moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+$content = $this->getHtmlContentFromMyModule();
+$moduleTemplate->setTitle('My module');
+$moduleTemplate->setContent($content);
+return new HtmlResponse($moduleTemplate->renderContent());
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 85613 | Introduce simple way to register category fields
+%
+%\begin{frame}[fragile]
+%	\frametitle{Deprecated/Removed Functions}
+%	\framesubtitle{CategoryRegistry API}
+%
+%	\begin{itemize}
+%		\item The following class has been marked as \textbf{deprecated}:
+%
+%			\begin{itemize}
+%				\item \texttt{TYPO3\textbackslash
+%					CMS\textbackslash
+%					Core\textbackslash
+%					Category\textbackslash
+%					CategoryRegistry}
+%			\end{itemize}
+%
+%		\item The following method has been marked as \textbf{deprecated}:
+%
+%			\begin{itemize}
+%				\item \texttt{ExtgensionManagementUtility::makeCategorizable()}
+%			\end{itemize}
+%
+%		\item Category fields can easily by registered by adding TCA configuration.
+%
+%	\end{itemize}
+%
+%\end{frame}
+%
+% ------------------------------------------------------------------------------
+% Deprecation | 90390 | Deprecate BrokenLinkRepository::getNumberOfBrokenLinks() in linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/entfernte Funktionen}
+	\framesubtitle{LinkValidator}
+
+	\begin{itemize}
+		\item Folgende Methode wurde als \textbf{veraltet} markiert:
+		\newline\newline
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Linkvalidator\textbackslash
+					Repository\textbackslash
+					BrokenLinkRepository}\newline
+				\texttt{->getNumberOfBrokenLinks()}\normalsize\newline
+
+		\item Verwenden Sie stattdessen folgende Methode in der gleichen Klasse:\newline
+			\small\texttt{BrokenLinkRepository::isLinkTargetBrokenLink()}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------

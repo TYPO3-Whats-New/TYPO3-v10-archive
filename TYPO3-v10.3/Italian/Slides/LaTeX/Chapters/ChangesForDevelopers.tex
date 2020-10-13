@@ -1,0 +1,429 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.3 - What's New (Italian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+
+\section{Modifiche per sviluppatori}
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+
+	\begin{center}\huge{Capitolo 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Modifiche per sviluppatori}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90333 | Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Dashboard (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Gli sviluppatori possono creare widget personalizzati per la dashboard estendendo uno dei seguenti widget \textit{abstract}:
+
+			\begin{itemize}
+				\item \texttt{AbstractWidget}\newline
+					\small
+						Un abstract di base che può essere utilizzato come inizio di semplici widget.
+					\normalsize
+				\item \texttt{AbstractRssWidget}\newline
+					\small
+						Un abstract per visualizzare un widget che mostra un feed RSS.
+					\normalsize
+				\item \texttt{AbstractListWidget}\newline
+					\small
+						Un abstract per creare un widget che mostra un elenco di elementi
+					\normalsize
+				\item \texttt{AbstractCtaButtonWidget}\newline
+					\small
+						Un abstract per mostrare un widget che mostra un pulsante di "invito all'azione"
+					\normalsize
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90333 | Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Dashboard (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Registra i tuoi widget nei seguenti file della tua estensione:\newline
+			\texttt{EXT:my\_extension/Configuration/Services.yaml}
+
+		\item Opzione 1: identificatore del widget come attributo
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+Vendor\MyExtension\Widgets\MyFirstWidget:
+  tags:
+    - name: dashboard.widget
+      identifier: widget-identifier-1
+      widgetGroups: 'general'
+\end{lstlisting}
+
+		\item Opzione 2: un nome del servizio personalizzato consente a più identificatori di widget di condividere una classe
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+widget.identifier:
+  class: Vendor\MyExtension\Widgets\MySecondWidget
+  tags:
+    - name: dashboard.widget
+      identifier: widget-identifier-2
+      widgetGroups: 'general, typo3'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90333 | Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Dashboard (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Ogni widget è collegato ad uno o più gruppi di widget.
+		\item Questi gruppi sono mostrati in modale quando si aggiunge un nuovo widget alla dashboard.
+		\item Gli sviluppatori possono configurare gruppi di widget personalizzati creando un file\newline
+			\smaller
+				\texttt{EXT:my\_extension/Configuration/Backend/DashboardWidgetGroups.php}
+			\normalsize
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+return [
+  'widgetGroup-exampleGroup' => [
+    'title' => 'LLL:EXT:my_extension/Resources/Private/Language/locallang.xlf:widget_group_name',
+  ],
+];
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89870 | New PSR-14 Events for Extbase-related signals
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Extbase e Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item I seguenti eventi basati su PSR-14 sono stati introdotti per signals correlati ad Extbase:
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+TYPO3\CMS\Extbase\Event\Mvc\AfterRequestDispatchedEvent
+TYPO3\CMS\Extbase\Event\Mvc\BeforeActionCallEvent
+TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent
+TYPO3\CMS\Extbase\Event\Persistence\ModifyQueryBeforeFetchingObjectDataEvent
+TYPO3\CMS\Extbase\Event\Persistence\ModifyResultAfterFetchingObjectDataEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityAddedToPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityFinalizedAfterPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityUpdatedInPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityRemovedFromPersistenceEvent
+TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent
+\end{lstlisting}
+
+		\item I signals esistenti sono stati sostituiti e non dovrebbero essere più utilizzati.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89644 | Add optional argument fields to editRecord ViewHelpers
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{ViewHelper \texttt{editRecord}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Un \texttt{campo} argomento opzionale è stato aggiunto ai Viewhelper
+			\texttt{uri.editRecord} e \texttt{link.editRecord}.
+		\item Se impostato, FormEngine crea un form per modificare solo i campi del database specificato.
+		\item L'esempio seguente crea un collegamento per modificare il campo \texttt{tt\_content.bodytext}
+			 del record con UID 42.
+
+\begin{lstlisting}
+<be:link.editRecord uid="42" table="tt_content" fields="bodytext" returnUrl="foo/bar">
+  Modifica record
+</be:link.editRecord>
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | xxxxx | Introduce AssetCollector
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{AssetCollector}
+
+	\begin{itemize}
+		\item Sono state implementate le fasi iniziali di integrazione di un AssetCollector.
+		\item Il concetto permette agli sviluppatori di aggiungere più volte un codice CSS/JS personalizzato (inline o esterno),
+			ma TYPO3 lo serve solo una volta.
+		\item A questo riguardo, sono stati aggiunti due nuovi ViewHelper di Fluid:
+			\begin{itemize}
+				\item \texttt{<f:css>}
+				\item \texttt{<f:script>}
+			\end{itemize}
+		\item A lungo termine, AssetCollector mira a sostituire le varie opzioni TypoScript
+			esistenti che sono piuttosto confuse.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86614 | Add PSR-14 event to control hreflang tags to be rendered
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Modificato \texttt{hreflang}-tag}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Ora è possibile modificare i tag \texttt{hreflang} prima di essere renderizzati.
+		\item Gli sviluppatori possono fare questo registrando un listener di eventi per il seguente evento:\newline
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					Event\textbackslash
+					ModifyHrefLangTagsEvent}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88818 | Introduce events to modify CKEditor configuration
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Modificare la configurazione di CKEditor}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sono stati introdotti i seguenti eventi basati su PSR-14 che consentono di modificare la configurazionedi CKEditor:
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+TYPO3\CMS\RteCKEditor\Form\Element\Event\AfterGetExternalPluginsEvent
+TYPO3\CMS\RteCKEditor\Form\Element\Event\BeforeGetExternalPluginsEvent
+TYPO3\CMS\RteCKEditor\Form\Element\Event\AfterPrepareConfigurationForEditorEvent
+TYPO3\CMS\RteCKEditor\Form\Element\Event\BeforePrepareConfigurationForEditorEvent
+\end{lstlisting}
+
+		\item Vedi il
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-88818-IntroduceEventsToModifyCKEditorConfiguration.html}{change log}
+			per un esempio.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90265 | Show dispatched Events in Admin Panel
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Eventi PSR-14 nel pannello di amministrazione}
+
+	\begin{itemize}
+		\item Il pannello di amministrazione mostra tutti gli eventi PSR-14 che sono stati inviati nella richiesta corrente.
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.85\linewidth]{ChangesForDevelopers/90265-ShowDispatchedEventsInAdminPanel.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89738 | API for AJAX Requests
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{API per richieste AJAX}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item L' \textbf{API Fetch} è stata introdotta per eseguire richieste AJAX e
+		    per rendere TYPO3 meno dipendente da jQuery.
+		\item L'API fornisce una definizione generica di oggetti Richiesta e Risposta
+			(e altre cose relative alle richieste di rete).
+		\item Supportato da tutti i browser moderni, vedi le
+			\href{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API}{tabelle di compatibilità}.
+		\item Il core TYPO3 utilizza già la nuova API in Install Tool, FormEngine, e
+			nei menù contestuali.
+		\item Vedi le
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-89738-ApiForAjaxRequests.html}{change log}
+			per alcuni esempi su come usare le API Fetch.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89650 | Allow line breaks in TCA descriptions
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Campo descrizione del TCA}
+
+	\begin{itemize}
+		\item Il campo della descrizione del TCA ora può contenere delle interruzioni di riga
+		    per rendere più leggibili i testi lunghi.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 90020 | Legacy BasicFileUtility and ExtendedFileUtility classes marked as internal
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Classi \texttt{BasicFileUtility} e \texttt{ExtendedFileUtility}}
+
+	\begin{itemize}
+		\item Le seguenti due classi sono state segnate come \textbf{internal}
+			e non dovrebbero essere più utilizzate:
+
+			\begin{itemize}\small
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					File\textbackslash
+					BasicFileUtility}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					File\textbackslash
+					ExtendedFileUtility}
+			\end{itemize}
+
+		\item Gli sviluppatori di estensioni dovrebbero usare invece le classi \texttt{ResourceStorage}
+			e \texttt{ResourceFactory} per la gestione delle risorse.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89139 | Add dependency injection support for console commands
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Comandi da console: Symfony DI Support}
+
+	\begin{itemize}
+		\item Ora le dipendenze dei comandi possono essere iniettate tramite il costruttore o altre tecniche di iniezione.
+		\item Aggiungi il tag \texttt{console.command} alle classi dei comandi.
+		\item Utilizzare l'attributo di tag \texttt{command} per specificare il nome del comando.
+		\item L'attributo opzionale di tag \texttt{schedulable} può essere impostato a \texttt{false}
+			per escludere il comando dallo scheduler di TYPO3.
+
+		\item Vedi il
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-89139-AddDependencyInjectionSupportForConsoleCommands.html}{change log}
+			per un esempio.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90168 | Introduce Modal Actions
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Bottoni di azioni in modale}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item I popup modali supportano ora i bottoni di azione.
+		\item In alternativa all'esistente opzione \texttt{trigger}, è possibile utilizzare
+			la nuova opzione \texttt{action}.
+		\item Per esempio:
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+Modal.confirm('Header', 'Some content', Severity.error, [
+  {
+    text: 'Based on trigger()',
+    trigger: function () {
+      console.log('Vintage!');
+    }
+  },
+  {
+    text: 'Based on action()',
+    action: new DeferredAction(() => {
+      return new AjaxRequest('/any/endpoint').post({});
+    })
+  }
+]);
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90471 | JavaScript Event API
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{API di eventi JavaScript}
+
+	\begin{itemize}
+		\item Una nuova API di eventi consente agli sviluppatori JavaScript di avere un'interfaccia di ascolto stabile degli eventi.
+		\item L'API si occupa delle insidie più comuni come la delega degli eventi e la non separazione degli eventi.
+		\item Ogni \textit{strategia di evento} offre due modi per associare un listener ad un evento.
+		\item L'API dell'evento offre diverse strategie per gestire i listener di eventi.
+		\item Vedi il
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Feature-90471-JavaScriptEventAPI.html}{change log}
+			per esempi e maggiori dettagli.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
