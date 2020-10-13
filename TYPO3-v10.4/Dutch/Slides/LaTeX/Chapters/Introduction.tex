@@ -1,0 +1,207 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - What's New (Dutch Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Dutch
+% ------------------------------------------------------------------------------
+
+\section{Inleiding}
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+
+	\begin{center}\huge{Inleiding}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{De feiten}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - The Facts
+
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+	\framesubtitle{TYPO3 Version 10.4 - De feiten}
+
+	\begin{itemize}
+		\item Publicatiedatum: 21 april 2020
+		\item Publicatietype: LTS (Long-term Support)
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3-v10-4-banner.jpg}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - Executive Summary
+
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+	\framesubtitle{Managementsamenvatting}
+
+	\small
+		TYPO3 v10.4 (ook TYPO3 v10 LTS genoemd om aan te geven dat de long-term support versie is)
+		is het nieuwe vlaggenschip en, zonder twijfel, een van de meest geavanceerde op PHP gebaseerde OpenSource
+		content management systemen op de markt op dit moment.
+
+		\vspace{0.2cm}
+
+		Na het publiceren van vijf sprintversies sinds juli 2019 kunnen we trots stellen dat we
+		TYPO3 hebben uitgerust met de beste moderne PHP-bibliotheken en dat we enkele fantastische,
+		nieuwe enterprise functies hebben toegevoegd.
+
+		\vspace{0.2cm}
+
+		Merk op dat dit document alleen de wijzigingen tussen TYPO3 v10.3 en v10.4 vermeld.
+
+		\vspace{0.2cm}
+
+		"What's New Slides" van alle TYPO3 v10.x versies zijn beschikbaar op
+		\href{https://typo3.org/help/documentation/whats-new/}{typo3.org}.
+
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% System Requirements
+
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+	\framesubtitle{Systeemeisen}
+
+	\begin{itemize}
+		\item PHP versie 7.2, 7.3 of 7.4
+		\item PHP instellingen:
+
+		\begin{itemize}
+			\item \texttt{memory\_limit} >= 256M
+			\item \texttt{max\_execution\_time} >= 240s
+			\item \texttt{max\_input\_vars} >= 1500
+			\item compilatieoptie \texttt{-}\texttt{-disable-ipv6} moet \underline{niet} worden gebruikt
+		\end{itemize}
+
+		\item De meeste databaseservers die worden ondersteund door \textbf{Doctrine DBAL} werken ook met TYPO3.
+		De geteste database systemen zijn:
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.80\linewidth]{Introduction/logo-databases.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Development, Release, and Maintenance Timeline
+
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+	\framesubtitle{Ontwikkeling-, versie- en onderhouds-tijdlijn}
+
+	\textbf{TYPO3 v10}
+
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{Introduction/typo3-v10-lifecycle.png}
+	\end{figure}
+
+	\textbf{Verlengde ondersteuning}\newline
+	\smaller
+	De \href{https://typo3.com}{TYPO3 GmbH} biedt nog extra ondersteuningsopties aan
+	voor TYPO3 v10 LTS, zelfs na 30 april 2023 tot twee jaar lang.
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 v10 Roadmap
+
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+	\framesubtitle{TYPO3 v10 Roadmap}
+
+	Verwachte verschijningsdata en de focus van de versie:
+
+	\begin{itemize}
+
+		\item v10.0 \tabto{1.1cm}23/juli/2019\tabto{3.4cm}De weg vrijmaken voor spannende nieuwe concepten en API's
+		\item v10.1 \tabto{1.1cm}01/okt/2019\tabto{3.4cm}Verbeterde routing en Site behandeling v2
+		\item v10.2 \tabto{1.1cm}03/dec/2019\tabto{3.4cm}Fluid/Rendering Engine verbeteringen
+		\item v10.3 \tabto{1.1cm}25/Feb/2020\tabto{3.4cm}Feature Freeze
+		\item
+			\begingroup
+				\color{typo3orange}
+				v10.4 \tabto{1.1cm}21/Apr/2020\tabto{3.4cm}LTS Publicatie (long-term support)
+			\endgroup
+
+	\end{itemize}
+
+	\vspace{0.6cm}
+	\smaller
+		\url{https://typo3.org/article/typo3-v10-roadmap}\newline
+		\url{https://typo3.org/article/typo3-v10-lts-safe-and-sound}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation
+
+\begin{frame}[fragile]
+	\frametitle{Inleiding}
+	\framesubtitle{Installatie}
+
+	\begin{itemize}
+		\item Offici\"ele \textit{klassieke} installatieprocedure op Linux/Mac OS X\newline
+		(DocumentRoot bijvoorbeeld \texttt{/var/www/site/htdocs}):
+\begin{lstlisting}
+$ cd /var/www/site
+$ wget --content-disposition get.typo3.org/10.4
+$ tar xzf typo3_src-10.4.0.tar.gz
+$ cd htdocs
+$ ln -s ../typo3_src-10.4.0 typo3_src
+$ ln -s typo3_src/index.php
+$ ln -s typo3_src/typo3
+$ touch FIRST_INSTALL
+\end{lstlisting}
+
+		\item Symbolische koppelingen op Microsoft Windows:
+
+			\begin{itemize}
+				\item Gebruik \texttt{junction} op Windows XP/2000
+				\item Gebruik \texttt{mklink} op Windows Vista en Windows 7 of hoger
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation using composer
+
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Installatie met \texttt{composer}}
+
+	\begin{itemize}
+		\item Installatie met \textit{composer} onder Linux, Mac OS X en Windows 10:
+\begin{lstlisting}
+$ cd /var/www/site/
+$ composer create-project typo3/cms-base-distribution typo3v10 ^10.4
+\end{lstlisting}
+
+		\item Of anders kan een maatwerk \texttt{composer.json} bestand gemaakt worden en dan:
+\begin{lstlisting}
+$ composer install
+\end{lstlisting}
+
+			Meer details over Composer voor de TYPO3 core en voor TYPO3 extensies
+			zijn beschikbaar op:
+
+			\small
+				\href{https://get.typo3.org/misc/composer}{https://get.typo3.org/misc/composer}
+			\normalsize
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------

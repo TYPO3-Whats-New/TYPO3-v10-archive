@@ -1,0 +1,354 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - What's New (French Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+
+\section{Fonctions dépréciées et retirées}
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+
+	\begin{center}\huge{Chapitre 4~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Fonctions dépréciées et retirées}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 91001 | Various methods within GeneralUtility
+% Deprecation | 90956 | Alternative fetch methods and reports for GeneralUtility::getUrl()
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{GeneralUtility (1)}
+
+	\begin{itemize}
+		\item Ces méthodes de GeneralUtility sont marquées \textbf{dépréciées}~:
+			\begin{itemize}\smaller
+				\item \texttt{GeneralUtility::IPv6Hex2Bin()}
+				\item \texttt{GeneralUtility::IPv6Bin2Hex()}
+				\item \texttt{GeneralUtility::compressIPv6()}
+				\item \texttt{GeneralUtility::milliseconds()}
+				\item \texttt{GeneralUtility::linkThisUrl()}
+				\item \texttt{GeneralUtility::flushDirectory()}
+			\end{itemize}\normalsize
+			\vspace{0.4cm}
+
+		\item Utiliser les arguments autre que l'URL dans \texttt{GeneralUtility::getUrl()}
+			est marqué \textbf{déprécié}.\newline
+			\smaller
+				(sont inclus~: \texttt{\$includeHeader}, \texttt{\$requestHeaders}, et \texttt{\$report})
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90800 | GeneralUtility::isRunningOnCgiServerApi
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{GeneralUtility (2)}
+
+	\begin{itemize}
+		\item Cette méthode est retirée de la classe \texttt{GeneralUtility}~:
+			\texttt{GeneralUtility::isRunningOnCgiServerApi()}.
+		\item Elle est remplacée par l'appel suivant~:\newline
+			\texttt{Environment::isRunningOnCgiServer()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90964 | LanguageService functionality and internal properties
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Fonctionnalité LanguageService}
+
+	Changements de LanguageService (aussi connu sous \texttt{\$GLOBALS[LANG]}).
+	\vspace{0.4cm}
+	\begin{itemize}
+		\item La visibilité des méthodes suivantes a changé~:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->LL\_files\_cache} (devenue \texttt{protected})
+				\item \texttt{LanguageService->LL\_labels\_cache} (devenue \texttt{protected})
+				\item \texttt{LanguageService->getLLL()} (devenue \texttt{protected})
+				\item \texttt{LanguageService->debugLL()} (devenue \texttt{protected})
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+		\item Cette méthode est marquée \textbf{dépréciée}~:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->getLabelsWithPrefix()}
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+		\item Cette méthode est marquée \textbf{interne}~:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->loadSingleTableDescription()}
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 90897 | Remove bootstrap-slider
+% Important | 86343 | Replace jQuerydatatables with tablesort
+% Deprecation | 90686 | Deprecate model FileMount (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Bibliothèques et classes internes}
+
+	\begin{itemize}
+		\item Les bibliothèques internes suivantes sont retirées~:
+			\begin{itemize}
+				\item "bootstrap-slider"
+				\item "jQuery.datatables"
+			\end{itemize}
+			\vspace{0.4cm}
+
+		\item La classe interne \small\texttt{TYPO3\textbackslash
+			CMS\textbackslash
+			Extbase\textbackslash
+			Domain\textbackslash
+			Model\textbackslash
+			FileMount}\normalsize\newline
+			est marquée \textbf{dépréciée}.
+
+	\end{itemize}
+
+	\vspace{0.6cm}
+	\begin{itemize}
+		\item[\ding{228}] \textit{Rappel~:} \textit{Les auteurs d'extensions ne devraient jamais utiliser de bibliothèque
+			qui ne soit par marquée comme API publique.}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90937 | Various hooks in ContentObjectRenderer
+% Deprecation | 90861 | Image-related methods within ContentObjectRenderer
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{ContentObjectRenderer}
+
+	\begin{itemize}
+		\item Ces hooks sont marqués \textbf{dépréciés}~:\newline
+			\tiny
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']['tslib/class.tslib\_content.php']...}
+			\normalsize
+
+			\begin{itemize}\smaller
+				\item \texttt{['cObjTypeAndClass']}
+				\item \texttt{['cObjTypeAndClassDefault']}
+				\item \texttt{['extLinkATagParamsHandler']}
+				\item \texttt{['typolinkLinkHandler']}
+			\end{itemize}
+
+		\item Ces méthodes sont marquées \textbf{dépréciées}~:
+
+			\begin{itemize}\smaller
+				\item \texttt{cImage()}
+				\item \texttt{getBorderAttr()}
+				\item \texttt{getImageTagTemplate()}
+				\item \texttt{getImageSourceCollection()}
+				\item \texttt{linkWrap()}
+				\item \texttt{getAltParam()}
+			\end{itemize}
+
+			\smaller
+				(elles ont été déplacées dans la classe ImageContentObject)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90856 | Deprecate Widget AutoComplete ViewHelper (Fluid)
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{ViewHelper Fluid AutoComplete}
+
+	\begin{itemize}
+		\item Le ViewHelper Fluid \texttt{<f:widget.autocomplete>} et le contrôleur lié sont
+			marqués \textbf{dépréciés}.
+		\item Vous devez agir si vous utilisez ou étendez les éléments suivants~:
+
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Fluid\textbackslash
+					ViewHelpers\textbackslash
+					Widget\textbackslash
+					AutocompleteViewHelper}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Fluid\textbackslash
+					ViewHelpers\textbackslash
+					Widget\textbackslash
+					Controller\textbackslash
+					AutocompleteController}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90692 | Deprecate FileCollection models (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Modèles FileCollection}
+
+	\begin{itemize}
+		\item Ces modèles de FileCollection sont marqués \textbf{dépréciés}~:
+			\vspace{0.4cm}
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					StaticFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					FolderBasedFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					AbstractFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					StaticFileCollectionConverter}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					FolderBasedFileCollectionConverter}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					AbstractFileCollectionConverter}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90625 | Extbase SignalSlot Dispatcher (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Extbase SignalSlot Dispatcher}
+
+	\begin{itemize}
+		\item Pendant le développement de TYPO3 v10 ces derniers mois,
+			tous les signaux Extbase fournis par TYPO3 ont été migrés en événements PSR-14.
+		\item Le «~SignalSlot Dispatcher~» d'Extbase est marqué \textbf{déprécié}.
+		\item Il est conseillé aux développeurs d'extension de migrer vers les événements PSR-14
+			et les écouteurs d'événement.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90147 | Unified File Name Validator
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{API FileNameValidator}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item La logique de validation du nom de fichier à la création (envoie) ou
+			au renommage est transférée sous l'API FileNameValidator~:
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Resource\textbackslash
+					Security\textbackslash
+					FileNameValidator}
+			\normalsize
+
+		\item Options de migration~:
+
+\begin{lstlisting}
+// ANCIEN~:
+GeneralUtility::verifyFilenameAgainstDenyPattern($filename)
+// NOUVEAU~:
+GeneralUtility::makeInstance(FileNameValidator::class)->isValid($filename)
+
+// ANCIEN~:
+FILE_DENY_PATTERN_DEFAULT
+// NOUVEAU~:
+FileNameValidator::DEFAULT_FILE_DENY_PATTERN
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88740 | Deprecate felogin pibase plugin
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{EXT:felogin hooks}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item L'ensemble des hooks de \texttt{EXT:felogin} sont désactivés et seront retirés de TYPO3 v11~:
+
+			\begin{itemize}\tiny
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['beforeRedirect']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['postProcContent']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['password\_changed']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['forgotPasswordMail']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['login\_confirmed']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['login\_error']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['loginFormOnSubmitFuncs']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['logout\_confirmed']}
+			\end{itemize}
+
+		\item Voir le
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Deprecation-88740-DeprecateFeloginPibasePlugin.html}{journal des changements (en)}
+			pour les options de migration.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

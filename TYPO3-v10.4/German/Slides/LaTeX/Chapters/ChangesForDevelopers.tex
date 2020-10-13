@@ -1,0 +1,314 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - What's New (German Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+
+\section{Änderungen für Entwickler}
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+
+	\begin{center}\huge{Kapitel 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Änderungen für Entwickler}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 90660 | Registration of dashboard widgets changed
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{Dashboard-Widgets (1)}
+
+	Änderungen zwischen TYPO3 v10.3 und v10.4:
+
+	\begin{itemize}
+		\item Die Art und Weise, wie Dashboard-Widgets registriert werden, hat sich geändert.
+		\item Abstrakte Klassen werden nicht mehr verwendet, da Widgets in der Datei
+			\texttt{Services.yaml} registriert (und konfiguriert) werden.
+		\item Einige Widget-Typen können jetzt nur durch Konfiguration erstellt werden.
+		\item Zusätzlich sind die gültigen Schlüsselwörter für Höhe und Breite jetzt
+			"\texttt{small}", "\texttt{medium}", oder "\texttt{large}"
+			(anstelle von numerischen Werten).
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 91066 | Removed ButtonUtility
+% Breaking | 91066 | Move interfaces of Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{Dashboard-Widgets (2)}
+
+	Änderungen zwischen TYPO3 v10.3 und v10.4:
+
+	\begin{itemize}
+		\item Die Klasse \texttt{ButtonUtility} wurde entfernt.
+		\item Schnittstellen wurden verschoben und ihre Namespaces müssen wahrscheinlich
+			in Ihrem benutzerdefinierten Code aktualisiert werden.
+			\begin{itemize}\smaller
+				\item \textbf{ALT:}
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Dashboard\textbackslash
+						Widgets\textbackslash
+						Interfaces}
+				\item \textbf{NEU:}
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Dashboard\textbackslash
+						Widgets}
+			\end{itemize}\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 77715 | No more password trimming for third-party authentication services
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{Third-party Authentication Services}
+
+	\begin{itemize}
+
+		\item Erweiterungen können die Authentifizierungsdienst-API von TYPO3 verwenden, um Benutzer gegenüber
+			Identitätsvermittlern über "OAuth", "LDAP", "SAML2", usw. zu authentifizieren.
+		\item Das \texttt{AbstractUserAuthentication}-Objekt von TYPO3 beschneidet die Passwörter
+			dieser third-party services nicht mehr.
+		\item Dies hat jedoch nichts mit dem nativen Authentifizierungsdienst von TYPO3 zu tun,
+			der immer noch ein Passwort ohne führende/nachlaufende Leerzeichen erfordert.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89573 | Allow flexible base url for slug fields in FormEngine
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{TCA: Basis-URL-Präfix}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es ist jetzt möglich, eine benutzerdefinierte Basis-URL für TCA-Spalten vom Typ \texttt{slug} hinzuzufügen.
+		\item Die Basis-URL wird vor dem Eingabefeld angezeigt (Präfix).
+		\item Beispiel (TCA):
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+...
+'config' => [
+  'type' => 'slug',
+  'appearance' => [
+    'prefix' => \Vendor\MyExtension\UserFunctions\FormEngine\SlugPrefix::class . '->getPrefix'
+  ]
+]
+...
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87776 | Limit Restriction to table/s in QueryBuilder
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{QueryBuilder}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Es ist jetzt möglich, Abfragebeschränkungen
+			für einen bestimmten Satz von Tabellen (genauer gesagt: Tabellen-Aliase) anzuwenden.
+		\item Der folgende Restriktionsbehälter kann verwendet werden:\newline
+			\begingroup
+				\fontsize{7}{9}
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Database\textbackslash
+						Query\textbackslash
+						Restriction\textbackslash
+						LimitToTablesRestrictionContainer}
+			\endgroup
+
+		\item Beispiel:
+\begin{lstlisting}
+$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+  ->getQueryBuilderForTable('tt_content');
+$queryBuilder->getRestrictions()
+  ->removeByType(HiddenRestriction::class)
+  ->add(
+    GeneralUtility::makeInstance(LimitToTablesRestrictionContainer::class)
+      ->addForTables(GeneralUtility::makeInstance(HiddenRestriction::class), ['tt'])
+  );
+
+$queryBuilder->select('tt.uid')->from('tt_content', 'tt');
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 91008 | Item grouping for TCA select items
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{TCA Select Items (Gruppierung)}
+
+	\begin{itemize}
+		\item Seitentypen (\texttt{pages.doktype}), Inhaltstypen (\texttt{tt\_content.CType}),
+			und Plugins (\texttt{tt\_content.list\_type}) haben jetzt die native Gruppierung aktiviert.
+		\item Zuvor wurde dies durch die Anwendung von
+			"\texttt{-}\texttt{-div-}\texttt{-}"-Punkten erledigt.
+		\item Entwicklern wird empfohlen, "\texttt{-}\texttt{-div-}\texttt{-}"
+			-Elemente aus benutzerdefinierten Auswahlmöglichkeiten
+			zu entfernen und stattdessen \texttt{itemGroups} zu verwenden.
+		\item Siehe
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Feature-91008-ItemGroupingForTCASelectItems.html}{Feature 91008 (Gruppierung)}
+			für weitere Details.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 91008 | Item sorting for TCA select items
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{TCA Select Items (Sortierung)}
+
+	\begin{itemize}
+		\item Es wurde eine neue Option \texttt{sortOrders} für TCA-basierte Auswahlfelder hinzugefügt.
+		\item Dies ermöglicht die Sortierung von statischen TCA-Auswahlfeldern nach ihren Werten oder Labels.
+		\item Siehe
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Feature-91008-ItemSortingForTCASelectItems.html}{Feature 91008 (Sortierung)}
+			für weitere Details.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90377 | Deprecate ref param types of method callUserFunction
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{GeneralUtility}
+
+	\begin{itemize}
+		\item Das dritte Argument der Methode \texttt{callUserFunction()}
+			sollte ein Objekt oder \texttt{null} sein.
+		\item Alle anderen Daten, die als Argument \texttt{\$ref} übergeben werden,
+			erzeugen jetzt eine Warnung \texttt{E\_USER\_DEPRECATED}.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 91079 | Various TypoScriptFrontendRenderer functionality is now internal
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{TypoScriptFrontendController}
+
+	\begin{itemize}
+		\item Die folgenden Eigenschaften sind jetzt als \textbf{intern} gekennzeichnet:
+			\begin{itemize}
+				\item \texttt{TypoScriptFrontendController->sPre}
+				\item \texttt{TypoScriptFrontendController->pSetup}
+				\item \texttt{TypoScriptFrontendController->all}
+				\item \texttt{TypoScriptFrontendController->additionalJavaScript}
+				\item \texttt{TypoScriptFrontendController->additionalCSS}
+				\item \texttt{TypoScriptFrontendController->JSCode}
+				\item \texttt{TypoScriptFrontendController->inlineJS}
+				\item \texttt{TypoScriptFrontendController->indexedDocTitle}
+			\end{itemize}
+
+		\item Die folgende Methode ist jetzt \textbf{intern} markiert:
+
+			\begin{itemize}
+				\item \texttt{TypoScriptFrontendController->setJS()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90613 | Add language argument to page-related LinkViewHelpers and UriViewHelpers in Fluid
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{LinkViewHelpers und UriViewHelpers}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Das neue Argument \texttt{language} wurde den folgenden ViewHelpers hinzugefügt:
+			\begin{itemize}
+				\item \texttt{<f:link.typolink>}
+				\item \texttt{<f:link.page>}
+				\item \texttt{<f:uri.typolink>}
+				\item \texttt{<f:uri.page>}
+			\end{itemize}
+
+		\item Dieses Argument verweist auf eine bestimmte Sprache einer Seite.
+		\item Beispiel (language ID 3):
+\begin{lstlisting}
+Go to the
+<f:link.page pageUid="42" language="3">french version</f:link.page>
+of the "Contact Us" page.
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90899 | Introduce AssetRenderer pre-rendering events
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen für Entwickler}
+	\framesubtitle{LinkViewHelpers und UriViewHelpers}
+
+	\begin{itemize}
+		\item Wenn die AssetCollector-API verwendet wird, können CSS- und JavaScript-Assets
+			bei Bedarf nachbearbeitet werden.
+		\item Zu diesem Zweck werden die folgenden zwei Events durchgeführt:
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Page\textbackslash
+					Event\textbackslash
+					BeforeStylesheetsRenderingEvent}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Page\textbackslash
+					Event\textbackslash
+					BeforeJavaScriptsRenderingEvent}
+			\end{itemize}
+
+		\item Siehe
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Feature-90899-IntroduceAssetPreRenderingEvents.html}{change log}
+			für weitere Details, Beispiele und zusätzliche Hinweise.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

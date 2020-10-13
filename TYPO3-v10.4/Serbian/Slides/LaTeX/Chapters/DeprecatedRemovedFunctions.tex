@@ -1,0 +1,352 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Zastarele/izbačene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele/izbačene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 91001 | Various methods within GeneralUtility
+% Deprecation | 90956 | Alternative fetch methods and reports for GeneralUtility::getUrl()
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{GeneralUtility (1)}
+
+	\begin{itemize}
+		\item Sledeće metode klase GeneralUtility su označene kao \textbf{zastarele}:
+			\begin{itemize}\smaller
+				\item \texttt{GeneralUtility::IPv6Hex2Bin()}
+				\item \texttt{GeneralUtility::IPv6Bin2Hex()}
+				\item \texttt{GeneralUtility::compressIPv6()}
+				\item \texttt{GeneralUtility::milliseconds()}
+				\item \texttt{GeneralUtility::linkThisUrl()}
+				\item \texttt{GeneralUtility::flushDirectory()}
+			\end{itemize}\normalsize
+			\vspace{0.4cm}
+
+		\item Dodavanje dodatnih argumenata uz URL u \texttt{GeneralUtility::getUrl()}
+			je označeno kao \textbf{zastarelo}.\newline
+			\smaller
+				(ovo uključuje: \texttt{\$includeHeader}, \texttt{\$requestHeaders}, i \texttt{\$report})
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90800 | GeneralUtility::isRunningOnCgiServerApi
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{GeneralUtility (2)}
+
+	\begin{itemize}
+		\item Sledeća metoda klase \texttt{GeneralUtility} je \textbf{zastarela}:
+			\texttt{GeneralUtility::isRunningOnCgiServerApi()}.
+		\item Ova funkcija je sada dostupna kao\newline
+			\texttt{Environment::isRunningOnCgiServer()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90964 | LanguageService functionality and internal properties
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Funkcionalnosti LanguageService-a}
+
+	Izmene LanguageService-a (znanog i kao \texttt{\$GLOBALS[LANG]}).
+	\vspace{0.4cm}
+	\begin{itemize}
+		\item Promenjena je vidljivost sledećih funkcija:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->LL\_files\_cache} (sada \texttt{protected})
+				\item \texttt{LanguageService->LL\_labels\_cache} (sada \texttt{protected})
+				\item \texttt{LanguageService->getLLL()} (sada \texttt{protected})
+				\item \texttt{LanguageService->debugLL()} (sada \texttt{protected})
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+		\item Sledeća funkcija je označena kao \textbf{zastarela}:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->getLabelsWithPrefix()}
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+		\item Sledeća funkcija je označena kao \textbf{unutrašnja}:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->loadSingleTableDescription()}
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 90897 | Remove bootstrap-slider
+% Important | 86343 | Replace jQuerydatatables with tablesort
+% Deprecation | 90686 | Deprecate model FileMount (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Unutrašnje biblioteke i klase}
+
+	\begin{itemize}
+		\item Uklonjene su sledeće unutrašnje biblioteke:
+			\begin{itemize}
+				\item "bootstrap-slider"
+				\item "jQuery.datatables"
+			\end{itemize}
+			\vspace{0.4cm}
+
+		\item Unutrašnja klasa \small\texttt{TYPO3\textbackslash
+			CMS\textbackslash
+			Extbase\textbackslash
+			Domain\textbackslash
+			Model\textbackslash
+			FileMount}\normalsize\newline
+			je označena kao \textbf{zastarela}.
+
+	\end{itemize}
+
+	\vspace{0.6cm}
+	\begin{itemize}
+		\item[\ding{228}] \textit{Podsetnik:} \textit{Autori proširenja ne smeju nikada da koriste biblioteke koje nisu označene kao public API.}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90937 | Various hooks in ContentObjectRenderer
+% Deprecation | 90861 | Image-related methods within ContentObjectRenderer
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{ContentObjectRenderer}
+
+	\begin{itemize}
+		\item Sledeći hukovi su označeni kao \textbf{zastareli}:\newline
+			\tiny
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']['tslib/class.tslib\_content.php']...}
+			\normalsize
+
+			\begin{itemize}\smaller
+				\item \texttt{['cObjTypeAndClass']}
+				\item \texttt{['cObjTypeAndClassDefault']}
+				\item \texttt{['extLinkATagParamsHandler']}
+				\item \texttt{['typolinkLinkHandler']}
+			\end{itemize}
+
+		\item Sledeće metode su označene kao \textbf{zastarele}:
+
+			\begin{itemize}\smaller
+				\item \texttt{cImage()}
+				\item \texttt{getBorderAttr()}
+				\item \texttt{getImageTagTemplate()}
+				\item \texttt{getImageSourceCollection()}
+				\item \texttt{linkWrap()}
+				\item \texttt{getAltParam()}
+			\end{itemize}
+
+			\smaller
+				(sve metode su izmeštene u ImageContentObject klasu)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90856 | Deprecate Widget AutoComplete ViewHelper (Fluid)
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Fluid AutoComplete ViewHelper}
+
+	\begin{itemize}
+		\item Fluid ViewHelper \texttt{<f:widget.autocomplete>} i pripadajući
+			kontroler su označeni kao \textbf{zastareli}.
+		\item Treba da prilagodite kod ukoliko koristite ili proširujete sledeće:
+
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Fluid\textbackslash
+					ViewHelpers\textbackslash
+					Widget\textbackslash
+					AutocompleteViewHelper}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Fluid\textbackslash
+					ViewHelpers\textbackslash
+					Widget\textbackslash
+					Controller\textbackslash
+					AutocompleteController}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90692 | Deprecate FileCollection models (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{FileCollection}
+
+	\begin{itemize}
+		\item Sledeći FileCollection modeli su označeni kao  \textbf{zastareli}:
+			\vspace{0.4cm}
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					StaticFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					FolderBasedFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					AbstractFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					StaticFileCollectionConverter}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					FolderBasedFileCollectionConverter}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					AbstractFileCollectionConverter}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90625 | Extbase SignalSlot Dispatcher (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Extbase SignalSlot Dispatcher}
+
+	\begin{itemize}
+		\item Tokom razvoja TYPO3 v10 proteklih meseci, svi Extbase signali iz TYPO3 jezgra su migrirani u PSR-14 dogadjaje.
+		\item Extbase "SignalSlot Dispatcher" je označen kao \textbf{zastareo}.
+		\item Programeri se savetuju da migriraju kod na PSR-14 dogadjaje i slušaoce dogadjaja.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90147 | Unified File Name Validator
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{FileNameValidator API}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Logika za validiranje da li je ime fajla novog ili izmenjenog validna,
+			sada je dostupna kao FileNameValidator API:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Resource\textbackslash
+					Security\textbackslash
+					FileNameValidator}
+			\normalsize
+
+		\item Opcije za migraciju:
+
+\begin{lstlisting}
+// STARO:
+GeneralUtility::verifyFilenameAgainstDenyPattern($filename)
+// NOVO:
+GeneralUtility::makeInstance(FileNameValidator::class)->isValid($filename)
+
+// STARO:
+FILE_DENY_PATTERN_DEFAULT
+// NOVO:
+FileNameValidator::DEFAULT_FILE_DENY_PATTERN
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88740 | Deprecate felogin pibase plugin
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{EXT:felogin}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Svi nasledjeni hukovi iz \texttt{EXT:felogin} su onemogućeni i biće uklonjeni
+			u TYPO3 v11:
+
+			\begin{itemize}\tiny
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['beforeRedirect']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['postProcContent']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['password\_changed']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['forgotPasswordMail']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['login\_confirmed']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['login\_error']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['loginFormOnSubmitFuncs']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['logout\_confirmed']}
+			\end{itemize}
+
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Deprecation-88740-DeprecateFeloginPibasePlugin.html}{change log}
+			za opcije migracije.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

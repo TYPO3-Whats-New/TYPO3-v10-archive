@@ -1,0 +1,313 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.4 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Izmene za programere}
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Izmene za programere}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 90660 | Registration of dashboard widgets changed
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Dashboard vidžeti (1)}
+
+	Izmene izmedju TYPO3 v10.3 i v10.4:
+
+	\begin{itemize}
+		\item Način registrovanja Dashboard vidžeta je promenjen.
+		\item Abstraktne klase se više ne koriste jer se vidžeti registruju
+			(i konfigurišu) u fajlu \texttt{Services.yaml}.
+		\item Neki tipovi vidžeta se mogu napraviti samo pomoću konfiguracije.
+		\item Takodje, validne ključne reči za visinu i širinu su
+			"\texttt{small}", "\texttt{medium}", ili "\texttt{large}"
+			(umesto brojčanih vrednosti).
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Breaking | 91066 | Removed ButtonUtility
+% Breaking | 91066 | Move interfaces of Dashboard
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Dashboard vidžeti (2)}
+
+	Izmene izmedju TYPO3 v10.3 i v10.4:
+
+	\begin{itemize}
+		\item Uklonjena je klasa \texttt{ButtonUtility}.
+		\item Interfejsi su premešteni i njihov namespace treba da ažurirate u
+			u Vašem prilagodjenom kodu.
+			\begin{itemize}\smaller
+				\item \textbf{STARO:}
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Dashboard\textbackslash
+						Widgets\textbackslash
+						Interfaces}
+				\item \textbf{NOVO:}
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Dashboard\textbackslash
+						Widgets}
+			\end{itemize}\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 77715 | No more password trimming for third-party authentication services
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Eksterni servisi za autentifikaciju}
+
+	\begin{itemize}
+
+		\item Proširenja mogu da koriste TYPO3 Authentication Service API
+			da autentifikuju korisnike putem "OAuth", "LDAP", "SAML2" i tako dalje...
+		\item TYPO3 \texttt{AbstractUserAuthentication} objekt više ne trimuje lozinke sa eksternih servisa.
+		\item Medjutim, ovo nije povezano sa nativnim servisom za autentifikaciju u okviru TYPO3
+			koji i dalje zahteva lozinke bez početnih/završnih praznih prostora.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89573 | Allow flexible base url for slug fields in FormEngine
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{TCA: Base URL prefix}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sad je moguće dodati prilagodjen base URL za TCA kolone tipa \texttt{slug}.
+		\item Base URL je prikazan pre polja (prefix).
+		\item Primer (TCA):
+
+\vspace{-0.4cm}
+\begin{lstlisting}
+...
+'config' => [
+  'type' => 'slug',
+  'appearance' => [
+    'prefix' => \Vendor\MyExtension\UserFunctions\FormEngine\SlugPrefix::class . '->getPrefix'
+  ]
+]
+...
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87776 | Limit Restriction to table/s in QueryBuilder
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{QueryBuilder}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Od sada je moguće postaviti ograničenja na upite za odredjene grupe tabela
+			(preciznije: na alijase tabela).
+		\item Sledeći kontejner ograničenja se može koristiti u ovu svrhu:\newline
+			\begingroup
+				\fontsize{7}{9}
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Database\textbackslash
+						Query\textbackslash
+						Restriction\textbackslash
+						LimitToTablesRestrictionContainer}
+			\endgroup
+
+		\item Primer:
+\begin{lstlisting}
+$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+  ->getQueryBuilderForTable('tt_content');
+$queryBuilder->getRestrictions()
+  ->removeByType(HiddenRestriction::class)
+  ->add(
+    GeneralUtility::makeInstance(LimitToTablesRestrictionContainer::class)
+      ->addForTables(GeneralUtility::makeInstance(HiddenRestriction::class), ['tt'])
+  );
+
+$queryBuilder->select('tt.uid')->from('tt_content', 'tt');
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 91008 | Item grouping for TCA select items
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{TCA selekt stavke (grupisanje)}
+
+	\begin{itemize}
+		\item Tipovi stranica (\texttt{pages.doktype}), tipovi sadržaja (\texttt{tt\_content.CType}),
+			i plugina (\texttt{tt\_content.list\_type}) sada imaju opciju grupisanja.
+		\item Za ovo se ranije koristila stavka
+			"\texttt{-}\texttt{-div-}\texttt{-}".
+		\item Programeri se savetuju da uklone stavke
+			"\texttt{-}\texttt{-div-}\texttt{-}"
+			iz prilagodjenih selekta i umesto njih koriste \texttt{itemGroups}.
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Feature-91008-ItemGroupingForTCASelectItems.html}{feature 91008 (grouping)}
+			za više detalja.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 91008 | Item sorting for TCA select items
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{TCA selekt stavke (sortiranje)}
+
+	\begin{itemize}
+		\item Dodata je nova opcija \texttt{sortOrders} za TCA selekt polja.
+		\item Ovo omogućava sortiranje stavki po vrednosti ili labeli.
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Feature-91008-ItemSortingForTCASelectItems.html}{feature 91008 (sorting)}
+			za više detalja.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90377 | Deprecate ref param types of method callUserFunction
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{GeneralUtility}
+
+	\begin{itemize}
+		\item Treći argument metode \texttt{callUserFunction()}
+			treba da bude objekat ili \texttt{null}.
+		\item Bilo koji drugi tip podatka prosledjen kao argument \texttt{\$ref} generiše sledeće upozorenje
+			\texttt{E\_USER\_DEPRECATED}.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 91079 | Various TypoScriptFrontendRenderer functionality is now internal
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{TypoScriptFrontendController}
+
+	\begin{itemize}
+		\item Sledeće osobine su sada označene kao \textbf{unutrašnje}:
+			\begin{itemize}
+				\item \texttt{TypoScriptFrontendController->sPre}
+				\item \texttt{TypoScriptFrontendController->pSetup}
+				\item \texttt{TypoScriptFrontendController->all}
+				\item \texttt{TypoScriptFrontendController->additionalJavaScript}
+				\item \texttt{TypoScriptFrontendController->additionalCSS}
+				\item \texttt{TypoScriptFrontendController->JSCode}
+				\item \texttt{TypoScriptFrontendController->inlineJS}
+				\item \texttt{TypoScriptFrontendController->indexedDocTitle}
+			\end{itemize}
+
+		\item Sledeći metod je sada označen kao \textbf{unutrašnji}:
+
+			\begin{itemize}
+				\item \texttt{TypoScriptFrontendController->setJS()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90613 | Add language argument to page-related LinkViewHelpers and UriViewHelpers in Fluid
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{LinkViewHelpers i UriViewHelpers}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Novi argument \texttt{language} je dodat sledećim ViewHelper-ima:
+			\begin{itemize}
+				\item \texttt{<f:link.typolink>}
+				\item \texttt{<f:link.page>}
+				\item \texttt{<f:uri.typolink>}
+				\item \texttt{<f:uri.page>}
+			\end{itemize}
+
+		\item Ovaj argument upućuje na specifičan jezik stranice.
+		\item Primer (jezik sa ID 3):
+\begin{lstlisting}
+Idi na
+<f:link.page pageUid="42" language="3">francusku verziju</f:link.page>
+"Kontakt" stranice.
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 90899 | Introduce AssetRenderer pre-rendering events
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{AssetCollector API}
+
+	\begin{itemize}
+		\item Kada se koristi AssetCollector API, CSS i JavaScript aseti
+			 mogu, ukoliko je potrebno, da se procesuiraju kasnije.
+		\item Sledeći dogadjaji se okidaju za ove potrebe:
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Page\textbackslash
+					Event\textbackslash
+					BeforeStylesheetsRenderingEvent}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Page\textbackslash
+					Event\textbackslash
+					BeforeJavaScriptsRenderingEvent}
+			\end{itemize}
+
+		\item Pogledajte
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Feature-90899-IntroduceAssetPreRenderingEvents.html}{change log}
+			za više detalja, primera i dodatnih objašnjenja.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
