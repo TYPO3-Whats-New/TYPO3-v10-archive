@@ -1,0 +1,106 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10 LTS - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Installatie en Upgrade}
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Installatie en Upgrade}}\end{center}
+	\begin{center}\large{\textit{Er is geen beter moment om TYPO3 v10 LTS te proberen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Classic Installation
+
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Klassieke installatiemethode}
+
+	\begin{itemize}
+		\item Offici\"ele \textit{klassieke} installatieprocedure op Linux/Mac OS X\newline
+			(DocumentRoot bijvoorbeeld \texttt{/var/www/site/htdocs}):
+\begin{lstlisting}
+$ cd /var/www/site/
+$ wget --content-disposition get.typo3.org/10
+$ tar xzf typo3_src-10.4.0.tar.gz
+$ cd htdocs
+$ ln -s ../typo3_src-10.4.0 typo3_src
+$ ln -s typo3_src/index.php
+$ ln -s typo3_src/typo3
+$ touch FIRST_INSTALL
+\end{lstlisting}
+
+		\item Symbolische koppelingen op Microsoft Windows:
+
+		\begin{itemize}
+			\item Gebruik \texttt{junction} op Windows XP/2000
+			\item Gebruik \texttt{mklink} op Windows Vista en Windows 7 of hoger
+		\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Composer Installation
+
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Installatie met PHP Composer}
+
+	\begin{itemize}
+		\item Installatie met \textit{composer} onder Linux, Mac OS X en Windows 10:
+\begin{lstlisting}
+$ cd /var/www/site/
+$ composer create-project typo3/cms-base-distribution typo3v10 ^10
+\end{lstlisting}
+
+		\item Of anders kan een maatwerk \texttt{composer.json} bestand gemaakt worden en dan:
+\begin{lstlisting}
+$ composer install
+\end{lstlisting}
+
+		Meer details over Composer voor de TYPO3 core en voor TYPO3 extensies
+		zijn beschikbaar op:
+
+		\small
+			\href{https://get.typo3.org/misc/composer/}{https://get.typo3.org/misc/composer}
+		\normalsize
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Upgrade to TYPO3 v10 LTS
+
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Upgrade naar TYPO3 v10 LTS}
+
+	\begin{itemize}
+		\item Upgrades zijn alleen mogelijk vanaf TYPO3 v9 LTS.
+		\item Sites met TYPO3 < v9 LTS horen eerst naar de meest recent v9.5.x te gaan.
+	\end{itemize}
+
+	\begin{itemize}
+		\item Algemene aanpak:
+			\begin{itemize}
+				\item Controle minimale vereisten \small(PHP, MySQL, etc.)
+				\item Bekijk \textbf{deprecation\_*.log} in oude TYPO3 installatie
+				\item Werk alle extensies bij naar meest recente, compatibele versies
+				\item Wissel naar nieuwe bronbestanden en start Install Tool -> Upgrade Wizard
+			\end{itemize}
+		\item Meer info in de offici\"ele
+			\href{https://docs.typo3.org/m/typo3/guide-installation/master/en-us/Upgrade/Index.html}{TYPO3 Installatie- en upgradegids}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

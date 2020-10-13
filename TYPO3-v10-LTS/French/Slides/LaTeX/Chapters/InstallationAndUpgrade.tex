@@ -1,0 +1,106 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10 LTS - What's New (French Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+
+\section{Installation et mise à jour}
+\begin{frame}[fragile]
+	\frametitle{Installation et mise à jour}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Installation et mise à jour}}\end{center}
+	\begin{center}\large{\textit{Pas de meilleurs moment pour jeter un œil à TYPO3 v10 LTS}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Classic Installation
+
+\begin{frame}[fragile]
+	\frametitle{Installation et mise à jour}
+	\framesubtitle{M2thode d'installation classique}
+
+	\begin{itemize}
+		\item Procédure officielle \textit{classique} d'installation sous Linux/Mac OS X\newline
+			(DocumentRoot considéré \texttt{/var/www/site/htdocs})~:
+\begin{lstlisting}
+\$ cd /var/www/site/
+\$ wget --content-disposition get.typo3.org/10
+\$ tar xzf typo3_src-10.4.0.tar.gz
+\$ cd htdocs
+\$ ln -s ../typo3_src-10.4.0 typo3_src
+\$ ln -s typo3_src/index.php
+\$ ln -s typo3_src/typo3
+\$ touch FIRST_INSTALL
+\end{lstlisting}
+
+		\item  Liens symboliques sous Microsoft Windows~:
+
+			\begin{itemize}
+				\item Utiliser \texttt{junction} sous Windows XP/2000
+				\item Utiliser \texttt{mklink} sous Windows Vista et Windows 7 ou supérieur
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Composer Installation
+
+\begin{frame}[fragile]
+	\frametitle{Installation et mise à jour}
+	\framesubtitle{Installation avec \texttt{composer}}
+
+	\begin{itemize}
+		\item Installation avec \textit{composer} sous Linux, Mac OS X et Windows 10~:
+\begin{lstlisting}
+\$ cd /var/www/site/
+\$ composer create-project typo3/cms-base-distribution typo3v10 ^10
+\end{lstlisting}
+
+		\item Vous pouvez aussi créer votre ficher \texttt{composer.json} sur mesure
+			et exécuter~:
+\begin{lstlisting}
+\$ composer install
+\end{lstlisting}
+
+		Plus de détails à propos de Composer pour le noyau de TYPO3 et les extensions TYPO3
+		disponible sur~:
+
+		\small
+			\href{https://get.typo3.org/misc/composer/}{https://get.typo3.org/misc/composer}
+		\normalsize
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Upgrade to TYPO3 v10 LTS
+
+\begin{frame}[fragile]
+	\frametitle{Installation et mise à jour}
+	\framesubtitle{Mise à jour vers TYPO3 v10 LTS}
+
+	\begin{itemize}
+		\item Les mises à jour sont possibles uniquement depuis TYPO3 v9 LTS\@.
+		\item Les sites utilisant une version antérieur doivent d'abord être mis à jour vers TYPO3 v9.5.x.
+	\end{itemize}
+
+	\begin{itemize}
+		\item Approche générique~:
+			\begin{itemize}
+				\item Vérifiez les prérequis système minimum \small(PHP, MySQL, etc.)
+				\item Relisez \textbf{deprecation\_*.log} dans l'ancienne instance TYPO3
+				\item Mettez à jour les extensions vers la dernière version compatible
+				\item Déployez les nouvelles sources et exécutez Install Tool -> Upgrade Wizard
+			\end{itemize}
+		\item Pour en savoir plus, lisez le
+			\href{https://docs.typo3.org/m/typo3/guide-installation/master/en-us/Upgrade/Index.html}{Guide d'installation et de mise à jour TYPO3 (en)}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

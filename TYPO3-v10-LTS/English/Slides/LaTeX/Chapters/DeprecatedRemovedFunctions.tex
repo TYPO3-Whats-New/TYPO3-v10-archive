@@ -1,0 +1,977 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10 LTS - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Deprecated/Removed Functions}
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Deprecated/Removed Functions}}\end{center}
+	\begin{center}\large{\textit{The TYPO3 core cleaned up and ready for the future}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% ==============================================================================
+% TYPO3 Version 10.1
+% ==============================================================================
+% ------------------------------------------------------------------------------
+% Deprecation | 88854 | T3_THIS_LOCATION
+% Deprecation | 88862 | T3_RETURN_URL
+% Deprecation | 89033 | jumpToUrl
+% Deprecation | 88854 | jumpExt() of RecordListController
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{JavaScript Deprecations}
+
+	\begin{itemize}
+		\item Two global JavaScript variables have been marked as \textbf{deprecated}:
+
+			\begin{itemize}
+				\item \texttt{T3\_THIS\_LOCATION}
+				\item \texttt{T3\_RETURN\_URL}
+			\end{itemize}
+
+		\item The well-known JavaScript function \texttt{jumpToUrl()} has been marked as \textbf{deprecated}.
+			Migration options:
+
+			\begin{itemize}
+				\item use \texttt{window.location.href = '...';}
+				\item or use a link in HTML like \texttt{<a href="...">link</a>}
+			\end{itemize}
+
+		\item The JavaScript function \texttt{jumpExt()} has been marked as \textbf{deprecated}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89215 | jQuery.clearable
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{JavaScript Deprecations}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The jQuery plugin \texttt{jquery.clearable},
+			that provides a button to clear an input field, has been marked as \textbf{deprecated}.
+		\item Migration: use module \small\texttt{TYPO3/CMS/Backend/Input/Clearable}\normalsize
+			and the method \texttt{clearable()} on a native HTMLInputElement.
+\begin{lstlisting}
+require(['TYPO3/CMS/Backend/Input/Clearable'], function() {
+  const inputField = document.querySelector('#myinput');
+  if (inputField !== null) {
+    inputField.clearable();
+  }
+
+  const clear = Array.from(document.querySelectorAll('.t3js-clearable')).filter(inputElement => {
+    return !inputElement.classList.contains('t3js-datetimepicker');
+  });
+  clear.forEach(clearableField => clearableField.clearable());
+});
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88839 | CLI lowlevel request handlers
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{CLI Command Handler}
+
+	\begin{itemize}
+		\item CLI commands are handled using the \texttt{CommandApplication} class.
+		\item This class is a wrapper around the
+			\href{https://symfony.com/doc/current/components/console.html}{Symfony Console}.
+
+		\item The previously used interface and the class \texttt{CommandRequestHandler} have been marked as \textbf{deprecated}:
+
+			\begin{itemize}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						RequestHandlerInterface}
+				\item
+					\texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Console\textbackslash
+						CommandRequestHandler}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89127 | Cleanup RecordHistory handling
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{RecordHistory Handling}
+
+	Changes made to the class
+		\smaller
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				History\textbackslash
+				RecordHistory}:
+		\normalsize
+
+	\begin{itemize}
+
+		\item Visibility of properties \texttt{changeLog} and \texttt{lastHistoryEntry}
+			changed to \texttt{protected} (and public getter function added).
+		\item Visibility of methods \texttt{getHistoryEntry()} and \texttt{getHistoryData()}
+			changed to \texttt{protected}.
+		\item The following methods have been marked as \textbf{deprecated}:
+
+			\begin{itemize}\smaller
+				\item \texttt{createChangeLog()}
+				\item \texttt{shouldPerformRollback()}
+				\item \texttt{getElementData()}
+				\item \texttt{performRollback()}
+				\item \texttt{createMultipleDiff()}
+				\item \texttt{setLastHistoryEntry()}
+			\end{itemize}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89037 | Deprecated LocallangXmlParser
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{XML Language Files}
+
+	\begin{itemize}
+		\item The XLIFF format is used for language files since TYPO3 v4.6.
+		\item The usage of XML language files is now marked as \textbf{deprecated}
+			and triggers a warning/error.
+		\item This includes executing the following XML-parser:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Localization\textbackslash
+					Parser\textbackslash
+					LocallangXmlParser}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% ==============================================================================
+% TYPO3 Version 10.2
+% ==============================================================================
+% ------------------------------------------------------------------------------
+% Deprecation | 89331 | FormEngine legacy functions
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{FormEngine}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The following functions of the FormEngine have been marked as \textbf{deprecated}:
+
+			\begin{itemize}
+				\item \texttt{setFormValueOpenBrowser()}\newline
+					\smaller(use \texttt{FormEngine.openPopupWindow()} instead)\small
+
+				\item \texttt{setFormValueFromBrowseWin()}\newline
+					\smaller(use \texttt{FormEngine.setSelectOptionFromExternalSource()} instead)\small
+
+				\item \texttt{setHiddenFromList()}\newline
+					\smaller(use \texttt{FormEngine.updateHiddenFieldValueFromSelect()} instead)\small
+
+				\item \texttt{setFormValueManipulate()}\newline
+					\smaller(no replacement, as this is interal logic)\small
+
+				\item \texttt{setFormValue\_getFObj()}\newline
+					\smaller(use \texttt{use FormEngine.getFormElement()} instead)\small
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89733 | Signal Slots in Core Extension migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Signal/Slot}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The following Signal/Slots were replaced by PSR-14 events and therefore have been marked as \textbf{deprecated}:
+			\newline
+
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Imaging\textbackslash
+					IconFactory::buildIconForResourceSignal}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					SoftReferenceIndex::setTypoLinkPartsElement}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					ReferenceIndex::shouldExcludeTableFromReferenceIndex}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					ExtensionManagementUtility::tcaIsBeingBuilt}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Install\textbackslash
+					Service\textbackslash
+					SqlExpectedSchemaService::tablesDefinitionIsBeingBuilt}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Tree\textbackslash
+					TableConfiguration\textbackslash
+					DatabaseTreeDataProvider::PostProcessTreeData}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					ToolbarItems\textbackslash
+					SystemInformationToolbarItem::getSystemInformation}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					ToolbarItems\textbackslash
+					SystemInformationToolbarItem::loadMessages}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89631 | Use Environment API to fetch application context
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Application Context}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The method \texttt{GeneralUtility::getApplicationContext()} has been marked \textbf{deprecated}.
+		\item The following method should be used instead:\newline
+		 	\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Core\textbackslash
+				Environment::getContext()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% ==============================================================================
+% TYPO3 Version 10.3
+% ==============================================================================
+% ------------------------------------------------------------------------------
+% Deprecation | 89463 | Deprecate switchable controller actions
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Switchable Controller Actions}
+
+	\begin{itemize}
+		\item "Switchable Controller Actions" (SCA) have been marked as \textbf{deprecated}.
+		\item SCA are used to override the allowed set of controllers and actions using TypoScript or Flexforms.
+		\item Using the same plugin as an entry point for many different functionalities contradicts the idea of a plugin serving one specific purpose.
+		\item Plugins that use SCA should be split into multiple different plugins.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90007 | Global constants TYPO3_version and TYPO3_branch
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Global Constants}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item The following two global constants have been marked as \textbf{deprecated}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\_version}
+				\item \texttt{TYPO3\_branch}
+			\end{itemize}
+
+		\item The following new PHP class should be used instead:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Information\textbackslash
+					Typo3Version}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89673 | Deprecate Extbases WebRequest and WebResponse
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Extbase: \texttt{WebRequest}/\texttt{WebResponse}}
+
+	\begin{itemize}
+		\item The following two Extbase classes have been marked as \textbf{deprecated}:
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Request}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Mvc\textbackslash
+					Web\textbackslash
+					Response}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90258 | Simplified RTE Parser API
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Simplified RTE Parser API}
+
+	\begin{itemize}
+		\item The PHP class \texttt{RteHtmlParser} features a simplified API now.
+		\item As a consequence, the following two methods have been marked as \textbf{deprecated}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->init()}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Html\textbackslash
+					RteHtmlParser->RTE\_transform()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89139 | Console Commands configuration migrated to Symfony service tags
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Console Commands Configuration}
+
+	\begin{itemize}
+		\item As the console commands configuration has been migrated to Symfony service tags,
+			the console command configuration file \texttt{Configuration/Commands.php}
+			has been marked as \textbf{deprecated}.
+		\item Use the dependency injection service tag \texttt{console.command} instead.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89672 | transOrigPointerField is not longer allowed to be excluded
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{TCA: \texttt{transOrigPointerField}}
+
+	\begin{itemize}
+		\item Excluding the field pointed by the following TCA option led to
+			inconsistent data stored in the database under certain circumstances:
+			\small
+				\texttt{\$GLOBALS['TCA'][\$table]['ctrl']['transOrigPointerField']}
+			\normalsize
+
+		\item Therefore, the targeted field can not be excluded anymore.
+		\item A migration wizard removes the option from the TCA and adds a deprecation
+			message to the deprecation log in case code needs to be updated.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90421 | DocumentTemplate
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{DocumentTemplate}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The following class has been marked as \textbf{deprecated}:
+
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Template\textbackslash
+					DocumentTemplate}
+			\end{itemize}
+
+		\item It was used as a basis to render backend modules or HTML-based output in TYPO3 backend.
+		\item Since TYPO3 v7, the new API via ModuleTemplate should be used instead.
+\begin{lstlisting}
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+...
+$moduleTemplate = GeneralUtility::makeInstance(ModuleTemplate::class);
+$content = $this->getHtmlContentFromMyModule();
+$moduleTemplate->setTitle('My module');
+$moduleTemplate->setContent($content);
+return new HtmlResponse($moduleTemplate->renderContent());
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90390 | Deprecate BrokenLinkRepository::getNumberOfBrokenLinks() in linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{LinkValidator}
+
+	\begin{itemize}
+		\item The following method has been marked as \textbf{deprecated}:
+		\newline\newline
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Linkvalidator\textbackslash
+					Repository\textbackslash
+					BrokenLinkRepository}\newline
+				\texttt{->getNumberOfBrokenLinks()}\normalsize\newline
+
+		\item Use the following method in the same class instead:\newline
+			\small\texttt{BrokenLinkRepository::isLinkTargetBrokenLink()}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% ==============================================================================
+% TYPO3 Version 10.4
+% ==============================================================================
+% ------------------------------------------------------------------------------
+% Deprecation | 91001 | Various methods within GeneralUtility
+% Deprecation | 90956 | Alternative fetch methods and reports for GeneralUtility::getUrl()
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{GeneralUtility}
+
+	\begin{itemize}
+		\item The following GeneralUtility methods have been marked \textbf{deprecated}:
+			\begin{itemize}\smaller
+				\item \texttt{GeneralUtility::IPv6Hex2Bin()}
+				\item \texttt{GeneralUtility::IPv6Bin2Hex()}
+				\item \texttt{GeneralUtility::compressIPv6()}
+				\item \texttt{GeneralUtility::milliseconds()}
+				\item \texttt{GeneralUtility::linkThisUrl()}
+				\item \texttt{GeneralUtility::flushDirectory()}
+			\end{itemize}\normalsize
+			\vspace{0.4cm}
+
+		\item Setting additional arguments besides the URL in \texttt{GeneralUtility::getUrl()}
+			has been marked \textbf{deprecated}.\newline
+			\smaller
+				(this includes: \texttt{\$includeHeader}, \texttt{\$requestHeaders}, and \texttt{\$report})
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90800 | GeneralUtility::isRunningOnCgiServerApi
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{GeneralUtility}
+
+	\begin{itemize}
+		\item The following method has been removed from the \texttt{GeneralUtility} class:
+			\texttt{GeneralUtility::isRunningOnCgiServerApi()}.
+		\item This function is now available as\newline
+			\texttt{Environment::isRunningOnCgiServer()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90964 | LanguageService functionality and internal properties
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{LanguageService Functionality}
+
+	Changes of the LanguageService (also known as \texttt{\$GLOBALS[LANG]}).
+	\vspace{0.4cm}
+	\begin{itemize}
+		\item The visibility of the following functions has changed:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->LL\_files\_cache} (now \texttt{protected})
+				\item \texttt{LanguageService->LL\_labels\_cache} (now \texttt{protected})
+				\item \texttt{LanguageService->getLLL()} (now \texttt{protected})
+				\item \texttt{LanguageService->debugLL()} (now \texttt{protected})
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+		\item The following function has been marked \textbf{deprecated}:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->getLabelsWithPrefix()}
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+		\item The following function has been marked \textbf{internal} now:
+			\begin{itemize}\smaller
+				\item \texttt{LanguageService->loadSingleTableDescription()}
+			\end{itemize}\normalsize
+			\vspace{0.2cm}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 90897 | Remove bootstrap-slider
+% Important | 86343 | Replace jQuerydatatables with tablesort
+% Deprecation | 90686 | Deprecate model FileMount (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Internal Libraries and Classes}
+
+	\begin{itemize}
+		\item The following internal libraries have been removed:
+			\begin{itemize}
+				\item "bootstrap-slider"
+				\item "jQuery.datatables"
+			\end{itemize}
+			\vspace{0.4cm}
+
+		\item The internal class \small\texttt{TYPO3\textbackslash
+			CMS\textbackslash
+			Extbase\textbackslash
+			Domain\textbackslash
+			Model\textbackslash
+			FileMount}\normalsize\newline
+			has been marked \textbf{deprecated}.
+
+	\end{itemize}
+
+	\vspace{0.6cm}
+	\begin{itemize}
+		\item[\ding{228}] \textit{Reminder:} \textit{Extension authors should never use libraries that are not marked as public API.}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90937 | Various hooks in ContentObjectRenderer
+% Deprecation | 90861 | Image-related methods within ContentObjectRenderer
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{ContentObjectRenderer}
+
+	\begin{itemize}
+		\item The following hooks within have been marked \textbf{deprecated}:\newline
+			\tiny
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']['tslib/class.tslib\_content.php']...}
+			\normalsize
+
+			\begin{itemize}\smaller
+				\item \texttt{['cObjTypeAndClass']}
+				\item \texttt{['cObjTypeAndClassDefault']}
+				\item \texttt{['extLinkATagParamsHandler']}
+				\item \texttt{['typolinkLinkHandler']}
+			\end{itemize}
+
+		\item The following methods have been marked \textbf{deprecated}:
+
+			\begin{itemize}\smaller
+				\item \texttt{cImage()}
+				\item \texttt{getBorderAttr()}
+				\item \texttt{getImageTagTemplate()}
+				\item \texttt{getImageSourceCollection()}
+				\item \texttt{linkWrap()}
+				\item \texttt{getAltParam()}
+			\end{itemize}
+
+			\smaller
+				(all methods have been moved to the ImageContentObject class)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90856 | Deprecate Widget AutoComplete ViewHelper (Fluid)
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Fluid AutoComplete ViewHelper}
+
+	\begin{itemize}
+		\item The Fluid ViewHelper \texttt{<f:widget.autocomplete>} and the related controller
+			have been marked \textbf{deprecated}.
+		\item If you use or extend the following, you should take action:
+
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Fluid\textbackslash
+					ViewHelpers\textbackslash
+					Widget\textbackslash
+					AutocompleteViewHelper}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Fluid\textbackslash
+					ViewHelpers\textbackslash
+					Widget\textbackslash
+					Controller\textbackslash
+					AutocompleteController}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90692 | Deprecate FileCollection models (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{FileCollection Models}
+
+	\begin{itemize}
+		\item The following FileCollection models have been marked \textbf{deprecated}:
+			\vspace{0.4cm}
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					StaticFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					FolderBasedFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Domain\textbackslash
+					Model\textbackslash
+					AbstractFileCollection}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					StaticFileCollectionConverter}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					FolderBasedFileCollectionConverter}
+
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Property\textbackslash
+					TypeConverter\textbackslash
+					AbstractFileCollectionConverter}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90625 | Extbase SignalSlot Dispatcher (Extbase)
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Extbase SignalSlot Dispatcher}
+
+	\begin{itemize}
+		\item During the TYPO3 v10 development over the last months,
+			all Extbase signals provided by TYPO3 core have been migrated to PSR-14 Events.
+		\item The Extbase "SignalSlot Dispatcher" has now been marked \textbf{deprecated}.
+		\item Extension developers are adviced to migrate to PSR-14 Events and Event Listeners.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 90147 | Unified File Name Validator
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{FileNameValidator API}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The logic for validating if the file name of a new (uploaded) or
+			renamed is valid, is now available as a new FileNameValidator API:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Resource\textbackslash
+					Security\textbackslash
+					FileNameValidator}
+			\normalsize
+
+		\item Migration options:
+\begin{lstlisting}
+// OLD:
+GeneralUtility::verifyFilenameAgainstDenyPattern($filename)
+// NEW:
+GeneralUtility::makeInstance(FileNameValidator::class)->isValid($filename)
+
+// OLD:
+FILE_DENY_PATTERN_DEFAULT
+// NEW:
+FileNameValidator::DEFAULT_FILE_DENY_PATTERN
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88740 | Deprecate felogin pibase plugin
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{\texttt{EXT:felogin} Hooks}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item All legacy hooks of \texttt{EXT:felogin} have been disabled and
+			will be removed in TYPO3 v11:
+
+			\begin{itemize}\tiny
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['beforeRedirect']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['postProcContent']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['password\_changed']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['forgotPasswordMail']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['login\_confirmed']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['login\_error']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['loginFormOnSubmitFuncs']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['EXTCONF']['felogin']['logout\_confirmed']}
+			\end{itemize}
+
+		\item See
+			\href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.4/Deprecation-88740-DeprecateFeloginPibasePlugin.html}{change log}
+			for migration options.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Miscellaneous from 10.1
+% ------------------------------------------------------------------------------
+% Deprecation | 88850 | ContentObjectRenderer::sendNotifyEmail
+% Deprecation | 88787 | BackendUtility::editOnClick
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous}
+
+	\begin{itemize}
+		\item Mail functionality should not be included in the class\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					ContentObject\textbackslash
+					ContentObjectRenderer}.\newline
+			\normalsize
+			Therefore, the method \texttt{sendNotifyEmail()} has been marked \textbf{deprecated} and will be removed in TYPO3 v11.
+
+		\item The method \texttt{editOnClick()} used to generate JavaScript \texttt{onclick}
+			targets has been marked as \textbf{deprecated} in the following class:\newline
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility}.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Miscellaneous from 10.2
+% ------------------------------------------------------------------------------
+% Deprecation | 89468 | Deprecate injection of EnvironmentService in Web Request
+% Deprecation | 89554 | Deprecate /TYPO3/CMS/Extbase/Mvc/Controller/AbstractController
+% Deprecation | 89756 | BackendUtility::TYPO3_copyRightNotice
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item The property \texttt{\$environmentService} of the following class has been marked as \textbf{deprecated}:
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Mvc\textbackslash
+				Web\textbackslash
+				Response}.\newline
+			\smaller
+				(inject the environment service manually in the subclass if required)
+			\normalsize
+
+		\item The following internal class has been marked as \textbf{deprecated}:\newline
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Mvc\textbackslash
+				Controller\textbackslash
+				AbstractController}.
+
+		\item The following method has been marked as \textbf{deprecated}:\newline
+			\texttt{TYPO3\
+				CMS\
+				Backend\
+				Utility\
+				BackendUtility::TYPO3\_copyRightNotice}.\newline
+				\smaller
+					(use the new PHP class \texttt{Typo3Copyright} and its method \texttt{getCopyrightNotice()} instead)
+				\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89722 | GMENU_LAYERS related property TSFE->divSection
+% Important | 89764 | Incompatible environment related dependency injection services have been removed
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item The PHP property \texttt{TypoScriptFrontendController->divSection} has been marked as \textbf{deprecated}.\newline
+			\smaller
+				(use \texttt{\$GLOBALS['TSFE']->additionalHeaderData[]} to add JavaScript within uncached content instead)
+			\normalsize
+
+		\item As part of the Symfony 5.0 support in TYPO3 v10.2, incompatible environment related dependency injection services have been removed:
+
+			\begin{itemize}
+				\item \texttt{env.is\_unix}
+				\item \texttt{env.is\_windows}
+				\item \texttt{env.is\_cli}
+				\item \texttt{env.is\_compoer\_mode}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% No Miscellaneous from 10.3 and 10.4
+% ------------------------------------------------------------------------------
