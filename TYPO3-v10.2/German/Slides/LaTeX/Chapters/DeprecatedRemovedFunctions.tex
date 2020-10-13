@@ -1,0 +1,226 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (German Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+
+\section{Veraltete/Entfernte Funktionen}
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+
+	\begin{center}\huge{Kapitel 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Veraltete/Entfernte Funktionen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89331 | FormEngine legacy functions
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{FormEngine}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die folgenden Funktionen der FormEngine wurden als \textbf{veraltet} markiert:
+
+			\begin{itemize}
+				\item \texttt{setFormValueOpenBrowser()}\newline
+					\smaller(verwenden Sie stattdessen \texttt{FormEngine.openPopupWindow()})\small
+
+				\item \texttt{setFormValueFromBrowseWin()}\newline
+					\smaller(verwenden Sie stattdessen \texttt{FormEngine.setSelectOptionFromExternalSource()})\small
+
+				\item \texttt{setHiddenFromList()}\newline
+					\smaller(verwenden Sie stattdessen \texttt{FormEngine.updateHiddenFieldValueFromSelect()})\small
+
+				\item \texttt{setFormValueManipulate()}\newline
+					\smaller(kein Ersatz, da dies eine interne Logik ist)\small
+
+				\item \texttt{setFormValue\_getFObj()}\newline
+					\smaller(verwenden Sie stattdessen \texttt{use FormEngine.getFormElement()})\small
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89733 | Signal Slots in Core Extension migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Signal/Slot}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die folgenden Signal/Slots wurden durch PSR-14 Events ersetzt und daher als \textbf{veraltet} gekennzeichnet:
+			\newline
+
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Imaging\textbackslash
+					IconFactory::buildIconForResourceSignal}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					SoftReferenceIndex::setTypoLinkPartsElement}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					ReferenceIndex::shouldExcludeTableFromReferenceIndex}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					ExtensionManagementUtility::tcaIsBeingBuilt}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Install\textbackslash
+					Service\textbackslash
+					SqlExpectedSchemaService::tablesDefinitionIsBeingBuilt}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Tree\textbackslash
+					TableConfiguration\textbackslash
+					DatabaseTreeDataProvider::PostProcessTreeData}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					ToolbarItems\textbackslash
+					SystemInformationToolbarItem::getSystemInformation}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					ToolbarItems\textbackslash
+					SystemInformationToolbarItem::loadMessages}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89631 | Use Environment API to fetch application context
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Anwendungskontext}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die Methode  \texttt{GeneralUtility::getApplicationContext()} wurde als \textbf{veraltet} markiert.
+		\item Stattdessen sollte die folgende Methode benutzt werden:\newline
+		 	\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Core\textbackslash
+				Environment::getContext()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89468 | Deprecate injection of EnvironmentService in Web Request
+% Deprecation | 89554 | Deprecate /TYPO3/CMS/Extbase/Mvc/Controller/AbstractController
+% Deprecation | 89756 | BackendUtility::TYPO3_copyRightNotice
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Sonstiges}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Eigenschaft \texttt{\$environmentService} der folgenden Klasse wurde als \textbf{veraltet} markiert:
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Mvc\textbackslash
+				Web\textbackslash
+				Response}.\newline
+			\smaller
+				(bei Bedarf den Umgebungsdienst manuell in die Unterklasse injizieren)
+			\normalsize
+
+		\item die folgende interne Klasse wurde als \textbf{veraltet} markiert:\newline
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Mvc\textbackslash
+				Controller\textbackslash
+				AbstractController}.
+
+		\item Folgende Methode wurde als \textbf{veraltet} markiert:\newline
+			\texttt{TYPO3\
+				CMS\
+				Backend\
+				Utility\
+				BackendUtility::TYPO3\_copyRightNotice}.\newline
+				\smaller
+					(verwenden Sie stattdessen die neue PHP-Klasse \texttt{Typo3Copyright} und ihre Methode \texttt{getCopyrightNotice()})
+				\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89722 | GMENU_LAYERS related property TSFE->divSection
+% Important | 89764 | Incompatible environment related dependency injection services have been removed
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Sonstiges}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die PHP-Eigenschaft \texttt{TypoScriptFrontendController->divSection} wurde als \textbf{veraltet} markiert.\newline
+			\smaller
+				(verwenden Sie stattdessen \texttt{\$GLOBALS['TSFE']->additionalHeaderData[]} zum Hinzufügen von JavaScript innerhalb von nicht gecachten Inhalten)
+			\normalsize
+
+		\item Im Rahmen der Unterstützung von Symfony 5.0 in TYPO3 v10.2 wurden inkompatible umgebungsbezogene Dependency-Injection-Dienste entfernt:
+
+			\begin{itemize}
+				\item \texttt{env.is\_unix}
+				\item \texttt{env.is\_windows}
+				\item \texttt{env.is\_cli}
+				\item \texttt{env.is\_composer\_mode}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

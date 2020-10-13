@@ -1,0 +1,314 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Izmene za integratore}
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+
+	\begin{center}\huge{Poglavlje 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Izmene za integratore}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 85592 | Add site title configuration to sites module
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Konfiguracija sajta (1)}
+
+	\begin{itemize}
+
+		\item Naslov sajta se sada može podesiti u
+			\textbf{SITE CONFIGURATION} $\rightarrow$ \textbf{Sites}.
+		\item Ovo omogućava razlicite naslove sajta za različite jezike.
+		\item Ovo polje u rekordu šablona je označeno kao \textbf{zastarelo}.
+		\item Polje \texttt{sys\_template.sitetitle} (baza podataka i TCA) će biti uklonjeno u TYPO3 v11.
+		\item Naslov sajta se koristi za naslov stranice, a u budućnosti i za integraciju sa
+		  \texttt{schema.org}.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89398 | Support for environment variables in imports in site configurations
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Konfiguracija sajta (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sada se mogu koristiti promenljive okruženja u importima YAML fajlova konfiguracije sajta:
+\begin{lstlisting}
+imports:
+  -
+    resource: 'Env_%env("foo")%.yaml'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88102 | Frontend Login Form Via Fluid And Extbase
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Logovanje na korisnički interfejs (1)}
+
+	\begin{itemize}
+
+		\item TYPO3 v10.2 poseduje Extbase verziju funkcionalnosti za logovanje na korisnički interfejs.
+		\item Ovo rešenje ima nekoliko prednosti:
+
+			\begin{itemize}
+				\item Lakša izmena šablona.
+				\item Slanje mejlova za resetovanje lozinke na bazi HTML-a.
+				\item Podešavanjem i menjanjem validatora je moguće da se podese ograničenja za lozinke.
+			\end{itemize}
+
+		\item Novi Extbase plugin je odmah dostupan za nove instalacije.
+		\item Postojeće TYPO3 instance će i dalje koristiti stare šablone.
+		\item Integratori mogu da menjaju "stari" i "novi" plugin.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Logovanje na korisnički interfejs (2)}
+
+	\begin{itemize}
+
+		\item Forma za resetovanje lozinke je dodata kao deo Extbase plugin-a.
+		\item Korisnik može da zahteva promenu lozinke i dobiće email sa linkom ka formi.
+		\item Podrazumevana pravila validacije lozinke su:
+
+			\begin{itemize}
+				\item \texttt{NotEmptyValidator} - lozinka ne može biti prazna.
+				\item \texttt{StringLengthValidator} - lozinka mora imati minimalnu dužinu.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Logovanje na korisnički interfejs (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Ova pravila validacije se mogu podešavati.
+		\item Na primer:
+\begin{lstlisting}
+plugin.tx_felogin_login {
+  settings {
+    passwordValidators {
+      10 = TYPO3\CMS\Extbase\Validation\Validator\AlphanumericValidator
+      20 {
+        className = TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator
+        options {
+          minimum = 12
+          maximum = 32
+        }
+      }
+      30 = \Vendor\MyExtension\Validation\Validator\MyCustomPasswordPolicyValidator
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89526 | FeatureFlag: betaTranslationServer
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Platforma za upravljanje prevodima}
+
+	\begin{itemize}
+
+		\item \href{https://crowdin.com/}{crowdin} ima za cilj da zameni postojeće rešenje
+			za upravljanje prevodima \href{https://translation.typo3.org/}{Pootle}.
+
+		\item Mogućnost izbora ove funkcionalnosti je dodata u TYPO3 v10.2 i ona koristi crowdin.com
+			kao izvor za prevode ako je omogućena.
+
+		\item Napomena: ovo je \textbf{beta verzija}.
+
+		\item Više možete pročitati na
+			\href{https://typo3.org/community/teams/typo3-development/initiatives/localization-with-crowdin/}{initiative}.
+
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.50\linewidth]{ChangesForIntegrators/crowdin-logo.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89171 | Added possibility to have multiple sitemaps
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Višestruke mape sajtova}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sada se može konfigurisati više mapa sajtova.
+		\item Sintaksa:
+\begin{lstlisting}
+plugin.tx_seo {
+  config {
+    <sitemapType> {
+      sitemaps {
+        <unique key> {
+          provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+          config {
+            ...
+          }
+        }
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86759 | Support nomodule attribute for JavaScript includes
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{HTML5 atribut \texttt{nomodule}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item HTML5 atribut \texttt{nomodule} je podržan kada se uključuju JavaScript fajlovi putem TypoScript-a.
+\begin{lstlisting}
+page.includeJSFooter.file = path/to/classic-file.js
+page.includeJSFooter.file.nomodule = 1
+\end{lstlisting}
+
+		\item Ovaj atribut sprečava izvršenje skripte u pretraživačima koji podržavaju modularne skripte.
+
+		\item Više o ovom standardu možete pročitati u
+			\href{https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule}{specifikaciji},
+			a ovde o konceptu \href{https://hacks.mozilla.org/2015/08/es6-in-depth-modules/}{modula}.
+
+	\end{itemize}
+
+% <script type="module" src="path/to/file.js"></script>
+% <script nomodule src="path/to/file/classic-file.js"></script>
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87798 | Provide a way to sort form lists in ext:form
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Sortiranje formi}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Forme se mogu sortirati u rastućem ili opadajućem redosledu.
+		\item Dodata su dva nova podešavanja: \texttt{sortByKeys} i \texttt{sortAscending}.
+		\item Forme su u startu sortirane po imenu i UID-u (u rastućem redosledu).
+		\item Da se promeni redosled, neophodna je sledeća konfiguracija u YAML konfiguracionom fajlu:
+\begin{lstlisting}
+TYPO3:
+  CMS:
+    Form:
+      persistenceManager:
+        sortByKeys: ['name', 'fileUid']
+        sortAscending: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86918 | Add additional configuration for external link types in Linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Validator linkova (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Validator linkova sada podržava dodatna podešavanja za konfiguraciju eksternih linkova.
+		\item Vrednosti za \texttt{httpAgentUrl} i \texttt{httpAgentEmail} se moraju dostaviti.
+		\item Podešavanja \texttt{headers}, \texttt{method} i \texttt{range} su napredna podešavanja.
+\begin{lstlisting}
+mod.linkvalidator {
+  linktypesConfig {
+    external {
+      httpAgentName = ...
+      httpAgentUrl = ...
+      httpAgentEmail = ...
+      headers {
+      }
+      method = HEAD
+      range = 0-4048
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84990 | Add event for checking external links in RTE
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za integratore}
+	\framesubtitle{Validator linkova (2)}
+
+	\begin{itemize}
+		\item Validator linkova označava \textbf{eksterne} linkove koji ne rade i u RTE.
+		\item Ova funkcionalnost je bila dostupna samo za interne linkove.
+		\item Preporuka je da se Validator linkova pokreće redovno putem Scheduler-a da bi tražio linkove koji ne rade.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

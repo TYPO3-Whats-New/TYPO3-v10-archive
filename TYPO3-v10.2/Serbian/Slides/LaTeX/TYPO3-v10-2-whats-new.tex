@@ -1,0 +1,77 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% .
+
+\documentclass[t]{beamer}
+
+% suppress navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\mode<presentation>
+{
+	\usetheme{typo3slides}
+}
+
+% global variables
+\title{TYPO3 Verzija 10.2 - Šta je novo}
+\subtitle{Sažet prikaz novih opcija, promena i poboljšanja}
+\author{
+	\centerline{Autor:}
+	\centerline{Michael Schams}
+}
+
+\date{\today}
+
+\begin{document}
+
+% select TYPO3 Share font
+\sharefont
+
+% ------------------------------------------------------------------------------
+% Title Page
+% ------------------------------------------------------------------------------
+
+\begingroup
+	\setbeamercolor{normal text}{fg=white,bg=typo3orange}
+	\setbeamercolor{title}{fg=white}
+	\setbeamercolor{author}{fg=white}
+	\setbeamertemplate{footline}[default]
+	\begin{frame}
+		\titlepage
+	\end{frame}
+\endgroup
+
+% ------------------------------------------------------------------------------
+% Table of Contents
+% ------------------------------------------------------------------------------
+
+\section*{TYPO3 Verzija 10.2 - Šta je novo}
+\begin{frame}[fragile]
+	\frametitle{Sadržaj}
+	\framesubtitle{Sadržaj}
+
+	\tableofcontents
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\include{Chapters/Introduction}
+\include{Chapters/BackendUserInterface}
+\include{Chapters/ChangesForIntegrators}
+\include{Chapters/ChangesForDevelopers}
+\include{Chapters/FormSystemExtension}
+\include{Chapters/DeprecatedRemovedFunctions}
+\include{Chapters/SourcesAndAuthors}
+
+% ------------------------------------------------------------------------------
+
+%\include{Chapters/TestChapter}
+
+% ------------------------------------------------------------------------------
+\end{document}

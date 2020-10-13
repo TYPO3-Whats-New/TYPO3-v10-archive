@@ -1,0 +1,203 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (French Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+
+\section{Introduction}
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+
+	\begin{center}\huge{Introduction}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Les faits}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - The Facts
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{TYPO3 Version 10.2 - Les faits}
+
+	\begin{itemize}
+		\item Date de sortie~: 03 décembre 2019
+		\item Type de sortie~: Sprint Release
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3-v10-2-banner.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - Executive Summary
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{En Résumé}
+
+	\small
+		La version 10.2 de TYPO3 est la troisième itération sur la route de
+		la version LTS (support long-terme) prévue en 2020. C'est aussi la
+		dernière itération de l'année.
+
+		\vspace{0.2cm}
+
+		De nombreuses fonctionnalités furent développées durant la TYPO3 Initiative Week (T3INIT19)
+		et TYPO3 v10.2 contient déjà certains de ces composants.
+
+		\vspace{0.2cm}
+
+		Cette sortie entame la route vers un environnement de pointe. Non seulement
+		TYPO3 v10.2 supporte Symfony version 5.0, mais c'est aussi la première sortie
+		qui supporte PHP 7.4. C'est aussi la dernière sortie avant le gel des fonctionnalités
+		en février 2020.
+
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% System Requirements
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Configuration requise}
+
+	\begin{itemize}
+		\item Version de PHP~: 7.2, 7.3 ou 7.4
+		\item Configuration PHP~:
+
+			\begin{itemize}
+				\item \texttt{memory\_limit} >= 256M
+				\item \texttt{max\_execution\_time} >= 240s
+				\item \texttt{max\_input\_vars} >= 1500
+				\item L'option de compilation \texttt{-}\texttt{-disable-ipv6}
+					\underline(NE) doit \underline{PAS} être utilisée
+			\end{itemize}
+
+		\item La majorité des serveurs de base de données supportés par \textbf{Doctrine DBAL}
+			fonctionnent avec TYPO3. Les moteurs testés sont par exemple~:
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.80\linewidth]{Introduction/logo-databases.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Development, Release and Maintenance Timeline
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Chronologie des développements, sorties et maintenances}
+
+	\textbf{TYPO3 v10}
+
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{Introduction/typo3-v10-lifecycle.png}
+	\end{figure}
+
+	\textbf{Support étendu}\newline
+	\smaller
+		\href{https://typo3.com}{TYPO3 GmbH} propose des options de support pour TYPO3
+		v10 LTS même après de 30 Avril 2023, pour 2 ans supplémentaires maximum.
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% TYPO3 v10 Roadmap
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Feuille de route TYPO3 v10}
+
+	Dates de sortie et objectifs principaux~:
+
+	\begin{itemize}
+
+		\item v10.0 \tabto{1.1cm}23/Jui./2019\tabto{3.4cm}Ouvre la voie à de nouveaux concepts et APis
+		\item v10.1 \tabto{1.1cm}01/Oct./2019\tabto{3.4cm}Améliorations routage et gestion des sites V2
+		\item
+			\begingroup
+				\color{typo3orange}
+		v10.2 \tabto{1.1cm}03/Déc./2019\tabto{3.4cm}Améliorations du moteur de rendu Fluid
+			\endgroup
+		\item v10.3 \tabto{1.1cm}04/Fév./2020\tabto{3.4cm}Gèle des fonctionnalités
+		\item v10.4 \tabto{1.1cm}07/Avr./2020\tabto{3.4cm}Version LTS (Long-term Support)
+
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/article/typo3-v10-roadmap/}\newline
+		\url{https://typo3.org/article/typo3-v10-safe-and-sound/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation
+
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Installation}
+
+	\begin{itemize}
+		\item Procédure officielle \textit{classique} d'installation sous Linux/Mac OS X\newline
+			(DocumentRoot considéré \texttt{/var/www/site/htdocs})~:
+\begin{lstlisting}
+$ cd /var/www/site
+$ wget --content-disposition get.typo3.org/10.1
+$ tar xzf typo3_src-10.2.0.tar.gz
+$ cd htdocs
+$ ln -s ../typo3_src-10.2.0 typo3_src
+$ ln -s typo3_src/index.php
+$ ln -s typo3_src/typo3
+$ touch FIRST_INSTALL
+\end{lstlisting}
+
+		\item Liens symboliques sous Microsoft Windows~:
+
+			\begin{itemize}
+				\item Utiliser \texttt{junction} sous Windows XP/2000
+				\item Utiliser \texttt{mklink} sous Windows Vista et Windows 7 ou supérieur
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Installation using composer
+
+\begin{frame}[fragile]
+	\frametitle{Installation and Upgrade}
+	\framesubtitle{Installation avec \texttt{composer}}
+
+	\begin{itemize}
+		\item Installation avec \textit{composer} sous Linux, Mac OS X et Windows 10~:
+\begin{lstlisting}
+$ cd /var/www/site/
+$ composer create-project typo3/cms-base-distribution typo3v10 ^10.1
+\end{lstlisting}
+
+		\item Vous pouvez aussi créer votre ficher \texttt{composer.json} sur mesure
+			et exécuter~:
+\begin{lstlisting}
+$ composer install
+\end{lstlisting}
+
+			Plus de détails et exemples de fichiers \texttt{composer.json} disponibles à~:\newline
+			\smaller
+				\href{https://composer.typo3.org}{https://composer.typo3.org}
+			\normalsize
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------

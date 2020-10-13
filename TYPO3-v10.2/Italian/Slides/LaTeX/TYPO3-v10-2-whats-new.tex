@@ -1,0 +1,78 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Italian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		https://typo3.org/help/documentation/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+% .
+
+\documentclass[t]{beamer}
+
+% suppress navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\mode<presentation>
+{
+	\usetheme{typo3slides}
+}
+
+% global variables
+\title{TYPO3 Versione 10.2 - Le novità}
+\subtitle{Riepilogo delle funzionalità, modifiche e aggiornamenti}
+\author{
+	\centerline{Creato da: Michael Schams}
+    \centerline{Traduzione italiana di:}
+    \textbf{Roberto Torresani} (roberto.torresani (at) typo3.org)
+}
+
+\date{\today}
+
+\begin{document}
+
+% select TYPO3 Share font
+\sharefont
+
+% ------------------------------------------------------------------------------
+% Title Page
+% ------------------------------------------------------------------------------
+
+\begingroup
+	\setbeamercolor{normal text}{fg=white,bg=typo3orange}
+	\setbeamercolor{title}{fg=white}
+	\setbeamercolor{author}{fg=white}
+	\setbeamertemplate{footline}[default]
+	\begin{frame}
+		\titlepage
+	\end{frame}
+\endgroup
+
+% ------------------------------------------------------------------------------
+% Table of Contents
+% ------------------------------------------------------------------------------
+
+\section*{TYPO3 Versione 10.0 - Le novità}
+\begin{frame}[fragile]
+	\frametitle{Indice delle sezioni}
+	\framesubtitle{Indice delle sezioni}
+
+	\tableofcontents
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\include{Chapters/Introduction}
+\include{Chapters/BackendUserInterface}
+\include{Chapters/ChangesForIntegrators}
+\include{Chapters/ChangesForDevelopers}
+\include{Chapters/FormSystemExtension}
+\include{Chapters/DeprecatedRemovedFunctions}
+\include{Chapters/SourcesAndAuthors}
+
+% ------------------------------------------------------------------------------
+
+%\include{Chapters/TestChapter}
+
+% ------------------------------------------------------------------------------
+\end{document}

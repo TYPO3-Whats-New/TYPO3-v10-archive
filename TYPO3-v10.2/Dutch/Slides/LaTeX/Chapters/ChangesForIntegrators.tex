@@ -1,0 +1,316 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Dutch Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Dutch
+% ------------------------------------------------------------------------------
+
+\section{Wijzigingen voor Integrators}
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+
+	\begin{center}\huge{Hoofdstuk 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Wijzigingen voor Integrators}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 85592 | Add site title configuration to sites module
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Site configuratie (1)}
+
+	\begin{itemize}
+
+		\item De titel van de site kan nu geconfigureerd worden in
+			\textbf{SITE CONFIGURATIE} $\rightarrow$ \textbf{Sites}.
+		\item Dit geeft integrators de mogelijkheid een site-titel per taal in te stellen.
+		\item Het veld in de sjabloonrecord is overbodig en is als \textbf{verouderd} gemarkeerd.
+		\item Het veld \texttt{sys\_template.sitetitle} (database en TCA) zal worden verwijderd in TYPO3 v11.
+		\item De titel van de site wordt gebruikt voor de paginatitel en ook voor toekomstige
+			\texttt{schema.org} integraties.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89398 | Support for environment variables in imports in site configurations
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Site configuratie (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Het is nu mogelijk om omgevingsvariabelen te gebruiken in imports van siteconfiguratie YAML bestanden:
+\begin{lstlisting}
+imports:
+  -
+    resource: 'Env_%env("foo")%.yaml'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88102 | Frontend Login Form Via Fluid And Extbase
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Aanmelding Frontend (1)}
+
+	\begin{itemize}
+
+		\item TYPO3 v10.2 bevat nu een Extbase-versie van de functionaliteit voor het aanmelden in de frontend.
+		\item Deze oplossing heeft een aantal voordelen:
+
+			\begin{itemize}
+				\item Eenvoudiger sjablonen aanpassen.
+				\item Verstuur wachtwoord vergeten e-mails gebaseerd op HTML.
+				\item Instellen en aanpassen van validators om wachtwoordrestricties te forceren.
+			\end{itemize}
+
+		\item De nieuwe Extbase plugin is standaard beschikbaar voor nieuwe installaties.
+		\item Bestaande installaties blijven gebruik maken van de oude sjablonen.
+		\item Integrators kunnen wisselen tussen de "oude" en de "nieuwe" plug-in met een functieschakelaar.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Aanmelding Frontend (2)}
+
+	\begin{itemize}
+
+		\item Aan de Extbase plug-in is een wachtwoord-vergeten-formulier toegevoegd.
+		\item Gebruikers kunnen aangeven het wachtwoord opnieuw te willen instellen. Ze krijgen vervolgens een e-mail met een link naar het formulier.
+		\item Standaard wachtwoordvalidatieregels:
+
+			\begin{itemize}
+				\item \texttt{NotEmptyValidator} - wachtwoorden mogen niet leeg zijn.
+				\item \texttt{StringLengthValidator} - wachtwoorden moeten een minimale lengte hebben.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Aanmelding Frontend (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De validatieregels kunnen worden aangepast.
+		\item Bijvoorbeeld:
+\begin{lstlisting}
+plugin.tx_felogin_login {
+  settings {
+    passwordValidators {
+      10 = TYPO3\CMS\Extbase\Validation\Validator\AlphanumericValidator
+      20 {
+        className = TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator
+        options {
+          minimum = 12
+          maximum = 32
+        }
+      }
+      30 = \Vendor\MyExtension\Validation\Validator\MyCustomPasswordPolicyValidator
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89526 | FeatureFlag: betaTranslationServer
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Beheerplatform vertalingen}
+
+	\begin{itemize}
+
+		\item \href{https://crowdin.com/}{crowdin} richt zich erop om de huidige
+			\href{https://translation.typo3.org/}{Pootle}
+			oplossing te vervangen als een beheerplatform voor vertalingen.
+
+		\item Een functieschakelaar is toegevoegd in TYPO3 v10.2 die ervoor zorgt dat crowdin.com
+			wordt gebruikt als de bron van vertalingen.
+
+		\item Let op: deze functie is nog in \textbf{beta fase}.
+
+		\item Lees meer over het
+			\href{https://typo3.org/community/teams/typo3-development/initiatives/localization-with-crowdin/}{initiatief}.
+
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.50\linewidth]{ChangesForIntegrators/crowdin-logo.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89171 | Added possibility to have multiple sitemaps
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Meerdere sitemaps}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Het is nu mogelijk om meerdere sitemaps te configureren.
+		\item Voorbeeld:
+\begin{lstlisting}
+plugin.tx_seo {
+  config {
+    <sitemapType> {
+      sitemaps {
+        <unique key> {
+          provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+          config {
+            ...
+          }
+        }
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86759 | Support nomodule attribute for JavaScript includes
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{HTML5 attribuut \texttt{nomodule}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Het HTML5 attribuut \texttt{nomodule} wordt nu ondersteund bij het inladen van JavaScript-bestanden via TypoScript.
+\begin{lstlisting}
+page.includeJSFooter.file = path/to/classic-file.js
+page.includeJSFooter.file.nomodule = 1
+\end{lstlisting}
+
+		\item Dit attribuut voorkomt dat het script wordt uitgevoerd wanneer de browser modulescripts ondersteunt.
+
+		\item Lees meer over deze standaard in de
+			\href{https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule}{specificatie}
+			en over het concept van
+			\href{https://hacks.mozilla.org/2015/08/es6-in-depth-modules/}{modules}.
+
+	\end{itemize}
+
+% <script type="module" src="path/to/file.js"></script>
+% <script nomodule src="path/to/file/classic-file.js"></script>
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87798 | Provide a way to sort form lists in ext:form
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Sorteren van formulieren}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Formulieren kunnen nu zowel oplopend als aflopend worden gesorteerd.
+		\item Twee nieuwe instellingen zijn ge\"{\i}ntroduceerd: \texttt{sortByKeys} en \texttt{sortAscending}.
+		\item Formulieren worden in de basis gesorteerd op naam en bestands-UID (oplopend).
+		\item Om de sortering te wijzigen moet de volgende configuratie worden toegevoegd in de YAML configuratiebestanden:
+\begin{lstlisting}
+TYPO3:
+  CMS:
+    Form:
+      persistenceManager:
+        sortByKeys: ['name', 'fileUid']
+        sortAscending: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86918 | Add additional configuration for external link types in Linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Link Validator (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De Link Validator ondersteunt nu extra configuratie voor externe links.
+		\item Waarden voor \texttt{httpAgentUrl} en \texttt{httpAgentEmail} moeten worden opgegeven.
+		\item De instellingen \texttt{headers}, \texttt{method} en \texttt{range} zijn geavanceerde instellingen.
+\begin{lstlisting}
+mod.linkvalidator {
+  linktypesConfig {
+    external {
+      httpAgentName = ...
+      httpAgentUrl = ...
+      httpAgentEmail = ...
+      headers {
+      }
+      method = HEAD
+      range = 0-4048
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84990 | Add event for checking external links in RTE
+
+\begin{frame}[fragile]
+	\frametitle{Wijzigingen voor Integrators}
+	\framesubtitle{Link Validator (2)}
+
+	\begin{itemize}
+		\item De Link Validator markeert nu ook kapotte \textbf{externe} links in de RTE.
+		\item Deze functie was alleen beschikbaar voor interne links.
+		\item Het wordt aangeraden om de Link Validator in de Taakplanner uit te voeren om regelmatig te controleren op kapotte links.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

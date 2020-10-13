@@ -1,0 +1,319 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (French Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+
+\section{Changements pour les intégrateurs}
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+
+	\begin{center}\huge{Chapitre 2~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Changements pour les intégrateurs}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 85592 | Add site title configuration to sites module
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Configuration de site (1)}
+
+	\begin{itemize}
+
+		\item Le titre du site se configure dans
+			\textbf{Gestionnaire de site} $\rightarrow$ \textbf{Sites}.
+		\item Les intégrateurs peuvent spécifier un titre de site différent pour chaque langues.
+		\item Le champ de l'enregistrement gabarit est obsolète et marqué \textbf{déprécié}.
+		\item Le champ \texttt{sys\_template.sitetitle} (base et TCA) sera retiré de TYPO3 v11.
+		\item Le titre du site est utilisé pour le titre de page et pour les intégrations futures de
+			\texttt{schema.org}.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89398 | Support for environment variables in imports in site configurations
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Configuration de site (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Les variables d'environnement sont utilisables dans les importations des fichiers YAML de
+			configuration de site~:
+\begin{lstlisting}
+imports:
+  -
+    resource: 'Env_%env("foo")%.yaml'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88102 | Frontend Login Form Via Fluid And Extbase
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Authentification frontend (1)}
+
+	\begin{itemize}
+
+		\item La fonctionnalité d'authentification frontend inclus une version Extbase dans TYPO3 v10.2.
+		\item La solution présentes les avantages~:
+
+			\begin{itemize}
+				\item Aisance de modification du gabarit.
+				\item Envoie d'email de récupération de mot de passe au format HTML.
+				\item Ajustement et modification des validateurs pour forcer les restrictions sur les mots de passe.
+			\end{itemize}
+
+		\item Le plugin est directement disponible dans les nouvelles installations.
+		\item Les instances TYPO3 existantes continuerons d'utiliser les anciens gabarits.
+		\item Les intégrateurs peuvent basculer entre l'ancien et le nouveau plugin dans la configuration des fonctionnalités.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Authentification frontend (2)}
+
+	\begin{itemize}
+
+		\item Le formulaire de récupération de mot de passe est intégré au plugin Extbase.
+		\item Les utilisateurs peuvent demander un changement de mot de passe. Ils recevront
+			un email avec un lien les redirigeant vers le formulaire.
+		\item Règles de validation de mots de passe par défaut~:
+
+			\begin{itemize}
+				\item \texttt{NotEmptyValidator} - les mots de passe ne sont pas vides.
+				\item \texttt{StringLengthValidator} - les mots de passe ont une longueur minimale.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Authentification frontend (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Ces règles de validation sont personnalisables.
+		\item Par exemple~:
+\begin{lstlisting}
+plugin.tx_felogin_login {
+  settings {
+    passwordValidators {
+      10 = TYPO3\CMS\Extbase\Validation\Validator\AlphanumericValidator
+      20 {
+        className = TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator
+        options {
+          minimum = 12
+          maximum = 32
+        }
+      }
+      30 = \Vendor\MyExtension\Validation\Validator\MyCustomPasswordPolicyValidator
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89526 | FeatureFlag: betaTranslationServer
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Plateforme de gestion des traductions}
+
+	\begin{itemize}
+
+		\item L'objectif de \href{https://crowdin.com/}{crowdin} est de remplacer la solution
+			\href{https://translation.typo3.org/}{Pootle} existante
+			en tant que plateforme de gestion des traductions.
+
+		\item Une nouveau paramètre dans la configuration des fonctionnalités est ajouté à TYPO3 v10.2 pour utiliser crowdin.com
+			comme source de traduction.
+
+		\item Remarque~: ceci est en \textbf{beta}.
+
+		\item En savoir plus sur
+			l'\href{https://typo3.org/community/teams/typo3-development/initiatives/localization-with-crowdin/}{initiative (en)}.
+
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.50\linewidth]{ChangesForIntegrators/crowdin-logo.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89171 | Added possibility to have multiple sitemaps
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Sitemap multiples}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il est possible de définir de multiples sitemaps.
+		\item Syntaxe~:
+\begin{lstlisting}
+plugin.tx_seo {
+  config {
+    <sitemapType> {
+      sitemaps {
+        <unique key> {
+          provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+          config {
+            ...
+          }
+        }
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86759 | Support nomodule attribute for JavaScript includes
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Attribut HTML5 \texttt{nomodule}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item L'attribut HTML5 \texttt{nomodule} est supporté lors de l'inclusion de fichiers JavaScript en TypoScript.
+\begin{lstlisting}
+page.includeJSFooter.file = path/to/classic-file.js
+page.includeJSFooter.file.nomodule = 1
+\end{lstlisting}
+
+		\item L'attribut empêche l'exécution du script lorsque le navigateur supporte les scripts modulaires.
+
+		\item En savoir plus sur le standard dans la
+			\href{https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule}{spécification}
+			et sur le concept de
+			\href{https://hacks.mozilla.org/2015/08/es6-in-depth-modules/}{modules}.
+
+	\end{itemize}
+
+% <script type="module" src="path/to/file.js"></script>
+% <script nomodule src="path/to/file/classic-file.js"></script>
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87798 | Provide a way to sort form lists in ext:form
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Tri des formulaires}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Les formulaires peuvent être triés en ordre ascendant ou descendant.
+		\item Deux options sont introduites~: \texttt{sortByKeys} et \texttt{sortAscending}.
+		\item Les formulaires sont triés initialement par leur nom et l'identifiant de leur fichier (ascendant).
+		\item Pour changer le tri, la configuration suivante doit être utilisée de la fichier de configuration YAML~:
+\begin{lstlisting}
+TYPO3:
+  CMS:
+    Form:
+      persistenceManager:
+        sortByKeys: ['name', 'fileUid']
+        sortAscending: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86918 | Add additional configuration for external link types in Linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Validateur de liens (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Le validateur de lien supporte des configurations supplémentaires pour les liens externes.
+		\item Les valeurs pour \texttt{httpAgentUrl} et \texttt{httpAgentEmail} devraient être fournies.
+		\item Les options \texttt{headers}, \texttt{method} et \texttt{range} sont pour l'usage avancée.
+\begin{lstlisting}
+mod.linkvalidator {
+  linktypesConfig {
+    external {
+      httpAgentName = ...
+      httpAgentUrl = ...
+      httpAgentEmail = ...
+      headers {
+      }
+      method = HEAD
+      range = 0-4048
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84990 | Add event for checking external links in RTE
+
+\begin{frame}[fragile]
+	\frametitle{Changements pour les intégrateurs}
+	\framesubtitle{Validateur de liens (2)}
+
+	\begin{itemize}
+		\item Le validateur de lien marque les liens \textbf{externe} cassés dans le RTE.
+		\item La fonction n'est disponible que pour les liens internes.
+		\item Il est recommandé de mettre en place la tâche planifiée du validateur de lien pour
+			chercher régulièrement les liens cassés.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

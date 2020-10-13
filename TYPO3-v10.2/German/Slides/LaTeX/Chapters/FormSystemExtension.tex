@@ -1,0 +1,267 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (German Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+
+\section{Die Systemerweiterung "Form"}
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+
+	\begin{center}\huge{Kapitel 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Die Systemerweiterung "Form"}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% System Extension "Form" - Summary
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Zusammenfassung}
+
+	\small
+		An der Systemerweiterung \textbf{"Form"} wurden mehrere Änderungen vorgenommen.
+		Diese Änderungen betreffen sowohl Redakteure, als auch Integratoren und Entwickler.
+
+		\vspace{0.2cm}
+
+		Einige der Änderungen basieren sich auf Konzepten der TYPO3-Initiative Woche (T3INIT19).
+
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 84221 | Restructuring of form setup
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Formulareinrichtung}
+
+	\begin{itemize}
+		\item Zuvor wurden drei Dateien verwendet: \texttt{BaseSetup.yaml}, \texttt{FormEditorSetup.yaml}, und \texttt{FormEngineSetup.yaml}.
+		\item Dies wurde konsolidiert und in einer Datei zusammengefasst: \texttt{FormSetup.yaml}.
+		\item Diese Datei enthält das Basis-Setup, inklusive dem Import der Konfiguration für Validatoren, Formularelemente und Finisher.
+		\item Alle bisher verwendeten Vererbungen wurden aufgelöst, um die gesamte Konfiguration besser zu verstehen.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84203 | Unify form setup YAML loading
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{YAML- Dateien}
+
+	\begin{itemize}
+		\item Die YAML-Dateien verwenden nun TYPO3-Core YAML Datei-Loader.
+		\item Dadurch wurden folgende Funktionen ermöglicht:
+
+			\begin{itemize}
+				\item Der Import anderer YAML-Dateien über die Direktive \texttt{imports}.
+				\item Das Ersetzen von \texttt{\%placeholders\%}.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 79445 | Add Multistep Wizard
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Der Multi-step Wizard}
+
+	\begin{itemize}
+		\item Ein neues JavaScript-Modul \texttt{MultiStepWizard} wurde eingeführt, das die folgenden Funktionen bietet:
+
+			\begin{itemize}
+				\item Navigation zu den vorherigen Schritten.
+				\item Die Schritte unterstützen beschreibende Bezeichnungen wie "Start" oder "Ende" statt der numerischen Anzeige "Schritt x von y".
+				\item Optimierte Konfigurationsstruktur.
+			\end{itemize}
+
+		\item Siehe \href{https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.2/Feature-79445-AddMultistepWizard.html}{das Änderungsprotokoll}
+			für JavaScript-basierte Beispiele.
+
+		\item Diese neue Funktion verbessert die Benutzererfahrung erheblich: Backend-Benutzer werden einen verbesserten Formularerstellungs-Assistenten bemerken.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89747 | Custom tables with record browser in forms
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Datensatzbrowser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Der Datensatzbrowser kann nun konfiguriert werden, um benutzerdefinierte Tabellen zu verwenden:
+\begin{lstlisting}
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        standard:
+          formElementsDefinition:
+            MyCustomElement:
+              formEditor:
+                editors:
+                  # ...
+                  300:
+                    identifier: myRecord
+                    # ...
+                    browsableType: tx_myext_mytable
+                    propertyPath: properties.myRecordUid
+                    # ...
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89746 | Custom icon for record browser button in forms
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Datensatzbrowser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die Schaltflächensymbole des Datensatzbrowsers sind auch konfigurierbar:
+\begin{lstlisting}
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        standard:
+          formElementsDefinition:
+            MyCustomElement:
+              formEditor:
+                editors:
+                  # ...
+                  300:
+                    identifier: contentElement
+                    # ...
+                    browsableType: tt_content
+                    iconIdentifier: mimetypes-x-content-text
+                    propertyPath: properties.contentElementUid
+                    # ...
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84713 | Access single values in form templates
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Datensatzbrowser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Ein neuer \textit{RenderFormValue-ViewHelper} ermöglicht Integratoren/Entwicklern den Zugriff auf einzelne Formularwerte in Vorlagen:
+\begin{lstlisting}
+<p>
+  The following message was just sent by
+  <formvh:renderFormValue renderable="{page.rootForm.elements.name}" as="formValue">
+    {formValue.processedValue}
+  </formvh:renderFormValue>:
+</p>
+
+<blockquote>
+  <formvh:renderFormValue renderable="{page.rootForm.elements.message}" as="formValue">
+    {formValue.processedValue}
+  </formvh:renderFormValue>
+</blockquote>
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 82706 | Render fieldset labels in form templates
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Fieldset-Labels}
+
+	\begin{itemize}
+		\item Das Element \texttt{Fieldset} ist nun in Vorlagen zugänglich.
+		\item Standardmäßig betrifft dies das Formularelement \textbf{SummaryPage} sowie die Finisher \textbf{EmailToReceiver} und \textbf{EmailToSender}.
+		\item Typischer Anwendungsfall:\newline
+			\small
+				Ein Formular mit einer Liefer- und einer Rechnungsadresse. Beide Abschnitte könnten ein Feld mit dem gleichen Namen haben, z.B. \texttt{street}.
+				Es ist nun möglich, zwischen beiden Feldern durch die Verwendung von Fieldset-Labels zu unterscheiden.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 88238 | Allowed MIME types of FileUpload and ImageUpload
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Datei-Uploads}
+
+	\begin{itemize}
+		\item Vordefinierte \texttt{allowedMimeTypes} der folgenden Formularelemente wurden als \textbf{veraltet} gekennzeichnet:
+
+			\begin{itemize}
+				\item \texttt{FileUpload}
+				\item \texttt{ImageUpload}
+			\end{itemize}
+
+		\item Alle gültigen MIME-Typen müssen in der Formulardefinition explizit aufgeführt werden \newline
+			\smaller
+				(vordefinierte MIME-Typen werden in TYPO3 v11 entfernt)
+			\normalsize
+
+		\item Integratoren können das neue Verhalten in TYPO3 v10 bereits mit einem Feature-Toggle aktivieren.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89742 | Form mixins
+
+\begin{frame}[fragile]
+	\frametitle{Die Systemerweiterung "Form"}
+	\framesubtitle{Formular Mixins}
+
+	\begin{itemize}
+		\item Mixins wurden als \textbf{veraltet} markiert und sollten nicht mehr verwendet werden.
+		\item Dies betrifft alle Vererbungen von \texttt{TYPO3.CMS.Form.mixins.*}.
+		\item Migrationsmöglichkeiten:
+
+			\begin{itemize}
+				\item Binden Sie die wesentlichen Teile aus \texttt{TYPO3.CMS.Form.mixins.*} ein, oder
+				\item migrieren Sie diese in benutzerdefinierte Mixins.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

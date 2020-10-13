@@ -1,0 +1,331 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Izmene za programere}
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Izmene za programere}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88950 | Add storeSession argument to Widget ViewHelpers
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Widget ViewHelper-i}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Widget ViewHelper-i u odredjenim situacijama postavljaju session cookie na korisničkom interfejsu.
+		\item Pošto ovo nije poželjno u svim situacijama (na primer zbog GDPR), sada može da se kontroliše.
+		\item Boolean promenljiva \texttt{storeSession} je dodata da omogući programerima da omoguće/onemoguće
+		 	ovu funkcionalnost.
+\begin{lstlisting}
+<f:widget.autocomplete
+  for="name"
+  objects="{posts}"
+  searchProperty="author"
+  storeSession="false" />
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89577 | New PSR-14 based events for File Abstraction Layer
+% Deprecation | 89577 | FAL SignalSlot handling migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{PSR-14 dogadjaji u FAL}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item U File Abstraction Layer (FAL) dodato je oko 40 novih dogadjaja zasnovanih na
+			\href{https://www.php-fig.org/psr/psr-14/}{PSR-14}.
+		\item Oni zamenjuju postojeće Extbase signale/slotove.
+		\item Korišćenje signala i dalje radi (bez poruke o zastarelosti!).
+			Medjutim, signali iz FAL-a će najverovatnije biti uklonjeni u TYPO3 v11.
+		\item Autori proširenja se savetuju da migriraju kod i koriste dogadjaje.
+		\item Pogledajte novie PHP klase da saznate više o PSR-14.
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89733 | Signal Slots in Core Extension migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{PSR-14 dogadjaji u jezgru TYPO3}
+
+	\begin{itemize}
+		\item Veliki broj novih dogadjaja zasnovanih na PSR-14 zamenuje signale/slotove u jezgru TYPO3:
+			\newline
+
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Imaging\textbackslash
+					Event\textbackslash
+					ModifyIconForResourcePropertiesEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					DataHandling\textbackslash
+					Event\textbackslash
+					IsTableExcludedFromReferenceIndexEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					DataHandling\textbackslash
+					Event\textbackslash
+					AppendLinkHandlerElementsEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Configuration\textbackslash
+					Event\textbackslash
+					AfterTcaCompilationEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					Event\textbackslash
+					AlterTableDefinitionStatementsEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Tree\textbackslash
+					Event\textbackslash
+					ModifyTreeDataEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					Event\textbackslash
+					SystemInformationToolbarCollectorEvent}
+					\newline
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89718 | Legacy PageTSconfig parsing lowlevel API
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Prepared Statements}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Dodate su dve nove PHP klase za čitanje i parsiranje PageTSconfig:
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Configuration\textbackslash
+					Loader\textbackslash
+					PageTsConfigLoader}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Configuration\textbackslash
+					Parser\textbackslash
+					PageTsConfigParser}
+			\end{itemize}
+
+		\item Na primer:
+\begin{lstlisting}
+// Fetch all available PageTS of a page/rootline:
+$loader = GeneralUtility::makeInstance(PageTsConfigLoader::class);
+$tsConfigString = $loader->load($rootLine);
+
+// Parse the string and apply conditions:
+$parser = GeneralUtility::makeInstance(
+  PageTsConfigParser::class, $typoScriptParser, $hashCache
+);
+
+$pagesTSconfig = $parser->parse($tsConfigString, $conditionMatcher);
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 87518 | Use prepared statements for pdo_mysql per default
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Prepared Statements}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Po podrazumevanim podešavanjima \texttt{pdo\_mysql} drajver koristi prepared statements.
+		\item U TYPO3 < v10.2 korišćene su \textit{emulirane prepared statements}.
+			Ovo znači da su sve vrednosti upita koje su vraćene bile tekstualnog tipa.
+		\item Ovo ponašanje je promenjeno i prepared statements sada vraćaju nativne tipove podataka.
+		\item Na primer: vrednosti za kolonu koja je definisana kao celobrojna se vraćaju u PHP kao \texttt{int}.
+		\item Ova funkcionalnost može da se isključi u podešavanjima konekcije sa bazom podataka
+			u opciji \texttt{PDO::ATTR\_EMULATE\_PREPARES}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86967 | Allow fetching uid of a LazyLoadingProxy without loading the object first
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Lazy Loading Proxy}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Metod \texttt{getUid()} je dodat klasi\newline
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Persistence\textbackslash
+				Generic\textbackslash
+				LazyLoadingProxy}.
+		\item Ovo omogućava programerima da dodju do UID-a objekta koji je iza proksija,
+			bez potrebe da se objekat dovlači iz baze podataka.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87380 | Introduce SiteLanguageAwareInterface to denote site language awareness
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Označavanje jezika sajta}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+% SiteLanguageAwareInterface with the methods setSiteLanguage(Entity\SiteLanguage $siteLanguage) and getSiteLanguage() has been introduced.
+% The interface can be used to denote a class as aware of the site language.
+
+	\begin{itemize}
+		\item \texttt{SiteLanguageAwareInterface} je dodat.
+		\item Interfejs se može koristiti da označi da je klasa svesna jezika sajta.
+		\item Aspekti rutiranja, koji uzimaju u obzir jezik sajta,
+			sada koriste i \texttt{SiteLanguageAwareInterface}
+			uz \texttt{SiteLanguageAwareTrait}.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89645 | Removed systemLog options
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{System Log API}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sledeće opcije su uklonjene iz podrazumevane konfiguracije TYPO3:
+
+			\begin{itemize}\smaller
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SYS']['systemLog']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SYS']['systemLogLevel']}
+			\end{itemize}\normalsize
+
+		\item Autori proširenja se savetuju da koriste Logging API i uklone systemLog opcije.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89603 | Introduce native pagination for lists
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{Podrazumevana paginacija lista}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Dodata je podrazumevana podrška za paginaciju lista kao što su nizovi i Extbase QueryResults.
+		\item \texttt{PaginatorInterface} definiše osnovni skup metoda.
+		\item \texttt{AbstractPaginator} klasa sadrži osnovnu logiku za paginaciju.
+		\item Ovo omogućava programerima da naprave paginatore po svojoj potrebi.
+\begin{lstlisting}
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+
+$items = ['apple', 'banana', 'strawberry', 'raspberry', 'ananas'];
+$currentPageNumber = 3;
+$itemsPerPage = 2;
+
+$paginator = new ArrayPaginator($itemsToBePaginated, $currentPageNumber, $itemsPerPage);
+$paginator->getNumberOfPages(); // returns 3
+$paginator->getCurrentPageNumber(); // returns 3
+$paginator->getKeyOfFirstPaginatedItem(); // returns 5
+$paginator->getKeyOfLastPaginatedItem(); // returns 5
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89579 | ServiceChains require an array for excluded Service keys
+
+\begin{frame}[fragile]
+	\frametitle{Izmene za programere}
+	\framesubtitle{API za servise}
+
+	\begin{itemize}
+		\item Argument \texttt{\$excludeServiceKeys} se koristi da se preskoči odredjeni servis kada se koristi lanac servisa.
+		\item U TYPO3 v10.2 argument je promenjen iz liste razdvojene zarezom u niz.
+		\item Ova izmena utiče na API za servise kod sledećih komponenti:
+
+			\begin{itemize}
+				\item \texttt{GeneralUtility::makeInstanceService()}
+				\item \texttt{ExtensionManagementUtility::findService()}
+			\end{itemize}
+
+		\item Prosledjivanje liste razdvojene zarezom i dalje radi, ali je označeno kao \textbf{zastarelo}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

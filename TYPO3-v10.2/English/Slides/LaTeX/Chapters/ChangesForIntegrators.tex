@@ -1,0 +1,317 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+\section{Changes for Integrators}
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+
+	\begin{center}\huge{Chapter 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Changes for Integrators}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 85592 | Add site title configuration to sites module
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Site Configuration (1)}
+
+	\begin{itemize}
+
+		\item The site title can now be configured in
+			\textbf{SITE CONFIGURATION} $\rightarrow$ \textbf{Sites}.
+		\item This lets integrators specify different site titles per language.
+		\item The field in the template record is obsolete and has been marked as \textbf{deprecated}.
+		\item The field \texttt{sys\_template.sitetitle} (database and TCA) will be removed in TYPO3 v11.
+		\item The site title is used for the page title as well as for
+			future \texttt{schema.org} integrations.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89398 | Support for environment variables in imports in site configurations
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Site Configuration (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item It is now possible to use environment variables in imports of site configuration YAML files:
+\begin{lstlisting}
+imports:
+  -
+    resource: 'Env_%env("foo")%.yaml'
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88102 | Frontend Login Form Via Fluid And Extbase
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Frontend Login (1)}
+
+	\begin{itemize}
+
+		\item TYPO3 v10.2 now includes an Extbase-version of the frontend login functionality.
+		\item This solution has a few advantages:
+
+			\begin{itemize}
+				\item Modify the templates more easily.
+				\item Send out HTML-based password recovery emails.
+				\item Adjust and modify validators to enforce password restrictions.
+			\end{itemize}
+
+		\item The new Extbase plugin is available out-of-the-box for new installations.
+		\item Existing TYPO3 instances will continue to use the old templates.
+		\item Integrators can switch between the "old" and the "new" plugin by using a feature toggle.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Frontend Login (2)}
+
+	\begin{itemize}
+
+		\item A password recovery form has been added as part of the Extbase plugin.
+		\item Users can request a password change and will receive an email with a link which redirects them to the form.
+		\item Default password validation rules:
+
+			\begin{itemize}
+				\item \texttt{NotEmptyValidator} - passwords cannot be empty.
+				\item \texttt{StringLengthValidator} - passwords must have a minimum length.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88110 | Felogin extbase password recovery
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Frontend Login (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item These validation rules can be customized.
+		\item For example:
+\begin{lstlisting}
+plugin.tx_felogin_login {
+  settings {
+    passwordValidators {
+      10 = TYPO3\CMS\Extbase\Validation\Validator\AlphanumericValidator
+      20 {
+        className = TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator
+        options {
+          minimum = 12
+          maximum = 32
+        }
+      }
+      30 = \Vendor\MyExtension\Validation\Validator\MyCustomPasswordPolicyValidator
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89526 | FeatureFlag: betaTranslationServer
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Localization Management Platform}
+
+	\begin{itemize}
+
+		\item \href{https://crowdin.com/}{crowdin} aims to replace the existing
+			\href{https://translation.typo3.org/}{Pootle}
+			solution as a localization/translation management platform.
+
+		\item A feature toggle has been added in TYPO3 v10.2 that uses crowdin.com
+			as the source for translations if enabled.
+
+		\item Please note: this is in \textbf{beta status}.
+
+		\item Read more about the
+			\href{https://typo3.org/community/teams/typo3-development/initiatives/localization-with-crowdin/}{initiative}.
+
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.50\linewidth]{ChangesForIntegrators/crowdin-logo.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89171 | Added possibility to have multiple sitemaps
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Multiple Sitemaps}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item It is now possible to configure multiple sitemaps.
+		\item Syntax:
+\begin{lstlisting}
+plugin.tx_seo {
+  config {
+    <sitemapType> {
+      sitemaps {
+        <unique key> {
+          provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+          config {
+            ...
+          }
+        }
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86759 | Support nomodule attribute for JavaScript includes
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{HTML5 attribute \texttt{nomodule}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The HTML5 attribute \texttt{nomodule} is now supported when including JavaScript files in TypoScript.
+\begin{lstlisting}
+page.includeJSFooter.file = path/to/classic-file.js
+page.includeJSFooter.file.nomodule = 1
+\end{lstlisting}
+
+		\item This attribute prevents a script from being executed in browsers that support module scripts.
+
+		\item Read more about the standard in the
+			\href{https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule}{specification}
+			and about the concept of
+			\href{https://hacks.mozilla.org/2015/08/es6-in-depth-modules/}{modules}.
+
+	\end{itemize}
+
+% <script type="module" src="path/to/file.js"></script>
+% <script nomodule src="path/to/file/classic-file.js"></script>
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87798 | Provide a way to sort form lists in ext:form
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Sorting of Forms}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Forms can now be sorted in either ascending or descending order.
+		\item Two new settings were introduced: \texttt{sortByKeys} and \texttt{sortAscending}.
+		\item Forms are initially sorted by their name and their file UID (ascending).
+		\item To change the sorting, the following configuration needs to be added in the YAML configuration file:
+\begin{lstlisting}
+TYPO3:
+  CMS:
+    Form:
+      persistenceManager:
+        sortByKeys: ['name', 'fileUid']
+        sortAscending: true
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86918 | Add additional configuration for external link types in Linkvalidator
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Link Validator (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The Link Validator now supports additional configuration for external links.
+		\item Values for \texttt{httpAgentUrl} and \texttt{httpAgentEmail} should be provided.
+		\item Settings \texttt{headers}, \texttt{method} and \texttt{range} are advanced settings.
+\begin{lstlisting}
+mod.linkvalidator {
+  linktypesConfig {
+    external {
+      httpAgentName = ...
+      httpAgentUrl = ...
+      httpAgentEmail = ...
+      headers {
+      }
+      method = HEAD
+      range = 0-4048
+    }
+  }
+}
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 84990 | Add event for checking external links in RTE
+
+\begin{frame}[fragile]
+	\frametitle{Changes for Integrators}
+	\framesubtitle{Link Validator (2)}
+
+	\begin{itemize}
+		\item Link Validator now marks broken \textbf{external} links in the RTE too.
+		\item This feature was only available for internal links.
+		\item It is recommended to run the Link Validator as a Scheduler task to regularly crawl for broken links.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

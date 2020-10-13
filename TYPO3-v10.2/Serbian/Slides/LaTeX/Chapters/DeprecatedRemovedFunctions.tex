@@ -1,0 +1,226 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Serbian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+
+\section{Zastarele/izbačene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+
+	\begin{center}\huge{Poglavlje 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele/izbačene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89331 | FormEngine legacy functions
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{FormEngine}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sledece funkcije FormEngine-a su označene kao \textbf{zastarele}:
+
+			\begin{itemize}
+				\item \texttt{setFormValueOpenBrowser()}\newline
+					\smaller(koristiti \texttt{FormEngine.openPopupWindow()})\small
+
+				\item \texttt{setFormValueFromBrowseWin()}\newline
+					\smaller(koristiti \texttt{FormEngine.setSelectOptionFromExternalSource()})\small
+
+				\item \texttt{setHiddenFromList()}\newline
+					\smaller(koristiti \texttt{FormEngine.updateHiddenFieldValueFromSelect()})\small
+
+				\item \texttt{setFormValueManipulate()}\newline
+					\smaller(nema zamene jer je ovo unutrašnja logika)\small
+
+				\item \texttt{setFormValue\_getFObj()}\newline
+					\smaller(koristiti \texttt{use FormEngine.getFormElement()})\small
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89733 | Signal Slots in Core Extension migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Signali/Slotovi}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sledeći signali/slotovi su zamenjeni PSR-14 dogadjajima i stoga su označeni kao \textbf{zastareli}:
+			\newline
+
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Imaging\textbackslash
+					IconFactory::buildIconForResourceSignal}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					SoftReferenceIndex::setTypoLinkPartsElement}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					ReferenceIndex::shouldExcludeTableFromReferenceIndex}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					ExtensionManagementUtility::tcaIsBeingBuilt}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Install\textbackslash
+					Service\textbackslash
+					SqlExpectedSchemaService::tablesDefinitionIsBeingBuilt}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Tree\textbackslash
+					TableConfiguration\textbackslash
+					DatabaseTreeDataProvider::PostProcessTreeData}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					ToolbarItems\textbackslash
+					SystemInformationToolbarItem::getSystemInformation}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					ToolbarItems\textbackslash
+					SystemInformationToolbarItem::loadMessages}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89631 | Use Environment API to fetch application context
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Application Context}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Metod \texttt{GeneralUtility::getApplicationContext()} je označen kao \textbf{zastareo}.
+		\item Umesto njega treba koristiti sledeći metod:\newline
+		 	\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Core\textbackslash
+				Environment::getContext()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89468 | Deprecate injection of EnvironmentService in Web Request
+% Deprecation | 89554 | Deprecate /TYPO3/CMS/Extbase/Mvc/Controller/AbstractController
+% Deprecation | 89756 | BackendUtility::TYPO3_copyRightNotice
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Razno}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Osobina \texttt{\$environmentService} sledeće klase je označena kao \textbf{zastarela}:
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Mvc\textbackslash
+				Web\textbackslash
+				Response}.\newline
+			\smaller
+				(ukoliko je neophodno, ručno umetnuti servis okruženja)
+			\normalsize
+
+		\item Sledeća unutrašnja klasa je označena kao \textbf{zastarela}:\newline
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Mvc\textbackslash
+				Controller\textbackslash
+				AbstractController}.
+
+		\item Sledeći metod je označen kao \textbf{zastareo}:\newline
+			\texttt{TYPO3\
+				CMS\
+				Backend\
+				Utility\
+				BackendUtility::TYPO3\_copyRightNotice}.\newline
+				\smaller
+					(umesto njega koristiti novu PHP klasu \texttt{Typo3Copyright} i njen metod \texttt{getCopyrightNotice()})
+				\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89722 | GMENU_LAYERS related property TSFE->divSection
+% Important | 89764 | Incompatible environment related dependency injection services have been removed
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbačene funkcije}
+	\framesubtitle{Razno}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item PHP osobina \texttt{TypoScriptFrontendController->divSection} je označena kao \textbf{zastarela}.\newline
+			\smaller
+				(da bi se dodao JavaScript u sadržaj koji se ne kešira, umesto nje koristiti \texttt{\$GLOBALS['TSFE']->additionalHeaderData[]})
+			\normalsize
+
+		\item Nekompatibilni servis za dependency injection u TYPO3 v10.2 je uklonjen kao deo podrške za Symfony 5.0:
+
+			\begin{itemize}
+				\item \texttt{env.is\_unix}
+				\item \texttt{env.is\_windows}
+				\item \texttt{env.is\_cli}
+				\item \texttt{env.is\_compoer\_mode}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

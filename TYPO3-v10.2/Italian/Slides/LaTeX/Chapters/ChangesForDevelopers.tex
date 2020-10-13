@@ -1,0 +1,331 @@
+% ------------------------------------------------------------------------------
+% TYPO3 Version 10.2 - What's New (Italian Version)
+%
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+
+\section{Modifiche per sviluppatori}
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+
+	\begin{center}\huge{Capitolo 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Modifiche per sviluppatori}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 88950 | Add storeSession argument to Widget ViewHelpers
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Widget ViewHelpers}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item I Widget ViewHelper impostano un cookie di sessione nel frontend in determinate circostanze.
+		\item Poiché ciò non sempre è possibile (ad esempio per il GDPR), ora può essere controllato.
+		\item E' stato introdotto un booleano \texttt{storeSession} che consente agli svluppatori di abilitare/disabilitare questa funzione.
+\begin{lstlisting}
+<f:widget.autocomplete
+  for="name"
+  objects="{posts}"
+  searchProperty="author"
+  storeSession="false" />
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89577 | New PSR-14 based events for File Abstraction Layer
+% Deprecation | 89577 | FAL SignalSlot handling migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{PSR-14 Events in FAL}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Circa 40 nuovi eventi basati su
+			\href{https://www.php-fig.org/psr/psr-14/}{PSR-14}
+			sono stati introdotti nel File Abstraction Layer (FAL).
+		\item Sostituiscono gli esistenti Signal/Slots Extbase.
+		\item L'uso dei Signals continua a funzionare (senza creare nessun messaggio di deprecazione!).
+			Tuttavia, i Signals nel FAL saranno probabilmente rimossi in TYPO3 v11.
+		\item Si consiglia agli autori di estensioni di migrare il loro codice e utilizzare gli eventi.
+		\item Esamina le nuove classi PHP per saperne di più sulla PSR-14.
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89733 | Signal Slots in Core Extension migrated to PSR-14 events
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Eventi PSR-14 nel core TYPO3}
+
+	\begin{itemize}
+		\item Numerosi nuovi eventi PSR-14 sostituiscono Signal/Slots nel core TYPO3:
+			\newline
+
+			\begin{itemize}\tiny
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Imaging\textbackslash
+					Event\textbackslash
+					ModifyIconForResourcePropertiesEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					DataHandling\textbackslash
+					Event\textbackslash
+					IsTableExcludedFromReferenceIndexEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					DataHandling\textbackslash
+					Event\textbackslash
+					AppendLinkHandlerElementsEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Configuration\textbackslash
+					Event\textbackslash
+					AfterTcaCompilationEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					Event\textbackslash
+					AlterTableDefinitionStatementsEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Tree\textbackslash
+					Event\textbackslash
+					ModifyTreeDataEvent}
+					\newline
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Backend\textbackslash
+					Event\textbackslash
+					SystemInformationToolbarCollectorEvent}
+					\newline
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89718 | Legacy PageTSconfig parsing lowlevel API
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Page TSconfig}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Sono state introdotte due nuovi classi PHP per caricare e analizzare PageTSconfig:
+			\begin{itemize}\smaller
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Configuration\textbackslash
+					Loader\textbackslash
+					PageTsConfigLoader}
+				\item \texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Configuration\textbackslash
+					Parser\textbackslash
+					PageTsConfigParser}
+			\end{itemize}
+
+		\item Ad esempio:
+\begin{lstlisting}
+// Fetch all available PageTS of a page/rootline:
+$loader = GeneralUtility::makeInstance(PageTsConfigLoader::class);
+$tsConfigString = $loader->load($rootLine);
+
+// Parse the string and apply conditions:
+$parser = GeneralUtility::makeInstance(
+  PageTsConfigParser::class, $typoScriptParser, $hashCache
+);
+
+$pagesTSconfig = $parser->parse($tsConfigString, $conditionMatcher);
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 87518 | Use prepared statements for pdo_mysql per default
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Statement predefiniti}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Il driver \texttt{pdo\_mysql} utilizza statement predefiniti come impostazione predefinita.
+		\item In TYPO3 < v10.2 sono utilizzate \textit{statement predefiniti emulati}.
+			Questo significa, che tutti i valori restituiti da una query erano stringhe.
+		\item Questo comportamento è cambiato e vengono utilizzate le statement predefiniti
+			che restituiscono tipi di dati nativi.
+		\item Ad esempio: i valori di una colonna definita come intero sono restituiti in PHP come \texttt{int}.
+		\item Questa funzione può essere disattivata impostando l'opzione
+			\texttt{PDO::ATTR\_EMULATE\_PREPARES} nella connessione al database.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 86967 | Allow fetching uid of a LazyLoadingProxy without loading the object first
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Lazy Loading Proxy}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Un metodo \texttt{getUid()} è stato aggiunto alla classe\newline
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Persistence\textbackslash
+				Generic\textbackslash
+				LazyLoadingProxy}.
+		\item Questo permette agli sviluppatori di recuperare l'UID dell'oggetto proxy senza recuperare l'oggetto dal database.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 87380 | Introduce SiteLanguageAwareInterface to denote site language awareness
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Consapevolezza della lingua del sito}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+% A SiteLanguageAwareInterface with the methods setSiteLanguage(Entity\SiteLanguage $siteLanguage) and getSiteLanguage() has been introduced.
+% The interface can be used to denote a class as aware of the site language.
+
+	\begin{itemize}
+		\item Una \texttt{SiteLanguageAwareInterface} è stata introdotta.
+		\item L'interfaccia può essere utilizzata per indicare una classe consapevole della lingua del sito.
+		\item Gli aspetti di routing, che tengono in considerazione la lingua del sito,
+			utilizzano ora \texttt{SiteLanguageAwareInterface}
+			oltre a \texttt{SiteLanguageAwareTrait}.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Important | 89645 | Removed systemLog options
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{System Log API}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Le seguenti opzioni sono state rimosse dalla configurazione di base di TYPO3:
+
+			\begin{itemize}\smaller
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SYS']['systemLog']}
+				\item \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SYS']['systemLogLevel']}
+			\end{itemize}\normalsize
+
+		\item Si consiglia agli autori di estensioni di utilizzare le API di Logging e di rimuovere le opzioni di systemLog.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Feature | 89603 | Introduce native pagination for lists
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{Paginazione di elenchi nativa}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item E' stato introdotto il supporto nativo per la paginazione di elenchi come array o QueryResults di Extbase.
+		\item Il \texttt{PaginatorInterface} definisce un insieme di metodi di base.
+		\item La classe \texttt{AbstractPaginator} contiene la logica principale di paginazione.
+		\item Questo permette agli sviluppatori di implementare tutti i tipi di paginazione.
+\begin{lstlisting}
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+
+$items = ['apple', 'banana', 'strawberry', 'raspberry', 'ananas'];
+$currentPageNumber = 3;
+$itemsPerPage = 2;
+
+$paginator = new ArrayPaginator($itemsToBePaginated, $currentPageNumber, $itemsPerPage);
+$paginator->getNumberOfPages(); // returns 3
+$paginator->getCurrentPageNumber(); // returns 3
+$paginator->getKeyOfFirstPaginatedItem(); // returns 5
+$paginator->getKeyOfLastPaginatedItem(); // returns 5
+\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Deprecation | 89579 | ServiceChains require an array for excluded Service keys
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche per sviluppatori}
+	\framesubtitle{API di servizio}
+
+	\begin{itemize}
+		\item Il parametro \texttt{\$excludeServiceKeys} è utilizzato per saltare determinati servizi quando si utilizza una catena.
+		\item L'argomento è stato modificato da un elenco separato da virgole in un array in TYPO3 v10.2.
+		\item Questa modifica ha effetto sulle API di servizio nei seguenti componenti:
+
+			\begin{itemize}
+				\item \texttt{GeneralUtility::makeInstanceService()}
+				\item \texttt{ExtensionManagementUtility::findService()}
+			\end{itemize}
+
+		\item Il passaggio di un elenco separato da virgole funziona ancora ma è stato contrassegnato come \textbf{deprecato}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
